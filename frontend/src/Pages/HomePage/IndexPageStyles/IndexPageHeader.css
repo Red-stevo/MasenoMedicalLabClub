@@ -12,10 +12,20 @@
     position: relative;
     display: block;
     width: calc(96% + 100px);
-    height: 130px;
+    height: 200px;
     transform: rotateY(180deg);
 }
 
 .custom-shape-divider-top-1725299348 .shape-fill {
-    fill: #12C7D7;
+    fill: rgba(4, 117, 124, 0.16);
+}
+
+.meseno-logo {
+    position: fixed;
+    right: 30px;
+    border-radius: 40px;
+}
+
+.box-shadow {
+    box-shadow: 4px 18px 10px rgba(0, 54, 255, 0.41);
 }
