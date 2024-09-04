@@ -6,6 +6,9 @@ const IndexPage = () => {
             <div className={"index-header"}>
                 <IndexPageHeader />
             </div>
+            <div className={"index-body"} >
+
+            </div>
         </div>
     )
 }
