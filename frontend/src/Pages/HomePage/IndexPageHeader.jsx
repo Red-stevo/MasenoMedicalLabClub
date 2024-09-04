@@ -1,29 +1,27 @@
 import "./IndexPageStyles/IndexPageHeader.css"
-import {Container, Image, Navbar, NavItem} from "react-bootstrap";
+import {Button, Container, Image, Nav, Navbar, NavItem} from "react-bootstrap";
 import masenoLogo from "./IndexPageAssets/MasenoSchoolLogo.jpeg";
 import { ReactTyped } from "react-typed";
 
 const IndexPageHeader = () => {
     return (
-        <div>
-            <Container className={"index-header-navbar"}>
-                <Navbar expand="lg" className="bg-body-tertiary">
+        <div className={"index-page-header"}>
+            <Navbar expand="lg" className={"index-page-navbar"}>
                 <Navbar.Brand href="#">
-
+                    <Image src={masenoLogo} alt={"Meseno University Logo"}
+                           className={"meseno-logo box-shadow"} height={100} width={100}/>
                 </Navbar.Brand>
-                    <NavItem className={"login"}>
-                        <ReactTyped strings={["Maseno Medical Laboratory Science Students' Association"]}
-                        typespeed={60}
-                        backspeed={60}
-                        loop/>
-                    </NavItem>
-                    <NavItem className={"image-logo"}>
-                        <Image src={masenoLogo} alt={"Meseno University Logo"}
-                               className={"meseno-logo box-shadow"} height={150} width={150}/>
-                    </NavItem>
-                </Navbar>
-            </Container>
-
+                    <Nav className={"nav-items-index-page"}>
+                        <NavItem className={"typed-animation graduate-regular"}>
+                            <ReactTyped strings={["Maseno Medical Laboratory Science Students' Association"]}
+                            typeSpeed={180} backSpeed={40} backDelay={3} loop
+                            className={"color-effect"}/>
+                        </NavItem>
+                        <NavItem>
+                            <Button>Signin</Button>
+                        </NavItem>
+                    </Nav>
+            </Navbar>
             <div className="custom-shape-divider-top-1725299348">
                 <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
                      preserveAspectRatio="none">

@@ -13,7 +13,6 @@
     display: block;
     width: calc(96% + 100px);
     height: 200px;
-    /*transform: rotateY(180deg);*/
 }
 
 .custom-shape-divider-top-1725299348 .shape-fill {
@@ -21,11 +20,45 @@
 }
 
 .meseno-logo {
-    position: fixed;
-    right: 30px;
-    border-radius: 40px;
+    margin-left: 40px;
+    margin-top: 10px;
+    border-radius: 20px;
 }
 
 .box-shadow {
     box-shadow: 4px 18px 10px rgba(0, 54, 255, 0.41);
 }
+
+.nav-items-index-page {
+    display: flex;
+    height: 50px;
+    gap: 100px;
+    width: 90%;
+}
+
+.index-page-navbar {
+    position: fixed;
+    width: 100%;
+    align-items: start;
+
+}
+
+.typed-animation {
+    min-width: 76%;
+    margin-left: 50px;
+    font-size: 26px;
+}
+
+.graduate-regular {
+    font-family: "Graduate", serif;
+    font-weight: 600;
+    font-style: oblique;
+}
+
+.color-effect {
+    background: linear-gradient(100deg, deepskyblue, #5ff509, #095003, #1beae3,deepskyblue, deeppink);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+
