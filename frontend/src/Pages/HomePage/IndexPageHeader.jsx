@@ -1,13 +1,14 @@
 import "./IndexPageStyles/IndexPageHeader.css"
-import {Button, Container, Image, Nav, Navbar, NavItem} from "react-bootstrap";
+import {Image, Nav, Navbar, NavItem, NavLink} from "react-bootstrap";
 import masenoLogo from "./IndexPageAssets/MasenoSchoolLogo.jpeg";
 import { ReactTyped } from "react-typed";
+
 
 const IndexPageHeader = () => {
     return (
         <div className={"index-page-header"}>
             <Navbar expand="lg" className={"index-page-navbar"}>
-                <Navbar.Brand href="#">
+                <Navbar.Brand href="/">
                     <Image src={masenoLogo} alt={"Meseno University Logo"}
                            className={"meseno-logo box-shadow"} height={100} width={100}/>
                 </Navbar.Brand>
@@ -18,11 +19,12 @@ const IndexPageHeader = () => {
                             className={"color-effect"}/>
                         </NavItem>
                         <NavItem>
-                            <Button>Signin</Button>
+                            <NavLink href={"#"} id={"signin-link"}>Signin</NavLink>
                         </NavItem>
                     </Nav>
             </Navbar>
-            <div className="custom-shape-divider-top-1725299348">
+
+           {/* <div className="custom-shape-divider-top-1725299348">
                 <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
                      preserveAspectRatio="none">
                     <path
@@ -31,7 +33,7 @@ const IndexPageHeader = () => {
                         1055.71,111.31,985.66,92.83Z"
                         className="shape-fill"></path>
                 </svg>
-            </div>
+            </div>*/}
         </div>
     );
 };
