@@ -28,17 +28,16 @@
 }
 
 .nav-items-index-page {
-    display: flex;
-    height: 50px;
-    gap: 60px;
+    display: block;
+    flex-direction:column-reverse;
     width: 90%;
 }
 
-
 .typed-animation {
-    min-width: 73%;
-    margin-left: 122px;
-    font-size: 24px;
+    min-width: 90%;
+    font-size: 30px;
+    margin-bottom: 0;
+    margin-left: 80px;
 }
 
 .graduate-regular {
@@ -48,7 +47,7 @@
 }
 
 .color-effect {
-    background: linear-gradient(100deg, deepskyblue, #5ff509, #095003, #1beae3,deepskyblue, deeppink);
+    background: linear-gradient(100deg, deepskyblue, #0a25c5, #095003, #1beae3,deepskyblue, deeppink);
     -webkit-background-clip: text;
     color: transparent;
 }
@@ -59,11 +58,17 @@
     font-weight: 600;
     color: black;
     border-radius: 10px;
+    margin-left: 60px;
     z-index: 1;
 }
 
 #signin-link:hover {
     background-color: transparent;
     color: grey;
-    border: solid 1px grey;
+}
+
+.nav-sections {
+    display: flex;
+    flex-direction: row;
+    margin-left: 110px;
 }
