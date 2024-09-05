@@ -1,2 +1,7 @@
 .index-header {
 }
+
+.index-page-sections {
+    display: flex;
+    flex-flow: column;
+}

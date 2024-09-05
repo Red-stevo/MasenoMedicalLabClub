@@ -1,3 +1,23 @@
+
+.index-page-navbar {
+    position: fixed;
+    width: 100%;
+    align-items: start;
+}
+
+.index-page-navbar:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("./../IndexPageAssets/wavesNegative.svg");
+    background-size: cover;
+    transform: scale(-1, -1);
+    z-index: -1;
+}
+
 .meseno-logo {
     margin-left: 100px;
     margin-top: 10px;
@@ -15,25 +35,6 @@
     width: 90%;
 }
 
-.index-page-navbar:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("./../IndexPageAssets/wavesNegative.svg");
-    background-size: cover;
-    transform: scale(-1, -1);
-    z-index: -1;
-}
-
-.index-page-navbar {
-    position: fixed;
-    width: 100%;
-    align-items: start;
-    /*background-color: #646cff;*/
-}
 
 .typed-animation {
     min-width: 70%;
@@ -54,15 +55,15 @@
 }
 
 #signin-link {
-    background-color: #033644;
+    background-color: transparent;
     font-size: 20px;
     font-weight: 600;
     color: white;
     border-radius: 10px;
-    z-index: 1;
 }
 
 #signin-link:hover {
     background-color: transparent;
-    color:  #033644;
+    color: grey;
+    border: solid 1px grey;
 }
