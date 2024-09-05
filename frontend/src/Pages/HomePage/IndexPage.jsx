@@ -4,7 +4,7 @@ import IndexPageCarousel from "./IndexPageCarousel.jsx";
 const IndexPage = () => {
     return (
         <div className={"index-page-sections"}>
-            <div className={"index-header"}>
+            <div id={"index-header"}>
                 <IndexPageHeader />
             </div>
             <div className={"index-body"} >

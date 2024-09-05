@@ -1,7 +1,5 @@
-.index-header {
-}
-
 .index-page-sections {
-    display: flex;
+    display: -ms-flexbox;
     flex-flow: column;
+    width: 100%;
 }

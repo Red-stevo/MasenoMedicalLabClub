@@ -1,6 +1,5 @@
-
 .index-page-navbar {
-    position: fixed;
+    position: relative;
     width: 100%;
     align-items: start;
 }
@@ -37,7 +36,7 @@
 
 
 .typed-animation {
-    min-width: 70%;
+    min-width: 73%;
     margin-left: 122px;
     font-size: 24px;
 }
@@ -58,8 +57,9 @@
     background-color: transparent;
     font-size: 20px;
     font-weight: 600;
-    color: white;
+    color: black;
     border-radius: 10px;
+    z-index: 1;
 }
 
 #signin-link:hover {
