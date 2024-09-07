@@ -1,2 +1,6 @@
+import axios from "axios";
 
-const axiosConfig =
+const axiosConfig = axios.create({
+    headers:{},
+    baseURL:""
+})
