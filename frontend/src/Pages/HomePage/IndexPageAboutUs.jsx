@@ -5,7 +5,7 @@ const IndexPageAboutUs = () => {
         <div>
             <h2 className={"about-us-title"}>About Us</h2>
             <Accordion defaultActiveKey={['0']} className={"about-us-accordion"}>
-                <Accordion.Item eventKey="0">
+                <Accordion.Item eventKey="0" className={"accordion-item-1"}>
                     <Accordion.Header>Foundation and Mission of MMLSSA</Accordion.Header>
                     <Accordion.Body>
                         The Maseno Medical Laboratory Science Students' Association (MMLSSA) was established in June
@@ -17,7 +17,7 @@ const IndexPageAboutUs = () => {
                         and essential expenses
                     </Accordion.Body>
                 </Accordion.Item>
-                <Accordion.Item eventKey="1">
+                <Accordion.Item eventKey="1" className={"accordion-item-2"}>
                     <Accordion.Header>Building Professional Networks and Mentorship</Accordion.Header>
                     <Accordion.Body>
                         MMLSSA serves as a crucial link between MLS students at Maseno and the larger medical laboratory
@@ -29,7 +29,7 @@ const IndexPageAboutUs = () => {
                         education and their future careers.
                     </Accordion.Body>
                 </Accordion.Item>
-                <Accordion.Item eventKey="3">
+                <Accordion.Item eventKey="3" className={"accordion-item-3"}>
                     <Accordion.Header>Advocacy, Development, and Community Engagement</Accordion.Header>
                     <Accordion.Body>
                         Guided by its constitution, MMLSSA advocates for the rights and interests of its members,
