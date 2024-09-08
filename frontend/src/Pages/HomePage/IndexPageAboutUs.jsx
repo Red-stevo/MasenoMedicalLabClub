@@ -3,11 +3,13 @@ import {Accordion} from "react-bootstrap";
 const IndexPageAboutUs = () => {
     return (
         <div>
-            <h2 className={"about-us-title"}>About Us</h2>
+            <h2 className={"about-us-title graduate-regular "}>About Us</h2>
             <Accordion defaultActiveKey={['0']} className={"about-us-accordion"}>
                 <Accordion.Item eventKey="0" className={"accordion-item-1"}>
-                    <Accordion.Header>Foundation and Mission of MMLSSA</Accordion.Header>
-                    <Accordion.Body>
+                    <Accordion.Header className={"graduate-regular"}>
+                        Foundation and Mission of MMLSSA
+                    </Accordion.Header>
+                    <Accordion.Body className={"accordion-text-font"}>
                         The Maseno Medical Laboratory Science Students' Association (MMLSSA) was established in June
                         2024 by first- and second-year Medical Laboratory Science (MLS) students at Maseno University.
                         Under the leadership of Sam Brian, then chairperson of the Medical Students' Association of
@@ -18,8 +20,10 @@ const IndexPageAboutUs = () => {
                     </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="1" className={"accordion-item-2"}>
-                    <Accordion.Header>Building Professional Networks and Mentorship</Accordion.Header>
-                    <Accordion.Body>
+                    <Accordion.Header className={"graduate-regular"} >
+                        Building Professional Networks and Mentorship
+                    </Accordion.Header>
+                    <Accordion.Body className={"accordion-text-font"}>
                         MMLSSA serves as a crucial link between MLS students at Maseno and the larger medical laboratory
                         science community. It connects members with national organizations like the Kenya Medical
                         Laboratory Science Association (KEMELSA) and the Kenya National Union of Medical Laboratory
@@ -30,8 +34,10 @@ const IndexPageAboutUs = () => {
                     </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="3" className={"accordion-item-3"}>
-                    <Accordion.Header>Advocacy, Development, and Community Engagement</Accordion.Header>
-                    <Accordion.Body>
+                    <Accordion.Header className={"graduate-regular"}>
+                        Advocacy, Development, and Community Engagement
+                    </Accordion.Header>
+                    <Accordion.Body className={"accordion-text-font"}>
                         Guided by its constitution, MMLSSA advocates for the rights and interests of its members,
                         ensuring their university experience is enriching and fulfilling. The association recognizes
                         excellence by awarding certificates to students with outstanding achievements and partners with

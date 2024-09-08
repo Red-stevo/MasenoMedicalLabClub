@@ -5,5 +5,30 @@
 
 .about-us-accordion {
     margin-left: 5%;
+/*    width: 60%;*/
+}
+
+.graduate-regular {
+    font-family: "Graduate", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.accordion-text-font {
+    font-family: "Reddit Sans Condensed", sans-serif;
+    font-optical-sizing: auto;
+    font-style: revert;
+    font-weight: 300;
+    font-size: 18px;
+}
+
+.accordion-item-2 {
     width: 60%;
+    margin-left: 35%;
+    margin-bottom: 20px;
+}
+
+.accordion-item-1, .accordion-item-3 {
+    width: 60%;
+    margin-bottom: 20px;
 }
