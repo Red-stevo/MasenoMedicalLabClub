@@ -1,6 +1,7 @@
 import "./IndexPageStyles/IndexPage.css";
 import IndexPageHeader from "./IndexPageHeader.jsx";
 import IndexPageCarousel from "./IndexPageCarousel.jsx";
+import IndexPageAboutUs from "./IndexPageAboutUs.jsx";
 const IndexPage = () => {
     return (
         <div className={"index-page-sections"}>
@@ -9,6 +10,7 @@ const IndexPage = () => {
             </div>
             <div className={"index-body"} >
                 <IndexPageCarousel />
+                <IndexPageAboutUs />
             </div>
         </div>
     )
