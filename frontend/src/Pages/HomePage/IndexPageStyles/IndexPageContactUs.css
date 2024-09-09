@@ -12,23 +12,25 @@
 .icons-section {
     display: flex;
     flex-direction: column;
-    margin-left: 20%;
+    margin-left: 15%;
 }
 
 .left-icons {
     display: flex;
     flex-direction: row;
-    gap: 10%;
+    gap: 7%;
     margin-bottom: 5%;
 }
 
 .right-icon {
     display: flex;
     flex-direction: row;
-    gap: 10%;
+    margin-bottom: 5%;
+    gap: 7%;
 }
 
-.instagram-icon {
+.icon {
     display: flex;
     flex-direction: column;
+
 }
