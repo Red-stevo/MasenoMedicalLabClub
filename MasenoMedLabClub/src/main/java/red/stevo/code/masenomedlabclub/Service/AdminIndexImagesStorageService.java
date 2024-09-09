@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class AdminIndexImagesStorageService {
 

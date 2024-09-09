@@ -13,10 +13,11 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequiredArgsConstructor
 @CrossOrigin("*")
+@RequiredArgsConstructor
 @RequestMapping("/apis/admin")
 public class AdminController {
+
     private final AdminIndexImagesStorageService adminIndexImagesStorageService;
 
     /*This end point handles storing of url, name and description of the upload images.
