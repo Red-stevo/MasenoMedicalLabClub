@@ -5,7 +5,10 @@
 
 .about-us-accordion {
     margin-left: 5%;
-/*    width: 60%;*/
+    background-image: url("./../IndexPageAssets/aboutUsBGImage.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
 }
 
 .graduate-regular {
@@ -23,12 +26,14 @@
 }
 
 .accordion-item-2 {
-    width: 60%;
-    margin-left: 35%;
-    margin-bottom: 20px;
+    margin-left: 5%;
 }
 
-.accordion-item-1, .accordion-item-3 {
+.accordion-item-3 {
+    margin-left: 10%;
+}
+
+.accordion-item-1, .accordion-item-3, .accordion-item-2 {
     width: 60%;
     margin-bottom: 20px;
 }
