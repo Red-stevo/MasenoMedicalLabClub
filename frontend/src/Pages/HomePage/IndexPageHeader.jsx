@@ -25,7 +25,7 @@ const IndexPageHeader = () => {
                             <Nav.Link href={"#aboutUs"} id={"signin-link"}>About Us</Nav.Link>
                         </NavItem>
                         <NavItem>
-                            <Nav.Link href={"#"} id={"signin-link"}>Contact Us</Nav.Link>
+                            <Nav.Link href={"#contactUS"} id={"signin-link"}>Contact Us</Nav.Link>
                         </NavItem>
                         <NavItem>
                             <Nav.Link href={"#"} id={"signin-link"}>Signin</Nav.Link>

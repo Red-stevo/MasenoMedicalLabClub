@@ -12,7 +12,7 @@
 .icons-section {
     display: flex;
     flex-direction: column;
-    margin-left: 20%;
+    margin-left: 15%;
 }
 
 .left-icons {
@@ -35,10 +35,13 @@
     justify-content: center;
     align-content: center;
     align-items: center;
-    width: 20%;
-    height: 40%;
+    width: 18%;
+    height: 30%;
     box-shadow: 8px 8px 20px rebeccapurple;
     border-radius: 10px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: transform ease-in 1.2s;
 }
 
 .icon:hover {

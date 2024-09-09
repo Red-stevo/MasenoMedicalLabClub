@@ -9,7 +9,7 @@ import whatsAppIcon from "./IndexPageAssets/whatsAppIcon.png";
 import gmailIcon from "./IndexPageAssets/G+Icon.png";
 const IndexPageContactUs = () => {
     return (
-        <div>
+        <div id={"contactUS"}>
             <h2 className={"contact-us-header"}>Contact US</h2>
 
             <div className={"icons-section"}>
