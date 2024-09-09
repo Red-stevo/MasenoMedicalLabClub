@@ -6,4 +6,29 @@
 .contact-us-header {
     margin-left: 10%;
     margin-top: 5%;
+    margin-bottom: 2%;
+}
+
+.icons-section {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+}
+
+.left-icons {
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+    margin-bottom: 5%;
+}
+
+.right-icon {
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+}
+
+.instagram-icon {
+    display: flex;
+    flex-direction: column;
 }
