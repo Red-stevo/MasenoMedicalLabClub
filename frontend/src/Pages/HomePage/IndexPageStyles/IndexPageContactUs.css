@@ -12,13 +12,13 @@
 .icons-section {
     display: flex;
     flex-direction: column;
-    margin-left: 15%;
+    margin-left: 12%;
 }
 
 .left-icons {
     display: flex;
     flex-direction: row;
-    gap: 15%;
+    gap: 8%;
     margin-bottom: 5%;
 }
 
@@ -26,7 +26,7 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 5%;
-    gap: 15%;
+    gap: 8%;
 }
 
 .icon {
@@ -35,8 +35,7 @@
     justify-content: center;
     align-content: center;
     align-items: center;
-    width: 18%;
-    height: 30%;
+    width: 16%;
     box-shadow: 8px 8px 20px rebeccapurple;
     border-radius: 10px;
     text-decoration: none;
