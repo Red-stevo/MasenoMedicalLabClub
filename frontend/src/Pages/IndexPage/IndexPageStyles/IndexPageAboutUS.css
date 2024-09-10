@@ -37,3 +37,25 @@
     width: 60%;
     margin-bottom: 20px;
 }
+
+@media only screen and (max-device-width: 600px){
+
+    .accordion-item-1, .accordion-item-3, .accordion-item-2 {
+        width: 90%;
+        margin-left: 0;
+    }
+
+    .about-us-accordion {
+        background: none;
+    }
+
+    .accordion-text-font {
+        font-weight: 400;
+        font-size: 32px;
+    }
+
+    .graduate-regular {
+        font-weight: 600;
+        font-size: 32px;
+    }
+}

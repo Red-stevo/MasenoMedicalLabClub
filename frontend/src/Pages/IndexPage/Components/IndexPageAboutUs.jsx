@@ -3,7 +3,7 @@ import {Accordion} from "react-bootstrap";
 const IndexPageAboutUs = () => {
     return (
         <div id={"aboutUs"}>
-            <h2 className={"about-us-title graduate-regular "}>About Us</h2>
+            <h2 className={"about-us-title graduate-regular"}>About Us</h2>
             <Accordion defaultActiveKey={['0']} className={"about-us-accordion"}>
                 <Accordion.Item eventKey="0" className={"accordion-item-1"}>
                     <Accordion.Header className={"graduate-regular"}>
