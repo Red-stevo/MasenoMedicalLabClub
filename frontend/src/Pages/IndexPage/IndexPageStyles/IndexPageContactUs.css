@@ -49,14 +49,15 @@
     }
 
     .icon {
-        font-size: 26px;
+        font-size: 30px;
         margin-bottom: 30%;
         transition: transform ease-in 1.2s;
+        height: 250px;
     }
 
     .icons-section {
         flex-direction: row;
-        gap: 20%;
+        gap: 15%;
         margin-left: 10%;
     }
 }
