@@ -11,10 +11,11 @@
     background-size: contain;
 }
 
-.graduate-regular {
+. .graduate-regular, #accordion-header-1,#accordion-header-2, #accordion-header-3 {
     font-family: "Graduate", system-ui;
     font-weight: 400;
     font-style: normal;
+    font-size: 32px;
 }
 
 .accordion-text-font {
@@ -54,7 +55,7 @@
         font-size: 32px;
     }
 
-    .graduate-regular {
+    .graduate-regular, #accordion-header-1,#accordion-header-2, #accordion-header-3 {
         font-weight: 600;
         font-size: 32px;
     }
