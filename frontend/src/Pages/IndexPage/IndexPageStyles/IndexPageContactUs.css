@@ -41,3 +41,23 @@
     transform: scale(1.2);
 }
 
+@media only screen and (max-device-width: 600px) {
+
+    .left-icons, .right-icon {
+        flex-direction: column;
+        height: 25%;
+    }
+
+    .icon {
+        font-size: 26px;
+        margin-bottom: 30%;
+        transition: transform ease-in 1.2s;
+    }
+
+    .icons-section {
+        flex-direction: row;
+        gap: 20%;
+        margin-left: 10%;
+    }
+}
+

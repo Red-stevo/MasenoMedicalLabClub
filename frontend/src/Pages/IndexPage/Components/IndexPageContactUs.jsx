@@ -41,10 +41,10 @@ const IndexPageContactUs = () => {
                     </Link>
                 </div>
                 <div className={"right-icon"}>
-                    <Link to={"https://www.linkedin.com/groups/9849659"} target={"_blank"}
-                          rel={"no-opener no-referrer"}  className={"icon"}>
-                        <Image src={linkedInIcon} alt={"LinkedIn icon"} height={120} width={100}/>
-                        <span>Find Us on LinkedIn</span>
+                    <Link to={"https://www.tiktok.com/@maseno.mlssa?_t=8pZxwVCbnle&_r=1"} target={"_blank"}
+                          rel={"no-opener no-referrer"} className={"icon"}>
+                        <Image src={tiktokIcon} alt={"Tiktok icon"} height={120} width={100}/>
+                        <span>Follow Us on Tiktok</span>
                     </Link>
 
                     <Link to={"https://chat.whatsapp.com/FfRnluR5acgHWeJhgBanY5"} target={"_blank"}
@@ -53,17 +53,18 @@ const IndexPageContactUs = () => {
                         <span>Contact Us via WhatsApp</span>
                     </Link>
 
+                    <Link to={"https://www.linkedin.com/groups/9849659"} target={"_blank"}
+                          rel={"no-opener no-referrer"}  className={"icon"}>
+                        <Image src={linkedInIcon} alt={"LinkedIn icon"} height={120} width={100}/>
+                        <span>Find Us on LinkedIn</span>
+                    </Link>
+
                     <Link to={"mailto:maseno.mlssa@gmail.com"} target={"_blank"} rel={"no-opener no-referrer"}
                           className={"icon"}>
                         <Image src={gmailIcon} alt={"gmail icon"} height={120} width={100}/>
                         <span>Email Us at Gmail</span>
                     </Link>
 
-                    <Link to={"https://www.tiktok.com/@maseno.mlssa?_t=8pZxwVCbnle&_r=1"} target={"_blank"}
-                          rel={"no-opener no-referrer"} className={"icon"}>
-                        <Image src={tiktokIcon} alt={"Tiktok icon"} height={120} width={100}/>
-                        <span>Follow Us on Tiktok</span>
-                    </Link>
                 </div>
             </div>
 
