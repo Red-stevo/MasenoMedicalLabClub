@@ -15,18 +15,12 @@
     margin-left: 12%;
 }
 
-.left-icons {
+.left-icons, .right-icon {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     gap: 8%;
     margin-bottom: 5%;
-}
-
-.right-icon {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 5%;
-    gap: 8%;
 }
 
 .icon {
@@ -35,7 +29,7 @@
     justify-content: center;
     align-content: center;
     align-items: center;
-    width: 16%;
+    min-width: 16%;
     box-shadow: 8px 8px 20px rebeccapurple;
     border-radius: 10px;
     text-decoration: none;

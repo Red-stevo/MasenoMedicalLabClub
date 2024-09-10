@@ -7,6 +7,8 @@ import xIcon from "./IndexPageAssets/XIcon.png";
 import linkedInIcon from "./IndexPageAssets/LinkedInIcon.png";
 import whatsAppIcon from "./IndexPageAssets/whatsAppIcon.png";
 import gmailIcon from "./IndexPageAssets/G+Icon.png";
+import youtubeIcon from "./IndexPageAssets/YoutubeIcon.png";
+import tiktokIcon from  "./IndexPageAssets/TiktokIcon.png";
 const IndexPageContactUs = () => {
     return (
         <div id={"contactUS"}>
@@ -34,7 +36,7 @@ const IndexPageContactUs = () => {
 
                     <Link to={"https://youtube.com/@maseno.mmlssa?si=y6OvCvptjsAK3wco"} target={"_blank"}
                           rel={"no-opener no-referrer"} className={"icon"}>
-                        <Image alt={"Youtube Icon"} height={120} width={100}/>
+                        <Image src={youtubeIcon} alt={"Youtube Icon"} height={120} width={100}/>
                         <span>Subscribe to our Channel</span>
                     </Link>
                 </div>
@@ -59,7 +61,7 @@ const IndexPageContactUs = () => {
 
                     <Link to={"https://www.tiktok.com/@maseno.mlssa?_t=8pZxwVCbnle&_r=1"} target={"_blank"}
                           rel={"no-opener no-referrer"} className={"icon"}>
-                        <Image alt={"Tiktok icon"} height={120} width={100}/>
+                        <Image src={tiktokIcon} alt={"Tiktok icon"} height={120} width={100}/>
                         <span>Follow Us on Tiktok</span>
                     </Link>
                 </div>

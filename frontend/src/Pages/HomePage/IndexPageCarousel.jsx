@@ -7,7 +7,7 @@ import image3 from "./IndexPageAssets/img3.png"
 const IndexPageCarousel = () => {
     return (
         <Carousel id={"image-holder"}>
-            <Carousel.Item interval={1000}>
+            <Carousel.Item interval={2000}>
                 <Image src={image1} alt={"Meseno Med Lab Science Index Page Image."} height={500}
                        className={"carousel-image"} />
                 <Carousel.Caption className={"caption-text"}>
@@ -16,7 +16,7 @@ const IndexPageCarousel = () => {
                 </Carousel.Caption>
             </Carousel.Item>
 
-            <Carousel.Item interval={1000}>
+            <Carousel.Item interval={3000}>
                 <Image src={image2} alt={"Meseno Med Lab Science Index Page Image."} height={500}
                        className={"carousel-image"} />
                 <Carousel.Caption>
@@ -25,7 +25,7 @@ const IndexPageCarousel = () => {
                 </Carousel.Caption>
             </Carousel.Item>
 
-            <Carousel.Item interval={1000}>
+            <Carousel.Item interval={3000}>
                 <Image src={image3} alt={"Meseno Med Lab Science Index Page Image."} height={500}
                        className={"carousel-image"}/>
                 <Carousel.Caption>

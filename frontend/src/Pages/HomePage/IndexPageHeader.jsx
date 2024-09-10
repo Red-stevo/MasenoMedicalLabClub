@@ -13,7 +13,7 @@ const IndexPageHeader = () => {
             </Navbar.Brand>
                 <Nav className={"nav-items-index-page"}>
                     <NavItem className={"typed-animation graduate-regular "}>
-                        <ReactTyped strings={["Maseno Medical Laboratory Science Students' Association"]}
+                        <ReactTyped strings={["Maseno MLSS association"]}
                         typeSpeed={180} backSpeed={40} backDelay={3} loop
                         className={"color-effect"}/>
                     </NavItem>
