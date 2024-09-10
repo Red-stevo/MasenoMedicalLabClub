@@ -1,4 +1,4 @@
-import "./IndexPageStyles/IndexPage.css";
+import "../IndexPageStyles/IndexPage.css";
 import IndexPageHeader from "./IndexPageHeader.jsx";
 import IndexPageCarousel from "./IndexPageCarousel.jsx";
 import IndexPageAboutUs from "./IndexPageAboutUs.jsx";

@@ -1,8 +1,8 @@
 import {Carousel, Image} from "react-bootstrap";
-import "./IndexPageStyles/IndexPageCarousel.css";
-import image1 from "./IndexPageAssets/img1.png"
-import image2 from "./IndexPageAssets/img2.png"
-import image3 from "./IndexPageAssets/img3.png"
+import "../IndexPageStyles/IndexPageCarousel.css";
+import image1 from "../IndexPageAssets/img1.png"
+import image2 from "../IndexPageAssets/img2.png"
+import image3 from "../IndexPageAssets/img3.png"
 
 const IndexPageCarousel = () => {
     return (

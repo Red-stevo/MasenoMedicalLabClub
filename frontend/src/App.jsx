@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import IndexPage from "./Pages/IndexPage/IndexPage.jsx";
+import IndexPage from "./Pages/IndexPage/Components/IndexPage.jsx";
 
 function App() {
     return (

@@ -1,6 +1,6 @@
-import "./IndexPageStyles/IndexPageHeader.css"
+import "../IndexPageStyles/IndexPageHeader.css"
 import {Image, Nav, Navbar, NavItem} from "react-bootstrap";
-import masenoLogo from "./IndexPageAssets/MasenoSchoolLogo.jpg";
+import masenoLogo from "../IndexPageAssets/MasenoSchoolLogo.jpg";
 import { ReactTyped } from "react-typed";
 
 

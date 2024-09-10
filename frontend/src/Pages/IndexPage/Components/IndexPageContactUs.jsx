@@ -1,14 +1,14 @@
-import "./IndexPageStyles/IndexPageContactUs.css";
+import "../IndexPageStyles/IndexPageContactUs.css";
 import {Link} from "react-router-dom";
 import {Image} from "react-bootstrap";
-import instagramIcon from "./IndexPageAssets/InstagramIcon.png";
-import facebookIcon from "./IndexPageAssets/FacebookIcon.png";
-import xIcon from "./IndexPageAssets/XIcon.png";
-import linkedInIcon from "./IndexPageAssets/LinkedInIcon.png";
-import whatsAppIcon from "./IndexPageAssets/whatsAppIcon.png";
-import gmailIcon from "./IndexPageAssets/G+Icon.png";
-import youtubeIcon from "./IndexPageAssets/YoutubeIcon.png";
-import tiktokIcon from  "./IndexPageAssets/TiktokIcon.png";
+import instagramIcon from "../IndexPageAssets/InstagramIcon.png";
+import facebookIcon from "../IndexPageAssets/FacebookIcon.png";
+import xIcon from "../IndexPageAssets/XIcon.png";
+import linkedInIcon from "../IndexPageAssets/LinkedInIcon.png";
+import whatsAppIcon from "../IndexPageAssets/whatsAppIcon.png";
+import gmailIcon from "../IndexPageAssets/G+Icon.png";
+import youtubeIcon from "../IndexPageAssets/YoutubeIcon.png";
+import tiktokIcon from "../IndexPageAssets/TiktokIcon.png";
 const IndexPageContactUs = () => {
     return (
         <div id={"contactUS"}>

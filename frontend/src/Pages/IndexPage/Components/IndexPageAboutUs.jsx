@@ -1,4 +1,4 @@
-import "./IndexPageStyles/IndexPageAboutUS.css";
+import "../IndexPageStyles/IndexPageAboutUS.css";
 import {Accordion} from "react-bootstrap";
 const IndexPageAboutUs = () => {
     return (
