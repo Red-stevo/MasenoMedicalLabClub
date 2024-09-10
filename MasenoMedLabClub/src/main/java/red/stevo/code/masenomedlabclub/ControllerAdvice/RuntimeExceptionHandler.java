@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UserDoesNotExistException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +48,15 @@ public class RuntimeExceptionHandler {
             errors.put(filedName, errorMessage);
         });
 
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(UserDoesNotExistException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleUserDoesNotExistException(UserDoesNotExistException ex){
+        Map<String, String> errors = new HashMap<>();
+
+        String message = ex.getMessage();
+        errors.put("message", message);
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }
