@@ -37,7 +37,7 @@ const IndexPageContactUs = () => {
                     <Link to={"https://youtube.com/@maseno.mmlssa?si=y6OvCvptjsAK3wco"} target={"_blank"}
                           rel={"no-opener no-referrer"} className={"icon"}>
                         <Image src={youtubeIcon} alt={"Youtube Icon"} height={120} width={100}/>
-                        <span>Subscribe to our Channel</span>
+                        <span>Subscribe</span>
                     </Link>
                 </div>
                 <div className={"right-icon"}>

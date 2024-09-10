@@ -21,6 +21,7 @@
     flex-direction: row;
     gap: 8%;
     margin-bottom: 5%;
+    padding: 10px;
 }
 
 .icon {
@@ -41,7 +42,7 @@
     transform: scale(1.2);
 }
 
-@media only screen and (max-device-width: 600px) {
+@media only screen and (max-device-width: 768px) {
 
     .left-icons, .right-icon {
         flex-direction: column;

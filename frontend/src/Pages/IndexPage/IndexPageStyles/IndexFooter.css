@@ -6,3 +6,9 @@
     justify-content: center;
     font-weight: lighter;
 }
+
+@media only screen and (max-device-width: 768px){
+    .index-footer {
+        font-size: 30px;
+    }
+}

@@ -38,7 +38,7 @@
     margin-bottom: 20px;
 }
 
-@media only screen and (max-device-width: 600px){
+@media only screen and (max-device-width: 768px){
 
     .accordion-item-1, .accordion-item-3, .accordion-item-2 {
         width: 90%;
