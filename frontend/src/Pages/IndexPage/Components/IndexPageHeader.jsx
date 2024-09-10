@@ -6,7 +6,7 @@ import { ReactTyped } from "react-typed";
 
 const IndexPageHeader = () => {
     return (
-        <Navbar expand="lg" className={"index-page-navbar"}>
+        <Navbar className={"index-page-navbar"}>
             <Navbar.Brand href="/">
                 <Image src={masenoLogo} alt={"Meseno University Logo"}
                        className={"meseno-logo box-shadow"} height={100} width={100}/>
@@ -18,17 +18,17 @@ const IndexPageHeader = () => {
                         className={"color-effect"}/>
                     </NavItem>
                     <Nav variant={"tabs"} defaultActiveKey={"/"} className={"nav-sections"}>
-                        <NavItem>
+                        <NavItem className={"home"}>
                             <Nav.Link href={"/"} id={"signin-link"}>Home</Nav.Link>
                         </NavItem>
-                        <NavItem>
+                        <NavItem className={"aboutUs"}>
                             <Nav.Link href={"#aboutUs"} id={"signin-link"}>About Us</Nav.Link>
                         </NavItem>
-                        <NavItem>
-                            <Nav.Link href={"#contactUS"} id={"signin-link"}>Contact Us</Nav.Link>
+                        <NavItem className={"contactUs"}>
+                            <Nav.Link  href={"#contactUS"} id={"signin-link"}>Contact Us</Nav.Link>
                         </NavItem>
                         <NavItem>
-                            <Nav.Link href={"#"} id={"signin-link"}>Signin</Nav.Link>
+                            <Nav.Link className={"signin"} href={"#"} id={"signin-link"}>Signin</Nav.Link>
                         </NavItem>
                     </Nav>
                 </Nav>
