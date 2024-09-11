@@ -12,21 +12,16 @@
 .icons-section {
     display: flex;
     flex-direction: column;
-    margin-left: 15%;
+    margin-left: 8%;
 }
 
-.left-icons {
+.left-icons, .right-icon {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
-    gap: 15%;
+    gap: 8%;
     margin-bottom: 5%;
-}
-
-.right-icon {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 5%;
-    gap: 15%;
+    padding: 10px;
 }
 
 .icon {
@@ -35,16 +30,38 @@
     justify-content: center;
     align-content: center;
     align-items: center;
-    width: 18%;
-    height: 30%;
-    box-shadow: 8px 8px 20px rebeccapurple;
+    min-width: 16%;
+    box-shadow: 8px 8px 20px #861bf1;
     border-radius: 10px;
     text-decoration: none;
     font-size: 16px;
+    padding: 30px;
     transition: transform ease-in 1.2s;
 }
 
 .icon:hover {
     transform: scale(1.2);
+}
+
+@media only screen and (max-device-width: 768px) {
+
+    .left-icons, .right-icon {
+        flex-direction: column;
+        height: 25%;
+    }
+
+    .icon {
+        font-size: 27px;
+        margin-bottom: 30%;
+        transition: transform ease-in 1.2s;
+        height: 250px;
+        padding: 60px;
+    }
+
+    .icons-section {
+        flex-direction: row;
+        gap: 15%;
+        margin-left: 12%;
+    }
 }
 

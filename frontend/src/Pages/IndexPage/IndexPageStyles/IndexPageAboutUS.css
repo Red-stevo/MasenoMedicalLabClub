@@ -11,10 +11,11 @@
     background-size: contain;
 }
 
-.graduate-regular {
+. .graduate-regular, #accordion-header-1,#accordion-header-2, #accordion-header-3 {
     font-family: "Graduate", system-ui;
     font-weight: 400;
     font-style: normal;
+    font-size: 32px;
 }
 
 .accordion-text-font {
@@ -36,4 +37,26 @@
 .accordion-item-1, .accordion-item-3, .accordion-item-2 {
     width: 60%;
     margin-bottom: 20px;
+}
+
+@media only screen and (max-device-width: 768px){
+
+    .accordion-item-1, .accordion-item-3, .accordion-item-2 {
+        width: 90%;
+        margin-left: 0;
+    }
+
+    .about-us-accordion {
+        background: none;
+    }
+
+    .accordion-text-font {
+        font-weight: 400;
+        font-size: 32px;
+    }
+
+    .graduate-regular, #accordion-header-1,#accordion-header-2, #accordion-header-3 {
+        font-weight: 600;
+        font-size: 32px;
+    }
 }
