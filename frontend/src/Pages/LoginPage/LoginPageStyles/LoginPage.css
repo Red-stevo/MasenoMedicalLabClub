@@ -14,9 +14,9 @@
 .login-section {
     display: flex;
     height: 62vh;
-    width: 36%;
+    width: 30%;
     flex-direction: column;
-    background: rgba(255, 255, 255, 0.76);
+    background: rgb(255, 255, 255);
     border-radius: 20px;
 }
 
