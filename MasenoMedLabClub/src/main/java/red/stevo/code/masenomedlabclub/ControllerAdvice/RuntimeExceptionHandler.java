@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UserDoesNotExistException;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UsersCreationFailedException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,6 +58,16 @@ public class RuntimeExceptionHandler {
 
         String message = ex.getMessage();
         errors.put("message", message);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UsersCreationFailedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleUsersCreationFailedException(UsersCreationFailedException ex){
+        Map<String, String> errors = new HashMap<>();
+        String message = ex.getMessage();
+        Throwable cause = ex.getCause();
+        errors.put("message"+ message+"cause", cause.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

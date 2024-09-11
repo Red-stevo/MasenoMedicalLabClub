@@ -24,6 +24,8 @@ public class JWTGenService {
     private String SECRET_KEY;
     @Value("${expiration_time}")
     private long expirationTime;
+    @Value("${refresh_token}")
+    private long REFRESH_TOKEN_EXPIRATION;
 
     /**
      method to validate if the username extracted from the token is valid username
@@ -50,14 +52,20 @@ public class JWTGenService {
     /**
      *  method to generate the jwt tokens
      * */
-    public String generateJWT(Users users) {
+    protected  String tokenGenerator(Users users, long duration) {
         return Jwts
                 .builder()
                 .subject(users.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expirationTime ))
+                .expiration(new Date(System.currentTimeMillis() + duration))
                 .signWith(getSignInKey())
                 .compact();
+    }
+    public String generateAccessToken(Users users) {
+        return tokenGenerator(users, expirationTime);
+    }
+    public String generateRefreshToken(Users users) {
+        return tokenGenerator(users, REFRESH_TOKEN_EXPIRATION);
     }
     /**
      *  method to extract a specific claim from the provided token e.g username, expiration time ...

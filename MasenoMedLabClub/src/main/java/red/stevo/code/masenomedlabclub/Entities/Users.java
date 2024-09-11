@@ -19,10 +19,8 @@ public class Users implements UserDetails {
     @Column(nullable = false,updatable = false)
     private Integer userId;
 
-    @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
     private String lastName;
 
     @Column(nullable = false)
@@ -31,7 +29,6 @@ public class Users implements UserDetails {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private Roles role;
 
     @Column(nullable = false)
