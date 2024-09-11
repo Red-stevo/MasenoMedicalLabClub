@@ -1,22 +1,15 @@
 package red.stevo.code.masenomedlabclub.Service;
 
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.View;
-import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UsersCreationFailedException;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
 import red.stevo.code.masenomedlabclub.Entities.Users;
 import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
@@ -29,11 +22,9 @@ import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
 import red.stevo.code.masenomedlabclub.configurations.PasswordGenerator;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.InvalidPropertiesFormatException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -44,7 +35,6 @@ public class UsersRegistrationService {
     private final UsersRepository usersRepository;
     private final JWTGenService jwtGenService;
     private final RefreshTokensRepository refreshTokensRepository;
-    private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final PasswordGenerator passwordGenerator;
@@ -67,7 +57,7 @@ public class UsersRegistrationService {
                     System.out.println(password);
                     log.info("your default password is " + password);
                     users1.setPassword(passwordEncoder.encode(password));
-                    users1.setRole(Roles.USER);
+                    users1.setRole(Roles.ADMIN);
                     users1.setEnabled(true);
                     return users1;
 
@@ -105,13 +95,21 @@ public class UsersRegistrationService {
             RefreshTokens tokenEntity = new RefreshTokens();
             tokenEntity.setUser(user);
             tokenEntity.setRefreshToken(refreshToken);
+            RefreshTokens oldTokens = refreshTokensRepository.findByUser(user);
+            if (oldTokens != null) {
+                refreshTokensRepository.delete(oldTokens);
+            }
+
             refreshTokensRepository.save(tokenEntity);
+
+
 
             // Set the access token in a secure cookie
             cookieUtils.createCookie(response, refreshToken);
+            cookieUtils.createCookie(response,accessToken);
 
             // Return an AuthenticationResponse object containing both tokens
-            return new AuthenticationResponse(accessToken, refreshToken);
+            return new AuthenticationResponse(accessToken,refreshToken);
 
         } catch (BadCredentialsException e) {
             log.error("Authentication failed: Invalid credentials");

@@ -9,10 +9,12 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.InvalidTokensException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UserDoesNotExistException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UsersCreationFailedException;
 
 import java.util.HashMap;
+import java.util.InvalidPropertiesFormatException;
 import java.util.Map;
 
 @Slf4j
@@ -69,5 +71,14 @@ public class RuntimeExceptionHandler {
         Throwable cause = ex.getCause();
         errors.put("message"+ message+"cause", cause.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidTokensException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<Map<String, String>> handleInvalidTokensException(InvalidTokensException ex){
+        Map<String, String> errors = new HashMap<>();
+        String message = ex.getMessage();
+        errors.put("message"+ message+"cause", ex.getMessage());
+        return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
     }
 }

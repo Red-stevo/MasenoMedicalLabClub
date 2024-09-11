@@ -2,6 +2,7 @@ package red.stevo.code.masenomedlabclub.Controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +43,12 @@ public class AdminController {
     public ResponseEntity<UserGeneralResponse> deleteIndexPAgeImage(@PathVariable ("image-id")String imageId){
         log.info("Request to delete index image.");
         return adminIndexImagesStorageService.deleteIndexPageImage(imageId);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> test(){
+        log.info("Request to test.");
+        String response = "hello there";
+        return ResponseEntity.ok(response);
     }
 }
