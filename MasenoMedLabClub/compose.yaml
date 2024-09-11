@@ -7,4 +7,4 @@ services:
       - MARIADB_ROOT_PASSWORD=${ROOT_PASSWORD}
       - MARIADB_USER=${USERNAME}
     ports:
-      - '3306'
+      - 3307:3306
