@@ -14,18 +14,19 @@ public class CookieUtils {
     private static int cookie_max_age;
 
     public  void createCookie(HttpServletResponse response, String token) {
-        Cookie cookie = new Cookie(token, token);
+        Cookie cookie = new Cookie("token", token);
         cookie.setPath("/");
         cookie.setMaxAge(cookie_max_age);
         cookie.setHttpOnly(true);
-        response.addCookie(cookie);
+        cookie.setSecure(true);
+        response.addHeader("Set-Cookie", cookie.toString());
     }
 
     public  String extractJwtFromCookie(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("access_token".equals(cookie.getName())) {
+                if ("refreshToken".equals(cookie.getName())) {
                     return cookie.getValue();
                 }
             }

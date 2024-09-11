@@ -12,7 +12,6 @@ public class RefreshTokens {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int tokenId;
     private String refreshToken;
-    private Instant expiresAt;
     @ManyToOne
     private Users user;
 }
