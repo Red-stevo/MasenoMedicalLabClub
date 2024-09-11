@@ -1,0 +1,19 @@
+.login-page {
+    width: 100%;
+    height: 100vh;
+    background-image: url("./../LoginPageAssets/loginPageBGImage.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.login-header {
+
+}
+
+.login-body {
+
+}
+
+.login-footer {
+
+}
