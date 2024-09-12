@@ -54,6 +54,7 @@
 }
 
 .login-footer {
+    display: flex;
     margin-top: 11%;
     color: #020f60;
     font-size: 18px;
@@ -67,7 +68,8 @@
     align-items: center;
     text-decoration: none;
     color: #020f60;
-    width: 95%;
+    width: fit-content;
+    margin-left: 20px;
 }
 
 span.arrow {
@@ -92,6 +94,15 @@ span.arrow {
     animation-delay: 0.4s;
 }
 
+.login {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    width: 50%;
+    background-color: #536553;
+    border: none;
+}
+
 @keyframes arrow-animation {
 
     0% {
@@ -106,3 +117,7 @@ span.arrow {
         opacity: 0;
     }
 }
+
+
+
+/*Working on the page responsiveness.*/

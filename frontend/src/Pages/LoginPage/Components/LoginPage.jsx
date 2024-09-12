@@ -1,5 +1,5 @@
 import "./../LoginPageStyles/LoginPage.css";
-import {Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
 const LoginPage = () => {
     return (
@@ -24,6 +24,7 @@ const LoginPage = () => {
                 </div>
 
                 <div className={"login-footer"}>
+                    <Button className={"login"}>Login</Button>
                     <Link className={"visitor-link"} to={"/"}>
                         <h5 className={"visitor"}>Visitor</h5>
                         <span className={"arrow"}></span>
@@ -31,7 +32,6 @@ const LoginPage = () => {
                         <span className={"arrow"}></span>
                     </Link>
                 </div>
-
             </div>
         </div>
     );
