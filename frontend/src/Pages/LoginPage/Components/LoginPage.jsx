@@ -18,7 +18,7 @@ const LoginPage = () => {
 
                         <Form.Group className={"password-group"}>
                             <Form.Label htmlFor={"password"} className={"text-font"}>Password : </Form.Label>
-                            <Form.Control id={"password"} />
+                            <div><Form.Control id={"password"} /><Faeye /></div>
                         </Form.Group>
                     </Form>
                 </div>
