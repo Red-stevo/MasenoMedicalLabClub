@@ -24,7 +24,12 @@ const LoginPage = () => {
                 </div>
 
                 <div className={"login-footer"}>
-                    <Link className={"visitor-link"} to={"/"}>Continue as Visitor</Link>
+                    <Link className={"visitor-link"} to={"/"}>
+                        <h5 className={"visitor"}>Visitor</h5>
+                        <span className={"arrow"}></span>
+                        <span className={"arrow"}></span>
+                        <span className={"arrow"}></span>
+                    </Link>
                 </div>
 
             </div>
