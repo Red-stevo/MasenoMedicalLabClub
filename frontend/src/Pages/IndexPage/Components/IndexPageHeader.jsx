@@ -28,7 +28,7 @@ const IndexPageHeader = () => {
                             <Nav.Link href={"/"} id={"home-link"}>Visitor</Nav.Link>
                         </NavItem>
                         <NavItem>
-                            <Nav.Link className={"signin"} href={"#"} id={"signin-link"}>Signin</Nav.Link>
+                            <Nav.Link className={"signin"} href={"/login"} id={"signin-link"}>Signin</Nav.Link>
                         </NavItem>
                     </Nav>
                 </Nav>
