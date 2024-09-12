@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UserDoesNotExistException;
 import red.stevo.code.masenomedlabclub.Entities.Users;
-import red.stevo.code.masenomedlabclub.Repositories.UsersRepository;
+import red.stevo.code.masenomedlabclub.Repositories.users.UsersRepository;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 

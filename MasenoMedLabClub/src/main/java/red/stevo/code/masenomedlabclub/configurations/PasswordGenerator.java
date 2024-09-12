@@ -50,10 +50,6 @@ public class PasswordGenerator {
         return new String(characters);
     }
 
-    /*public static void main(String[] args) {
-        // Example usage
-        String randomPassword = generateRandomPassword(12);
-        System.out.println("Generated Password: " + randomPassword);
-    }*/
+
 }
 

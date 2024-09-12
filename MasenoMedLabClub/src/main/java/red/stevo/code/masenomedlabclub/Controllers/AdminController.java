@@ -10,9 +10,11 @@ import org.springframework.web.server.ResponseStatusException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.IndexPageImageModel;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
+import red.stevo.code.masenomedlabclub.Models.RequestModels.events.EventsCreationRequest;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Service.AdminIndexImagesStorageService;
 import red.stevo.code.masenomedlabclub.Service.UsersRegistrationService;
+import red.stevo.code.masenomedlabclub.Service.events.EventsService;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class AdminController {
 
     private final AdminIndexImagesStorageService adminIndexImagesStorageService;
     private final UsersRegistrationService usersRegistrationService;
+    private final EventsService eventsService;
 
     /*This end point handles storing of url, name and description of the upload images.
     * These values are received from the font-end provided by the cloudinary API.*/
@@ -52,6 +55,7 @@ public class AdminController {
 
     @PostMapping("/register")
     public ResponseEntity<List<String>> register(@RequestBody List<UsersRegistrationRequests> request){
+        log.info("Request to register users.");
         List<String> createUsers = usersRegistrationService.createUser(request);
         return ResponseEntity.ok(createUsers);
     }
@@ -66,8 +70,27 @@ public class AdminController {
         }catch (Exception e){
             throw new EntityDeletionException("could not delete the user");
         }
+    }
 
+    @PostMapping("/events/create")
+    public ResponseEntity<String> createEvent(@RequestBody EventsCreationRequest request){
+        log.info("Request to create event.");
+        eventsService.createEvent(request);
+        return ResponseEntity.ok("Event created");
+    }
 
+    @PutMapping("/events/update")
+    public ResponseEntity<String> updateEvent(@RequestBody EventsCreationRequest request,
+                                              @RequestParam String eventId){
+        log.info("request to create an event");
+        eventsService.updateEvent(request,eventId);
+        return ResponseEntity.ok("event updated successfully");
+    }
+
+    @DeleteMapping("/event/delete")
+    public ResponseEntity<String> deleteEvent(String eventId){
+        eventsService.deleteEvent(eventId);
+        return ResponseEntity.ok("event deleted successfully");
     }
 
     @GetMapping("/test")
