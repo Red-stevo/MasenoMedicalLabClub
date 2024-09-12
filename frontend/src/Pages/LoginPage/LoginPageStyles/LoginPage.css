@@ -13,8 +13,8 @@
 
 .login-section {
     display: flex;
-    height: 62vh;
-    width: 30%;
+    height: 71vh;
+    width: 33%;
     flex-direction: column;
     background: rgb(255, 255, 255);
     border-radius: 20px;
@@ -26,12 +26,10 @@
     color: #020f60;
 }
 
-.login-body {
-
-}
-
 .login-form {
     width: 100%;
+    padding: 1%;
+    margin: 2%;
     font-size: 24px;
 }
 
@@ -47,6 +45,7 @@
     flex-direction: column;
     justify-content: center;
     width: 90%;
+    height: 30%;
     margin-left: 5%;
     margin-right: 5%;
     margin-top: 8%;
@@ -59,6 +58,7 @@
     color: #020f60;
     font-size: 18px;
     text-align: end;
+    gap: 20%;
 }
 
 
@@ -95,10 +95,10 @@ span.arrow {
 }
 
 .login {
-    margin-left: 10px;
+    margin-left: 5%;
     font-size: 20px;
     font-weight: 500;
-    width: 50%;
+    width: 40%;
     background-color: #536553;
     border: none;
 }
@@ -121,3 +121,62 @@ span.arrow {
 
 
 /*Working on the page responsiveness.*/
+
+@media all and (max-device-width: 1024px){
+    .login-section {
+        height: 67vh;
+        width: 55%;
+    }
+
+    .text-font {
+        font-size: 26px;
+    }
+
+    #password, #email {
+        height: 70px;
+        font-size: 30px;
+    }
+}
+
+@media all and (max-device-width: 786px){
+    .login-section {
+        height: 58vh;
+        width: 70%;
+    }
+
+    .text-font {
+        font-size: 32px;
+    }
+
+    #password, #email {
+        height: 70px;
+        font-size: 34px;
+    }
+
+}
+
+@media all and (max-device-width: 480px){
+    .login-section {
+        height: 49vh;
+        width: 71%;
+    }
+
+    .text-font {
+        font-size: 40px;
+    }
+
+    #password, #email {
+        height: 80px;
+        font-size: 38px;
+    }
+
+    .login-page {
+        justify-content: start;
+        align-items: center;
+    }
+
+    .login-section {
+        margin-top: 20%;
+    }
+
+}
