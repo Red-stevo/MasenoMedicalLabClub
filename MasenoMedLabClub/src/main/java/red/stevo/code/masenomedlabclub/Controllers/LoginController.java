@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.LoginRequests;
+import red.stevo.code.masenomedlabclub.Models.RequestModels.ResetPasswordDetails;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.AuthenticationResponse;
 import red.stevo.code.masenomedlabclub.Service.UsersRegistrationService;
@@ -24,12 +25,6 @@ public class LoginController {
     private final UsersRegistrationService usersRegistrationService;
 
 
-    @PostMapping("/register")
-    public ResponseEntity<List<String>> register(@RequestBody List<UsersRegistrationRequests> request){
-        List<String> createUsers = usersRegistrationService.createUser(request);
-        return ResponseEntity.ok(createUsers);
-    }
-
 
 
     @PostMapping("/login")
@@ -45,5 +40,11 @@ public class LoginController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AuthenticationResponse("An error occurred during login"));
         }
+    }
+
+    @PutMapping("/update/password")
+    public ResponseEntity<String> updatePassword(@RequestBody ResetPasswordDetails details){
+        usersRegistrationService.resetPassword(details);
+        return ResponseEntity.ok("Password updated successfully");
     }
 }
