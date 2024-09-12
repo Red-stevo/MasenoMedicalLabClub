@@ -1,7 +1,18 @@
 import "./../LoginPageStyles/LoginPage.css";
 import {Button, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import {FaEye, FaEyeSlash} from "react-icons/fa";
+import {useEffect, useState} from "react";
 const LoginPage = () => {
+    const [view, setView] = useState(false);
+    const [inputState, setInputState] = useState("password")
+
+
+    useEffect(() => {
+        if(view) setInputState("text");
+        else setInputState("password");
+    }, [view]);
+
     return (
         <div className={"login-page"}>
             <div className={"login-section"}>
@@ -18,7 +29,16 @@ const LoginPage = () => {
 
                         <Form.Group className={"password-group"}>
                             <Form.Label htmlFor={"password"} className={"text-font"}>Password : </Form.Label>
-                            <div><Form.Control id={"password"} /></div>
+                            <div className={"password-holder"}>
+                                <Form.Control id={"password"} type={inputState} />
+                                { view?
+                                <Button className={"eye-button"} onClick={() => setView(false)}>
+                                    <FaEye />
+                                </Button> :
+                                <Button className={"eye-button"} onClick={() => setView(true)}>
+                                    <FaEyeSlash />
+                                </Button>}
+                            </div>
                         </Form.Group>
                     </Form>
                 </div>

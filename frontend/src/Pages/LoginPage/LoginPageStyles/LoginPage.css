@@ -61,6 +61,15 @@
     gap: 20%;
 }
 
+.eye-button {
+    background-color: grey;
+    border: none;
+}
+
+.password-holder {
+    display: flex;
+    gap: 6px;
+}
 
 .visitor-link {
     display: flex;
