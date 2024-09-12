@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.IndexPageImageModel;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
@@ -54,6 +56,19 @@ public class AdminController {
         return ResponseEntity.ok(createUsers);
     }
 
+    @DeleteMapping("/delete}")
+    public ResponseEntity<UserGeneralResponse> deleteUser(@RequestBody List<String> emails){
+        log.info("Request to delete user.");
+        try {
+            UserGeneralResponse generalResponse = new UserGeneralResponse();
+            usersRegistrationService.deleteUser(emails);
+            return ResponseEntity.ok(generalResponse);
+        }catch (Exception e){
+            throw new EntityDeletionException("could not delete the user");
+        }
+
+
+    }
 
     @GetMapping("/test")
     public ResponseEntity<String> test(){

@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
 import red.stevo.code.masenomedlabclub.Entities.Users;
 import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
@@ -155,12 +155,24 @@ public class UsersRegistrationService {
     }
 
 
-    public String deleteUser(List<String> email){
+    public void deleteUser(List<String> emails){
         log.info("Service to delete the user");
         try {
 
-        }catch (Exception ex){
+            List<Users> usersList = emails.stream().map(
+                    email1 -> {
+                        Users user = usersRepository.findByEmail(email1);
+                        if (user == null) {
+                            throw new UsernameNotFoundException("User does not exist");
+                        }
+                        return user;
+                    }
 
+            ).toList();
+            usersRepository.deleteAll(usersList);
+
+        }catch (Exception ex){
+            throw new EntityDeletionException("could not delete the user");
         }
 
     }
