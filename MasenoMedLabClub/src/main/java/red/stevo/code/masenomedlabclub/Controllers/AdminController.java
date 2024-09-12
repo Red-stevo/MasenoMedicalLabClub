@@ -7,8 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.IndexPageImageModel;
+import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Service.AdminIndexImagesStorageService;
+import red.stevo.code.masenomedlabclub.Service.UsersRegistrationService;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class AdminController {
 
     private final AdminIndexImagesStorageService adminIndexImagesStorageService;
+    private final UsersRegistrationService usersRegistrationService;
 
     /*This end point handles storing of url, name and description of the upload images.
     * These values are received from the font-end provided by the cloudinary API.*/
@@ -44,6 +47,13 @@ public class AdminController {
         log.info("Request to delete index image.");
         return adminIndexImagesStorageService.deleteIndexPageImage(imageId);
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<List<String>> register(@RequestBody List<UsersRegistrationRequests> request){
+        List<String> createUsers = usersRegistrationService.createUser(request);
+        return ResponseEntity.ok(createUsers);
+    }
+
 
     @GetMapping("/test")
     public ResponseEntity<String> test(){

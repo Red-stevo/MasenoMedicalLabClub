@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,17 @@ import red.stevo.code.masenomedlabclub.Entities.Roles;
 import red.stevo.code.masenomedlabclub.Entities.Users;
 import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.LoginRequests;
+import red.stevo.code.masenomedlabclub.Models.RequestModels.ResetPasswordDetails;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.AuthenticationResponse;
 import red.stevo.code.masenomedlabclub.Repositories.RefreshTokensRepository;
 import red.stevo.code.masenomedlabclub.Repositories.UsersRepository;
+import red.stevo.code.masenomedlabclub.Service.DetService.EmailService;
 import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
 import red.stevo.code.masenomedlabclub.configurations.PasswordGenerator;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 
@@ -39,9 +42,11 @@ public class UsersRegistrationService {
     private final AuthenticationManager authenticationManager;
     private final PasswordGenerator passwordGenerator;
     private final CookieUtils cookieUtils;
+    private final EmailService emailService;
 
 
     public List<String> createUser(List<UsersRegistrationRequests> regRequest) {
+        List<String> createdEmails = new ArrayList<>();
         List<Users> users = regRequest.stream()
                 .map(usersRegistrationRequests -> {
                     Users users1 = new Users();
@@ -57,13 +62,16 @@ public class UsersRegistrationService {
                     System.out.println(password);
                     log.info("your default password is " + password);
                     users1.setPassword(passwordEncoder.encode(password));
+                    //emailService.sendRegistrationEmail(users1.getEmail(),password);
                     users1.setRole(Roles.ADMIN);
                     users1.setEnabled(true);
+                    createdEmails.add(users1.getEmail());
                     return users1;
 
                 }).toList();
         usersRepository.saveAll(users);
-        return Collections.singletonList("created successfully");
+        ;
+        return createdEmails;
     }
 
     private boolean isEmailValid(String email) {
@@ -107,6 +115,7 @@ public class UsersRegistrationService {
             // Set the access token in a secure cookie
             cookieUtils.createCookie(response, refreshToken);
             cookieUtils.createCookie(response,accessToken);
+            System.out.println(response.getHeader("Set-Cookie"));
 
             // Return an AuthenticationResponse object containing both tokens
             return new AuthenticationResponse(accessToken,refreshToken);
@@ -119,4 +128,41 @@ public class UsersRegistrationService {
             throw new RuntimeException("An error occurred during login");
         }
     }
+
+
+    public void resetPassword(ResetPasswordDetails resetPasswordDetails) {
+        log.info("Service to reset the password");
+
+        // Find user by email
+        Users user = usersRepository.findByEmail(resetPasswordDetails.getEmail());
+        if (user == null) {
+            throw new UsernameNotFoundException("User does not exist");
+        }
+
+        // Validate the old password by comparing it with the encoded password in the database
+        if (!passwordEncoder.matches(resetPasswordDetails.getOldPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("Invalid current password");
+        }
+
+        // Set the new password
+        String newPassword = resetPasswordDetails.getNewPassword();
+        user.setPassword(passwordEncoder.encode(newPassword));
+
+        // Save the updated user with the new password
+        usersRepository.save(user);
+
+        log.info("Password reset successfully for user: {}", resetPasswordDetails.getEmail());
+    }
+
+
+    public String deleteUser(List<String> email){
+        log.info("Service to delete the user");
+        try {
+
+        }catch (Exception ex){
+
+        }
+
+    }
+
 }
