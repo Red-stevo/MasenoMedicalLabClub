@@ -1,7 +1,18 @@
 import "./../LoginPageStyles/LoginPage.css";
-import {Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import {FaEye, FaEyeSlash} from "react-icons/fa";
+import {useEffect, useState} from "react";
 const LoginPage = () => {
+    const [view, setView] = useState(false);
+    const [inputState, setInputState] = useState("password")
+
+
+    useEffect(() => {
+        if(view) setInputState("text");
+        else setInputState("password");
+    }, [view]);
+
     return (
         <div className={"login-page"}>
             <div className={"login-section"}>
@@ -18,15 +29,29 @@ const LoginPage = () => {
 
                         <Form.Group className={"password-group"}>
                             <Form.Label htmlFor={"password"} className={"text-font"}>Password : </Form.Label>
-                            <Form.Control id={"password"} />
+                            <div className={"password-holder"}>
+                                <Form.Control id={"password"} type={inputState} />
+                                { view?
+                                <Button className={"eye-button"} onClick={() => setView(false)}>
+                                    <FaEye />
+                                </Button> :
+                                <Button className={"eye-button"} onClick={() => setView(true)}>
+                                    <FaEyeSlash />
+                                </Button>}
+                            </div>
                         </Form.Group>
                     </Form>
                 </div>
 
                 <div className={"login-footer"}>
-                    <Link className={"visitor-link"} to={"/"}>Continue as Visitor</Link>
+                    <Button className={"login"}>Login</Button>
+                    <Link className={"visitor-link"} to={"/"}>
+                        <h5 className={"visitor"}>Visitor</h5>
+                        <span className={"arrow"}></span>
+                        <span className={"arrow"}></span>
+                        <span className={"arrow"}></span>
+                    </Link>
                 </div>
-
             </div>
         </div>
     );

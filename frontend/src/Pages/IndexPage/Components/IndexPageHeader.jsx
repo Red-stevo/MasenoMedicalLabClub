@@ -18,17 +18,17 @@ const IndexPageHeader = () => {
                         className={"color-effect"}/>
                     </NavItem>
                     <Nav variant={"tabs"} defaultActiveKey={"/"} className={"nav-sections"}>
-                        <NavItem className={"home"}>
-                            <Nav.Link href={"/"} id={"signin-link"}>Home</Nav.Link>
-                        </NavItem>
                         <NavItem className={"aboutUs"}>
-                            <Nav.Link href={"#aboutUs"} id={"signin-link"}>About Us</Nav.Link>
+                            <Nav.Link href={"#aboutUs"} id={"about-link"}>About Us</Nav.Link>
                         </NavItem>
                         <NavItem className={"contactUs"}>
-                            <Nav.Link  href={"#contactUS"} id={"signin-link"}>Contact Us</Nav.Link>
+                            <Nav.Link  href={"#contactUS"} id={"contact-link"}>Contact Us</Nav.Link>
+                        </NavItem>
+                        <NavItem className={"home"}>
+                            <Nav.Link href={"/"} id={"home-link"}>Visitor</Nav.Link>
                         </NavItem>
                         <NavItem>
-                            <Nav.Link className={"signin"} href={"#"} id={"signin-link"}>Signin</Nav.Link>
+                            <Nav.Link className={"signin"} href={"/login"} id={"signin-link"}>Signin</Nav.Link>
                         </NavItem>
                     </Nav>
                 </Nav>

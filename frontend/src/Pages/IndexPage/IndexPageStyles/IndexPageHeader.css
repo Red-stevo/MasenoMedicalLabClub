@@ -33,8 +33,6 @@
     width: 90%;
 }
 
-
-
 .typed-animation {
     min-width: 90%;
     font-size: 30px;
@@ -54,7 +52,7 @@
     color: transparent;
 }
 
-#signin-link {
+#home-link, #about-link, #contact-link, #signin-link {
     background-color: transparent;
     font-size: 20px;
     font-weight: 600;
@@ -72,18 +70,31 @@
     display: flex;
     flex-direction: row;
     margin-left: 110px;
+    border: none;
 }
 
-/*
-@media only screen and (max-width: 500px){
+@media only screen and (max-device-width: 1024px){
 
-    .contactUs, .aboutUs, .home {
+    #home-link, #about-link, #contact-link, #signin-link {
+        font-size: 28px;
+        font-weight: 450;
+        margin-left: 20px;
+    }
+
+    .nav-sections {
+        margin-left: 20px;
+    }
+}
+
+@media only screen and (max-device-width: 786px){
+
+    #about-link, #contact-link {
         display: none;
     }
+
     .nav-sections {
-        display: flex;
         justify-content: end;
-        margin-left: 60px;
-        border: none;
+        margin-left: 0;
+        margin-right: 10%;
     }
-}*/
+}
