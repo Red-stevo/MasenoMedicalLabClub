@@ -6,11 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.InvalidTokensException;
 import red.stevo.code.masenomedlabclub.Entities.Users;
-import red.stevo.code.masenomedlabclub.Repositories.RefreshTokensRepository;
-import red.stevo.code.masenomedlabclub.Repositories.UsersRepository;
+import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepository;
+import red.stevo.code.masenomedlabclub.Repositories.users.UsersRepository;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
-
-import java.util.InvalidPropertiesFormatException;
 
 @Service
 @RequiredArgsConstructor

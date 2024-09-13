@@ -9,13 +9,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
-import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.InvalidTokensException;
-import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UserDoesNotExistException;
-import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UsersCreationFailedException;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.*;
 
 import java.util.HashMap;
-import java.util.InvalidPropertiesFormatException;
 import java.util.Map;
 
 @Slf4j
@@ -86,6 +82,17 @@ public class RuntimeExceptionHandler {
     @ExceptionHandler(EntityDeletionException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleEntityDeletionException(EntityDeletionException ex){
+        Map<String, String> errors = new HashMap<>();
+        String message = ex.getMessage();
+        errors.put("message"+ message+"cause", ex.getMessage());
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(EventsCreationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleEventsCreationException
+            (EventsCreationException ex){
         Map<String, String> errors = new HashMap<>();
         String message = ex.getMessage();
         errors.put("message"+ message+"cause", ex.getMessage());
