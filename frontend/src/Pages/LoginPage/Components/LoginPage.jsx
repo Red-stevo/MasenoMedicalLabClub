@@ -1,11 +1,11 @@
 import "./../LoginPageStyles/LoginPage.css";
 import {Button, Form} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useFormAction} from "react-router-dom";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 import {useEffect, useState} from "react";
 const LoginPage = () => {
     const [view, setView] = useState(false);
-    const [inputState, setInputState] = useState("password")
+    const [inputState, setInputState] = useState("password");
 
 
     useEffect(() => {
