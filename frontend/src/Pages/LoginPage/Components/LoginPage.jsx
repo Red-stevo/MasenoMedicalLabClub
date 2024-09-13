@@ -1,6 +1,6 @@
 import "./../LoginPageStyles/LoginPage.css";
 import {Button, Form} from "react-bootstrap";
-import {Link, useFormAction} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 import {useEffect, useState} from "react";
 const LoginPage = () => {
@@ -8,6 +8,8 @@ const LoginPage = () => {
     const [inputState, setInputState] = useState("password");
 
 
+    /*Toggle between visible password and hidden.The js below changes the type for the
+    * input filed when the user toggles.*/
     useEffect(() => {
         if(view) setInputState("text");
         else setInputState("password");
