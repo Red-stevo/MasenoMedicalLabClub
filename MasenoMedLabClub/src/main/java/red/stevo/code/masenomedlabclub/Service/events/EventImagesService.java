@@ -19,6 +19,7 @@ public class EventImagesService {
 
     private final EventsImagesRepository imagesRepository;
     private final EventsRepository eventsRepository;
+    private final EventsImagesRepository eventsImagesRepository;
 
     public void addEventImage(List<EventImagesCreationRequest> request) {
         log.info("Adding event images");
@@ -48,6 +49,23 @@ public class EventImagesService {
         } catch (Exception e) {
             log.error("Error occurred while uploading images for events: {}", e.getMessage());
             throw new EventsCreationException("Could not upload image for event: " + e.getMessage());
+        }
+    }
+
+    public void deleteEventImages(List<String> url) {
+        try {
+            List<EventImages> imagesList = url.stream().map(
+                    todelete->{
+                        EventImages eventImage = eventsImagesRepository.findByImageUrl(todelete);
+                        if (eventImage == null) {
+                            throw new RuntimeException("such image not found");
+                        }
+                        return eventImage;
+                    }
+            ).toList();
+            imagesRepository.deleteAll(imagesList);
+        }catch (Exception e) {
+            throw new RuntimeException("Error occurred while deleting image for events: ");
         }
     }
 

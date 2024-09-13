@@ -6,4 +6,5 @@ import red.stevo.code.masenomedlabclub.Entities.events.EventImages;
 
 @Repository
 public interface EventsImagesRepository extends JpaRepository<EventImages,String> {
+    EventImages findByImageUrl(String todelete);
 }

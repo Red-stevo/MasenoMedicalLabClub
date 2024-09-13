@@ -12,7 +12,7 @@ import java.time.Instant;
 public class Events {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String event_id;
+    private String eventId;
     private String eventName;
     private String eventDescription;
     private Instant eventDate;

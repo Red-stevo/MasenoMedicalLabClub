@@ -11,6 +11,6 @@ public class EventImages {
     private String imageId;
     private String imageUrl;
     @ManyToOne
-    @Column(name = "event_id")
+    @JoinColumn(name = "event_id")
     private Events event;
 }

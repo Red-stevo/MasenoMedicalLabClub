@@ -60,7 +60,7 @@ public class AdminController {
         return ResponseEntity.ok(createUsers);
     }
 
-    @DeleteMapping("/delete}")
+    @DeleteMapping("/delete")
     public ResponseEntity<UserGeneralResponse> deleteUser(@RequestBody List<String> emails){
         log.info("Request to delete user.");
         try {
