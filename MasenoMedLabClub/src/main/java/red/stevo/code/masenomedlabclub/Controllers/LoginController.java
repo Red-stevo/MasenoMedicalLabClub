@@ -11,6 +11,7 @@ import red.stevo.code.masenomedlabclub.Models.RequestModels.LoginRequests;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.ResetPasswordDetails;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.AuthenticationResponse;
+import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Service.UsersRegistrationService;
 
 import java.util.List;
@@ -28,21 +29,13 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
             @RequestBody LoginRequests requests, HttpServletResponse response) {
-        log.info("Login request received for user: " + requests.getEmail());
-
-        try {
-            AuthenticationResponse authResponse = registrationService.loginUser(requests, response);
-            return ResponseEntity.ok(authResponse);
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthenticationResponse("Invalid credentials"));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AuthenticationResponse("An error occurred during login"));
-        }
+        log.info("Login request received.");
+        return ResponseEntity.ok(registrationService.loginUser(requests, response));
     }
 
     @PutMapping("/update/password")
-    public ResponseEntity<String> updatePassword(@RequestBody ResetPasswordDetails details){
-        usersRegistrationService.resetPassword(details);
-        return ResponseEntity.ok("Password updated successfully");
+    public ResponseEntity<UserGeneralResponse> updatePassword(@RequestBody ResetPasswordDetails details){
+        log.info("Request to update password.");
+        return ResponseEntity.ok(usersRegistrationService.resetPassword(details));
     }
 }

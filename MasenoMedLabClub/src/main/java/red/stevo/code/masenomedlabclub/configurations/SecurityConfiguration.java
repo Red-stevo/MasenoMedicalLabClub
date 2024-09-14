@@ -1,6 +1,8 @@
 package red.stevo.code.masenomedlabclub.configurations;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,25 +12,28 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.SecurityExceptions.AccessDeniedExceptionHandler;
 import red.stevo.code.masenomedlabclub.Service.DetService.UserDetailsServiceImpl;
 import red.stevo.code.masenomedlabclub.filter.JwtAuthFilter;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfiguration {
     private final JwtAuthFilter jwtAuthFilter;
     private final UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
-    public SecurityConfiguration(JwtAuthFilter jwtAuthFilter, UserDetailsServiceImpl userDetailsService) {
-        this.jwtAuthFilter = jwtAuthFilter;
-        this.userDetailsService = userDetailsService;
-    }
+    @Qualifier("DelegatedAuthenticationEntryPoint")
+    private final AuthenticationEntryPoint authenticationEntryPoint;
 
+    @Qualifier("AccessDeniedExceptionHandler")
+    private final AccessDeniedExceptionHandler accessDeniedExceptionHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,6 +48,9 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedExceptionHandler))
                 .build();
 
     }

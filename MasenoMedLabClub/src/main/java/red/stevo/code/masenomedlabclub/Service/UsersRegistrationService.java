@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ import red.stevo.code.masenomedlabclub.Models.RequestModels.LoginRequests;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.ResetPasswordDetails;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.AuthenticationResponse;
+import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepository;
 import red.stevo.code.masenomedlabclub.Repositories.users.UsersRepository;
 import red.stevo.code.masenomedlabclub.Service.DetService.EmailService;
@@ -26,6 +28,7 @@ import red.stevo.code.masenomedlabclub.configurations.PasswordGenerator;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 
@@ -130,7 +133,7 @@ public class UsersRegistrationService {
     }
 
 
-    public void resetPassword(ResetPasswordDetails resetPasswordDetails) {
+    public UserGeneralResponse resetPassword(ResetPasswordDetails resetPasswordDetails) {
         log.info("Service to reset the password");
 
         // Find user by email
@@ -151,7 +154,12 @@ public class UsersRegistrationService {
         // Save the updated user with the new password
         usersRepository.save(user);
 
-        log.info("Password reset successfully for user: {}", resetPasswordDetails.getEmail());
+        UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
+        userGeneralResponse.setMessage("Password updated successfully.");
+        userGeneralResponse.setDate(new Date());
+        userGeneralResponse.setHttpStatus(HttpStatus.OK);
+
+        return userGeneralResponse;
     }
 
 
