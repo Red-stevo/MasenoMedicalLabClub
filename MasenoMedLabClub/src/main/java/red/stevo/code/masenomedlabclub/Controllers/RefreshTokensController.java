@@ -12,7 +12,7 @@ import red.stevo.code.masenomedlabclub.Service.DetService.RefreshTokensService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/apis")
-@CrossOrigin(value = "*", allowCredentials = "true")
+@CrossOrigin(value = "http://localhost/5173", allowCredentials = "true")
 public class RefreshTokensController {
 
     private final RefreshTokensService refreshTokensService;

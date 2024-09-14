@@ -17,9 +17,9 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@CrossOrigin(value = "*", allowCredentials = "true")
 @RequiredArgsConstructor
 @RequestMapping("/apis")
+@CrossOrigin(value = "http://localhost:5173", allowCredentials = "true")
 public class LoginController {
     private final UsersRegistrationService registrationService;
     private final UsersRegistrationService usersRegistrationService;

@@ -20,8 +20,6 @@ import red.stevo.code.masenomedlabclub.filter.JwtAuthFilter;
 
 @Configuration
 public class SecurityConfiguration {
-
-
     private final JwtAuthFilter jwtAuthFilter;
     private final UserDetailsServiceImpl userDetailsService;
 
@@ -32,12 +30,12 @@ public class SecurityConfiguration {
     }
 
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.requestMatchers("/**").permitAll()
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/apis/login").permitAll()
                         .requestMatchers("/apis/admin/**").hasRole("ADMIN").anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
