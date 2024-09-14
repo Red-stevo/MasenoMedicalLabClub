@@ -16,15 +16,18 @@ const LoginPage = () => {
         else setInputState("password");
     }, [view]);
 
+    const submitUserLogin = (data) => {
+        console.log(data);
+    }
+
     return (
         <div className={"login-page"}>
             <div className={"login-section"}>
                 <div className={"login-header"}>
                     MMLSA Login
                 </div>
-
                 <div className={"login-body"}>
-                    <Form className={"login-form"}>
+                    <Form className={"login-form"} onSubmit={handleSubmit(submitUserLogin)}>
                         <Form.Group className={"email-group"}>
                             <Form.Label htmlFor={"email"} className={"text-font"}>Email : </Form.Label>
                             <input className={'form-control'} id={"email"} type={"email"}
