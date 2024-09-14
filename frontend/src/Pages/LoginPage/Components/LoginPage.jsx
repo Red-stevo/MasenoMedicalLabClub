@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 const LoginPage = () => {
     const [view, setView] = useState(false);
     const [inputState, setInputState] = useState("password");
+    const {register, handleSubmit} =
 
 
     /*Toggle between visible password and hidden.The js below changes the type for the
