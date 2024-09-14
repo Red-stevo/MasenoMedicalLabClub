@@ -8,7 +8,7 @@ const initialState = imagesAdapter.getInitialState({
 });
 
 const fetchImages = createAsyncThunk("indexImages/allImages",
-    (state, action) => {
+    () => {
         const response = axiosConfig.get("");
     });
 

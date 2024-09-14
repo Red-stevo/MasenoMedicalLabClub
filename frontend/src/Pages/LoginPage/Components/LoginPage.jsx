@@ -4,10 +4,13 @@ import {Link} from "react-router-dom";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
+import {useDispatch} from "react-redux";
+import {loginRequest} from "../../../ReduxStorage/LoginPageStore.js";
 const LoginPage = () => {
     const [view, setView] = useState(false);
     const [inputState, setInputState] = useState("password");
     const {register, handleSubmit} = useForm();
+    const dispatch = useDispatch();
 
     /*Toggle between visible password and hidden.The js below changes the type for the
     * input filed when the user toggles.*/
@@ -17,7 +20,7 @@ const LoginPage = () => {
     }, [view]);
 
     const submitUserLogin = (data) => {
-        console.log(data);
+        if (data) dispatch(loginRequest(data))
     }
 
     return (

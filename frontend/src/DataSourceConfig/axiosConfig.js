@@ -5,7 +5,8 @@ const axiosConfigFreeAPI = axios.create({
         'Content-Type':'application/json',
         'Accept':'application/json',
     },
-    baseURL:"http://localhost:8080/api"
+    baseURL:"http://localhost:8080/apis",
+    withCredentials:true,
 });
 
 export default axiosConfigFreeAPI;
