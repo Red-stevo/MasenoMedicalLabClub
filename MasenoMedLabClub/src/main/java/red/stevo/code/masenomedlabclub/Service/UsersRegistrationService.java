@@ -110,8 +110,14 @@ public class UsersRegistrationService {
             cookieUtils.createCookie(response,accessToken);
             System.out.println(response.getHeader("Set-Cookie"));
 
+            AuthenticationResponse authResponse = new AuthenticationResponse();
+
+            authResponse.setMessage("Authentication successful.");
+            authResponse.setRefreshToken(refreshToken);
+            authResponse.setToken(accessToken);
+
             // Return an AuthenticationResponse object containing both tokens
-            return new AuthenticationResponse(accessToken,refreshToken);
+            return authResponse;
     }
 
 
