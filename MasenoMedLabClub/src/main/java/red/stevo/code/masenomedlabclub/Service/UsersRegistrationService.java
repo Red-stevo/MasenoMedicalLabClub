@@ -83,20 +83,12 @@ public class UsersRegistrationService {
     }
 
     public AuthenticationResponse loginUser(LoginRequests loginRequests, HttpServletResponse response) {
-        try {
             // Authenticate the user
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequests.getEmail(),
-                            loginRequests.getPassword()
-                    )
-            );
+                    new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
 
             // Fetch user details
             Users user = usersRepository.findByEmail(loginRequests.getEmail());
-            if (user == null) {
-                throw new UsernameNotFoundException("User does not exist");
-            }
 
             // Generate access and refresh tokens
             String accessToken = jwtGenService.generateAccessToken(user);
@@ -113,8 +105,6 @@ public class UsersRegistrationService {
 
             refreshTokensRepository.save(tokenEntity);
 
-
-
             // Set the access token in a secure cookie
             cookieUtils.createCookie(response, refreshToken);
             cookieUtils.createCookie(response,accessToken);
@@ -122,14 +112,6 @@ public class UsersRegistrationService {
 
             // Return an AuthenticationResponse object containing both tokens
             return new AuthenticationResponse(accessToken,refreshToken);
-
-        } catch (BadCredentialsException e) {
-            log.error("Authentication failed: Invalid credentials");
-            throw new BadCredentialsException("Invalid credentials");
-        } catch (Exception ex) {
-            log.error("An error occurred during login: " + ex.getMessage());
-            throw new RuntimeException("An error occurred during login");
-        }
     }
 
 

@@ -50,7 +50,7 @@ public class RuntimeExceptionHandler {
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
-    @ExceptionHandler(UserDoesNotExistException.class)
+/*    @ExceptionHandler(UserDoesNotExistException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleUserDoesNotExistException(UserDoesNotExistException ex){
         Map<String, String> errors = new HashMap<>();
@@ -58,8 +58,9 @@ public class RuntimeExceptionHandler {
         String message = ex.getMessage();
         errors.put("message", message);
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
+    }*/
 
+/*
     @ExceptionHandler(UsersCreationFailedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleUsersCreationFailedException(UsersCreationFailedException ex){
@@ -69,7 +70,9 @@ public class RuntimeExceptionHandler {
         errors.put("message"+ message+"cause", cause.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+*/
 
+/*
     @ExceptionHandler(InvalidTokensException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<Map<String, String>> handleInvalidTokensException(InvalidTokensException ex){
@@ -78,6 +81,7 @@ public class RuntimeExceptionHandler {
         errors.put("message"+ message+"cause", ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
     }
+*/
 
     @ExceptionHandler(EntityDeletionException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

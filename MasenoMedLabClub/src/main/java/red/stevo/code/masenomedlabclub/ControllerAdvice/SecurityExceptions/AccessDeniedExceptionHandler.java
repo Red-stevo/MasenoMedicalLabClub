@@ -8,16 +8,13 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
+import java.io.IOException;
+
 @Component("AccessDeniedExceptionHandler")
 public class AccessDeniedExceptionHandler implements AccessDeniedHandler {
-    private final HandlerExceptionResolver resolver;
-
-    public AccessDeniedExceptionHandler(@Qualifier("handlerExceptionResolver")HandlerExceptionResolver resolver){
-        this.resolver = resolver;
-    }
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,
-                       AccessDeniedException accessDeniedException) {
-        resolver.resolveException(request, response, null, accessDeniedException);
+                       AccessDeniedException accessDeniedException) throws IOException {
+        response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden Access Denied.");
     }
 }
