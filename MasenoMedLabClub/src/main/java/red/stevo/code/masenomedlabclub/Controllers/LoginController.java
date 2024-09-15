@@ -30,7 +30,7 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
             @RequestBody LoginRequests requests, HttpServletResponse response) {
-        log.info("Login request received for user: " + requests.getEmail());
+        log.info("Login request received for user: {}", requests.getEmail());
 
         try {
             AuthenticationResponse authResponse = registrationService.loginUser(requests, response);
