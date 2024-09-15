@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.SecurityExceptions.AccessDeniedExceptionHandler;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.*;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
@@ -75,6 +76,19 @@ public class RuntimeExceptionHandler {
         userGeneralResponse.setDate(new Date());
 
         return new ResponseEntity<>(userGeneralResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<UserGeneralResponse> handleNoResourceFoundException(NoResourceFoundException ex){
+        log.warn("request path not found.");
+
+        UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
+        userGeneralResponse.setMessage(ex.getMessage());
+        userGeneralResponse.setDate(new Date());
+        userGeneralResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(userGeneralResponse, HttpStatus.NOT_FOUND);
     }
 
 /*    @ExceptionHandler(UserDoesNotExistException.class)
