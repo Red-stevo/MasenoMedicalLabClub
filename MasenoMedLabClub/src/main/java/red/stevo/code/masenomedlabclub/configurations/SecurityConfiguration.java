@@ -52,7 +52,6 @@ public class SecurityConfiguration {
                         .authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedExceptionHandler))
                 .build();
-
     }
 
     @Bean

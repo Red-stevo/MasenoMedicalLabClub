@@ -33,6 +33,6 @@ export const loginPageStore = createSlice({
             console.log("success:",action);
         })
         .addCase(loginRequest.rejected, (state, action) =>{
-            console.error("error", action);
+            console.error("error", action, "state", state);
         })
 });

@@ -25,7 +25,6 @@ public class LoginController {
     private final UsersRegistrationService registrationService;
     private final UsersRegistrationService usersRegistrationService;
 
-
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
             @RequestBody LoginRequests requests, HttpServletResponse response) {
