@@ -40,8 +40,8 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/apis/login").permitAll()
-                        .requestMatchers("/apis/admin/**").hasRole("ADMIN").anyRequest().authenticated())
+                        .requestMatchers("/**").permitAll()
+                        /*.requestMatchers("/apis/admin/**").hasRole("ADMIN").anyRequest().authenticated()*/)
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .userDetailsService(userDetailsService)

@@ -63,7 +63,7 @@ public class UsersRegistrationService {
                     users1.setEmail(usersRegistrationRequests.getEmail());
                     String password = passwordGenerator.generateRandomPassword(8);
                     System.out.println(password);
-                    log.info("your default password is " + password);
+                    log.error("your default password is " + password);
                     users1.setPassword(passwordEncoder.encode(password));
                     //emailService.sendRegistrationEmail(users1.getEmail(),password);
                     users1.setRole(Roles.ADMIN);

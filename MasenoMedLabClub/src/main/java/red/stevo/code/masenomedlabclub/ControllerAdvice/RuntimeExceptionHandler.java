@@ -30,10 +30,8 @@ public class RuntimeExceptionHandler {
         Map<String, String> errors = new HashMap<>();
 
         ex.getBindingResult().getAllErrors().forEach((error -> {
-
             String filedName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-
             errors.put(filedName, errorMessage);
         }));
 

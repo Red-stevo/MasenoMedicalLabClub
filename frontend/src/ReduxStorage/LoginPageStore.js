@@ -15,11 +15,15 @@ const initialState = loginAdapter.getInitialState({
 
 
 export const loginRequest = createAsyncThunk("login/user-login",
-    (credentials,
-     {rejectWithValue}) =>{
-        return axiosConfigFreeAPI.post("/login", credentials)
+    async (credentials, { rejectWithValue,
+        fulfillWithValue}) => {
+    try {
+        const response = await axiosConfigFreeAPI.post("/login", credentials);
+        return fulfillWithValue(response.data)
+    }catch (error){
+        return rejectWithValue(error.response);
     }
-);
+});
 
 export const loginPageStore = createSlice({
     name:"login",
@@ -27,12 +31,12 @@ export const loginPageStore = createSlice({
     reducers:{},
     extraReducers: builder => builder
         .addCase(loginRequest.pending, (state, action) => {
-            console.log("initial-state", state, action);
+            console.log("initial-state", state.payload, action);
         })
         .addCase(loginRequest.fulfilled, (state, action) => {
-            console.log("success:",action);
+            console.log("success:",action.payload);
         })
         .addCase(loginRequest.rejected, (state, action) =>{
-            console.error("error", action, "state", state);
+            console.error("error", action.payload, "state", state);
         })
 });
