@@ -5,7 +5,7 @@ import {FaEye, FaEyeSlash} from "react-icons/fa";
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
-import {loginRequest} from "../../../ReduxStorage/LoginPageStore.js";
+import {loginRequest} from "../../../ReduxStorage/LoginStore/LoginPageStore.js";
 const LoginPage = () => {
     const [view, setView] = useState(false);
     const [inputState, setInputState] = useState("password");

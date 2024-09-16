@@ -43,7 +43,6 @@ public class RefreshTokensService {
         AuthenticationResponse authenticationResponse = new AuthenticationResponse();
         authenticationResponse.setToken(accessToken);
         authenticationResponse.setMessage("access token refreshed successfully");
-        authenticationResponse.setRefreshToken(String.valueOf(refresh));
         authenticationResponse.setUserRole(String.valueOf(users.getRole()));
         authenticationResponse.setUserId(users.getUserId());
 
