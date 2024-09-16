@@ -22,13 +22,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JWTGenService jwtService;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
-    private final CookieUtils cookieUtils;
 
     @Autowired
     public JwtAuthFilter(JWTGenService jwtService, UserDetailsServiceImpl userDetailsServiceImpl, CookieUtils cookieUtils) {
         this.jwtService = jwtService;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
-        this.cookieUtils = cookieUtils;
     }
 
     @Override

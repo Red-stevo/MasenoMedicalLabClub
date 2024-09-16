@@ -53,12 +53,7 @@ public class AdminController {
         return adminIndexImagesStorageService.deleteIndexPageImage(imageId);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<List<String>> register(@RequestBody List<UsersRegistrationRequests> request){
-        log.info("Request to register users.");
-        List<String> createUsers = usersRegistrationService.createUser(request);
-        return ResponseEntity.ok(createUsers);
-    }
+
 
     @DeleteMapping("/delete")
     public ResponseEntity<UserGeneralResponse> deleteUser(@RequestBody List<String> emails){
@@ -78,6 +73,8 @@ public class AdminController {
         eventsService.createEvent(request);
         return ResponseEntity.ok("Event created");
     }
+
+
 
     @PutMapping("/events/update")
     public ResponseEntity<String> updateEvent(@RequestBody EventsCreationRequest request,

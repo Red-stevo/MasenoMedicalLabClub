@@ -5,12 +5,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UserAlreadyExistException;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
 import red.stevo.code.masenomedlabclub.Entities.Users;
 import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
@@ -65,8 +67,11 @@ public class UsersRegistrationService {
                     log.error("your default password is " + password);
                     users1.setPassword(passwordEncoder.encode(password));
                     //emailService.sendRegistrationEmail(users1.getEmail(),password);
-                    users1.setRole(Roles.ADMIN);
+                    users1.setRole(usersRegistrationRequests.getRoles());
                     users1.setEnabled(true);
+                    if (usersRepository.existsByEmail(usersRegistrationRequests.getEmail())){
+                        throw new UserAlreadyExistException("the user with that email already exists");
+                    }
                     createdEmails.add(users1.getEmail());
                     return users1;
 
@@ -80,40 +85,33 @@ public class UsersRegistrationService {
         return emailValidator.isValid(email);
     }
 
-    public AuthenticationResponse loginUser(LoginRequests loginRequests) {
-            // Authenticate the user
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
+    public ResponseEntity<AuthenticationResponse> loginUser(LoginRequests loginRequests) {
+        // Authenticate the user
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
 
-            // Fetch user details
-            Users user = usersRepository.findByEmail(loginRequests.getEmail());
+        // Fetch user details
+        Users user = usersRepository.findByEmail(loginRequests.getEmail());
 
-            // Generate access and refresh tokens
-            String accessToken = jwtGenService.generateAccessToken(user);
-            String refreshToken = jwtGenService.generateRefreshToken(user);
+        // Generate access and refresh tokens
+        String accessToken = jwtGenService.generateAccessToken(user);
 
-            // Save the refresh token in the repository
-            RefreshTokens tokenEntity = new RefreshTokens();
-            tokenEntity.setUser(user);
-            tokenEntity.setRefreshToken(refreshToken);
-            RefreshTokens oldTokens = refreshTokensRepository.findByUser(user);
 
-            if (oldTokens != null) refreshTokensRepository.delete(oldTokens);
 
-            refreshTokensRepository.save(tokenEntity);
 
-            // Set the access token in a secure cookie
-            response.addCookie(cookieUtils.createCookie(refreshToken));
+        // Set the access token in a secure cookie
 
-            AuthenticationResponse authResponse = new AuthenticationResponse();
-            authResponse.setMessage("Authentication successful.");
-            authResponse.setRefreshToken(refreshToken);
-            authResponse.setToken(accessToken);
-            authResponse.setUserId(user.getUserId());
-            authResponse.setUserRole(user.getRole().toString());
 
-            // Return an AuthenticationResponse object containing both tokens
-            return authResponse;
+        AuthenticationResponse authResponse = new AuthenticationResponse();
+        authResponse.setMessage("Authentication successful.");
+        authResponse.setToken(accessToken);
+        authResponse.setUserId(user.getUserId());
+        authResponse.setUserRole(user.getRole().toString());
+
+        response.setHeader("Set-Cookie", cookieUtils.responseCookie(user).toString());
+
+        // Return an AuthenticationResponse object containing both tokens
+        return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 
 
