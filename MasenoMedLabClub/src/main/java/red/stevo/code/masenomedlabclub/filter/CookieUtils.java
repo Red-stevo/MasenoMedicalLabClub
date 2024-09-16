@@ -11,6 +11,8 @@ import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
 import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepository;
 import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
 
+import java.util.Arrays;
+
 @Configuration
 @RequiredArgsConstructor
 public class CookieUtils {
@@ -36,9 +38,11 @@ public class CookieUtils {
 
     public  String extractJwtFromCookie(HttpServletRequest request) {
 
+
         String token = request.getHeader("cookie").substring(16);
         System.out.println(token);
 
         return token;
+
     }
 }
