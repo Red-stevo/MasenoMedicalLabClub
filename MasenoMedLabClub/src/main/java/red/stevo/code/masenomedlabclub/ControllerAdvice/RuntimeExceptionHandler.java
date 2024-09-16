@@ -91,6 +91,17 @@ public class RuntimeExceptionHandler {
         return new ResponseEntity<>(userGeneralResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UserAlreadyExistException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<UserGeneralResponse> handleUserAlreadyExistException(UserAlreadyExistException ex){
+        log.warn("UserAlreadyExistException");
+        UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
+        userGeneralResponse.setMessage(ex.getMessage());
+        userGeneralResponse.setDate(new Date());
+        userGeneralResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(userGeneralResponse, HttpStatus.BAD_REQUEST);
+    }
+
 /*    @ExceptionHandler(UserDoesNotExistException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleUserDoesNotExistException(UserDoesNotExistException ex){

@@ -30,12 +30,20 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequests requests) {
         log.info("Login request received.");
-        return ResponseEntity.ok(registrationService.loginUser(requests));
+        return registrationService.loginUser(requests);
     }
+
 
     @PutMapping("/update/password")
     public ResponseEntity<UserGeneralResponse> updatePassword(@RequestBody ResetPasswordDetails details){
         log.info("Request to update password.");
         return ResponseEntity.ok(usersRegistrationService.resetPassword(details));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<List<String>> register(@RequestBody List<UsersRegistrationRequests> request){
+        log.info("Request to register users.");
+        List<String> createUsers = usersRegistrationService.createUser(request);
+        return ResponseEntity.ok(createUsers);
     }
 }

@@ -1,42 +1,48 @@
 package red.stevo.code.masenomedlabclub.filter;
 
-import jakarta.servlet.http.Cookie;
+
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpCookie;
+import org.springframework.http.ResponseCookie;
+import red.stevo.code.masenomedlabclub.Entities.Users;
+import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
+import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepository;
+import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
 
 import java.util.Arrays;
 
 @Configuration
+@RequiredArgsConstructor
 public class CookieUtils {
+    private final RefreshTokensRepository refreshTokensRepository;
 
-    @Value("${cookie_age}")
-    private static int cookie_max_age;
+    private final JWTGenService jwtGenService;
 
-    public  Cookie createCookie(String token) {
-        Cookie cookie = new Cookie("x-refresh-cookie", token);
+    public HttpCookie responseCookie (Users user) {
 
-        cookie.setPath("/");
-        cookie.setMaxAge(cookie_max_age);
-        cookie.setHttpOnly(true);
-        cookie.setValue(token);
-        return cookie;
+        // Save the refresh token in the repository
+        RefreshTokens tokenEntity = new RefreshTokens();
+        tokenEntity.setUser(user);
+        tokenEntity.setRefreshToken(jwtGenService.generateRefreshToken(user));
+
+
+        refreshTokensRepository.save(tokenEntity);
+        return ResponseCookie.from("x-refresh-token", tokenEntity.getRefreshToken())
+                .maxAge(120)
+                .httpOnly(true)
+                .path("/")
+                .build();
     }
 
     public  String extractJwtFromCookie(HttpServletRequest request) {
 
-        System.out.println(Arrays.toString(request.getCookies()));
-        System.out.println(request.getHeader("Set-Cookie"));
 
+        String token = request.getHeader("cookie").substring(16);
+        System.out.println(token);
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                System.out.println("cookies : "+cookie.getValue());
-            }
-        }
-        return null;
+        return token;
+
     }
 }
