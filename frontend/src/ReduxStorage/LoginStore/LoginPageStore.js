@@ -4,9 +4,8 @@ import axiosConfigFreeAPI from "../../DataSourceConfig/axiosConfig.js";
 
 const loginAdapter = createEntityAdapter()
 const initialState = loginAdapter.getInitialState({
-    username: null,
-    userId: null,
-    accessToken: null,
+    userId:null,
+    accessToken:null,
     status:"idle",
     successMessage:null,
     errorMessage:null,
@@ -35,7 +34,6 @@ const loginPageStore = createSlice({
             state.status = "loading";
         }).addCase(loginRequest.fulfilled, (state, action) => {
             state.status = "success";
-            state.username = action.payload.username;
             state.accessToken = action.payload.token;
             state.userId = action.payload.userId;
             state.successMessage = action.payload.message;
@@ -45,7 +43,6 @@ const loginPageStore = createSlice({
         }).addCase(loginRequest.rejected, (state, action) => {
             state.status = "error";
             state.errorMessage = action.payload.message;
-            state.username = null;
             state.accessToken = null;
             state.userId = null;
             state.successMessage = null;
