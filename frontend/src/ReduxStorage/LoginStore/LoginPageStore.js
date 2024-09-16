@@ -26,7 +26,7 @@ export const loginRequest = createAsyncThunk("login/user-login",
     }
 });
 
-export const loginPageStore = createSlice({
+const loginPageStore = createSlice({
     name:"login",
     initialState,
     reducers:{},
@@ -53,3 +53,5 @@ export const loginPageStore = createSlice({
             state.isAuthenticated = false;
         })
 });
+
+export default loginPageStore.reducer
