@@ -116,7 +116,7 @@ public class RuntimeExceptionHandler {
     @ExceptionHandler(InvalidTokensException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<UserGeneralResponse> handleInvalidTokensException(InvalidTokensException ex){
-        log.warn("Iinvalid token passed.");
+        log.warn("Invalid token passed.");
 
         UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
         userGeneralResponse.setMessage("Something went wrong.");

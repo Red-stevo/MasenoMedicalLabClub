@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 @Configuration
 public class CookieUtils {
 
@@ -24,6 +26,11 @@ public class CookieUtils {
     }
 
     public  String extractJwtFromCookie(HttpServletRequest request) {
+
+        System.out.println(Arrays.toString(request.getCookies()));
+        System.out.println(request.getHeader("Set-Cookie"));
+
+
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
