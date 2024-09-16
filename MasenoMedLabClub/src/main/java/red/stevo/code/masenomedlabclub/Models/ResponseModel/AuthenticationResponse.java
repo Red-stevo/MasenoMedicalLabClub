@@ -11,4 +11,8 @@ public class AuthenticationResponse {
     private  String refreshToken;
 
     private  String message;
+
+    private Integer userId;
+
+    private String userRole;
 }

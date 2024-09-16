@@ -114,6 +114,8 @@ public class UsersRegistrationService {
             authResponse.setMessage("Authentication successful.");
             authResponse.setRefreshToken(refreshToken);
             authResponse.setToken(accessToken);
+            authResponse.setUserId(user.getUserId());
+            authResponse.setUserRole(user.getRole().toString());
 
             // Return an AuthenticationResponse object containing both tokens
             return authResponse;
