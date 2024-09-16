@@ -30,7 +30,7 @@ public class CookieUtils {
 
         refreshTokensRepository.save(tokenEntity);
         return ResponseCookie.from("x-refresh-token", tokenEntity.getRefreshToken())
-                .maxAge(120)
+                .maxAge(604800)
                 .httpOnly(true)
                 .path("/")
                 .build();

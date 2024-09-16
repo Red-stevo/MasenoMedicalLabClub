@@ -1,9 +1,12 @@
 package red.stevo.code.masenomedlabclub.Service;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UserAlreadyExistException;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UsersCreationFailedException;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
 import red.stevo.code.masenomedlabclub.Entities.Users;
 import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
@@ -32,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.InvalidPropertiesFormatException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 @Slf4j
@@ -131,6 +136,9 @@ public class UsersRegistrationService {
 
         // Set the new password
         String newPassword = resetPasswordDetails.getNewPassword();
+        if (!isPasswordStrong(resetPasswordDetails.getNewPassword())){
+            throw new IllegalArgumentException("Weak password");
+        }
         user.setPassword(passwordEncoder.encode(newPassword));
 
         // Save the updated user with the new password
@@ -144,6 +152,10 @@ public class UsersRegistrationService {
         return userGeneralResponse;
     }
 
+    private static boolean isPasswordStrong(String password){
+        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        return password.matches(passwordRegex);
+    }
 
     public void deleteUser(List<String> emails){
         log.info("Service to delete the user");
@@ -163,6 +175,34 @@ public class UsersRegistrationService {
             throw new EntityDeletionException("could not delete the user");
         }
 
+    }
+    @Value("${default-email}")
+    @Email
+    private String adminEmail;
+    @Value("${default-password}")
+    private String adminPassword;
+    @PostConstruct
+    public void createAdmin(){
+        try {
+            Users user = new Users();
+
+            user.setEmail(adminEmail);
+            if (!isPasswordStrong(adminPassword)){
+                throw new IllegalArgumentException("Weak password");
+            }
+            user.setPassword(passwordEncoder.encode(adminPassword));
+            user.setRole(Roles.ADMIN);
+            user.setEnabled(true);
+            if (usersRepository.existsByEmail(adminEmail)){
+                return;
+            }
+            usersRepository.save(user);
+            log.info("default admin is created");
+
+
+        }catch (Exception ex){
+            throw new UsersCreationFailedException("could not create the default admin", ex.getCause());
+        }
     }
 
 }

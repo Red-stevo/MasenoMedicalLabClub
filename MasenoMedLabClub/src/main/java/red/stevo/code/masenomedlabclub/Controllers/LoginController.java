@@ -40,10 +40,5 @@ public class LoginController {
         return ResponseEntity.ok(usersRegistrationService.resetPassword(details));
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<List<String>> register(@RequestBody List<UsersRegistrationRequests> request){
-        log.info("Request to register users.");
-        List<String> createUsers = usersRegistrationService.createUser(request);
-        return ResponseEntity.ok(createUsers);
-    }
+
 }
