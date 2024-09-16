@@ -22,14 +22,15 @@ import java.util.List;
 @RequestMapping("/apis")
 @CrossOrigin(value = "http://localhost:5173", allowCredentials = "true")
 public class LoginController {
+
     private final UsersRegistrationService registrationService;
+
     private final UsersRegistrationService usersRegistrationService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(
-            @RequestBody LoginRequests requests, HttpServletResponse response) {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequests requests) {
         log.info("Login request received.");
-        return ResponseEntity.ok(registrationService.loginUser(requests, response));
+        return ResponseEntity.ok(registrationService.loginUser(requests));
     }
 
     @PutMapping("/update/password")

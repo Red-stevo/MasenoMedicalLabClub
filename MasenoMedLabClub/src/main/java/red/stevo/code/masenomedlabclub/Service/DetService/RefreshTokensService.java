@@ -32,15 +32,13 @@ public class RefreshTokensService {
        }
 
 
-
-
         Users users = refreshTokensRepository.findByRefreshToken(refreshToken).getUser();
         if (!jwtGenService.isTokenValid(refreshToken,users)){
             throw new InvalidTokensException("Invalid token");
         }
 
         String access = jwtGenService.generateAccessToken(users);
-        cookieUtils.createCookie(response,access);
+        response.addCookie(cookieUtils.createCookie(access));
         return access;
     }
 

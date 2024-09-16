@@ -34,7 +34,6 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
-
 public class UsersRegistrationService {
 
     private final UsersRepository usersRepository;
@@ -45,6 +44,7 @@ public class UsersRegistrationService {
     private final PasswordGenerator passwordGenerator;
     private final CookieUtils cookieUtils;
     private final EmailService emailService;
+    private final HttpServletResponse response;
 
 
     public List<String> createUser(List<UsersRegistrationRequests> regRequest) {
@@ -72,7 +72,6 @@ public class UsersRegistrationService {
 
                 }).toList();
         usersRepository.saveAll(users);
-        ;
         return createdEmails;
     }
 
@@ -81,7 +80,7 @@ public class UsersRegistrationService {
         return emailValidator.isValid(email);
     }
 
-    public AuthenticationResponse loginUser(LoginRequests loginRequests, HttpServletResponse response) {
+    public AuthenticationResponse loginUser(LoginRequests loginRequests) {
             // Authenticate the user
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
@@ -98,19 +97,15 @@ public class UsersRegistrationService {
             tokenEntity.setUser(user);
             tokenEntity.setRefreshToken(refreshToken);
             RefreshTokens oldTokens = refreshTokensRepository.findByUser(user);
-            if (oldTokens != null) {
-                refreshTokensRepository.delete(oldTokens);
-            }
+
+            if (oldTokens != null) refreshTokensRepository.delete(oldTokens);
 
             refreshTokensRepository.save(tokenEntity);
 
             // Set the access token in a secure cookie
-            cookieUtils.createCookie(response, refreshToken);
-            cookieUtils.createCookie(response,accessToken);
-            System.out.println(response.getHeader("Set-Cookie"));
+            response.addCookie(cookieUtils.createCookie(refreshToken));
 
             AuthenticationResponse authResponse = new AuthenticationResponse();
-
             authResponse.setMessage("Authentication successful.");
             authResponse.setRefreshToken(refreshToken);
             authResponse.setToken(accessToken);
@@ -159,9 +154,7 @@ public class UsersRegistrationService {
             List<Users> usersList = emails.stream().map(
                     email1 -> {
                         Users user = usersRepository.findByEmail(email1);
-                        if (user == null) {
-                            throw new UsernameNotFoundException("User does not exist");
-                        }
+                        if (user == null) throw new UsernameNotFoundException("User does not exist");
                         return user;
                     }
 

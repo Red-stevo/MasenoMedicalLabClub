@@ -13,22 +13,21 @@ public class CookieUtils {
     @Value("${cookie_age}")
     private static int cookie_max_age;
 
-    public  void createCookie(HttpServletResponse response, String token) {
-        Cookie cookie = new Cookie("token", token);
+    public  Cookie createCookie(String token) {
+        Cookie cookie = new Cookie("x-refresh-cookie", token);
+
         cookie.setPath("/");
         cookie.setMaxAge(cookie_max_age);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        response.addHeader("Set-Cookie", cookie.toString());
+        cookie.setValue(token);
+        return cookie;
     }
 
     public  String extractJwtFromCookie(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("refreshToken".equals(cookie.getName())) {
-                    return cookie.getValue();
-                }
+                System.out.println("cookies : "+cookie.getValue());
             }
         }
         return null;

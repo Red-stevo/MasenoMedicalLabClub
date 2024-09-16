@@ -113,16 +113,19 @@ public class RuntimeExceptionHandler {
     }
 */
 
-/*
     @ExceptionHandler(InvalidTokensException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<Map<String, String>> handleInvalidTokensException(InvalidTokensException ex){
-        Map<String, String> errors = new HashMap<>();
-        String message = ex.getMessage();
-        errors.put("message"+ message+"cause", ex.getMessage());
-        return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<UserGeneralResponse> handleInvalidTokensException(InvalidTokensException ex){
+        log.warn("Iinvalid token passed.");
+
+        UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
+        userGeneralResponse.setMessage("Something went wrong.");
+        userGeneralResponse.setDate(new Date());
+        userGeneralResponse.setHttpStatus(HttpStatus.UNAUTHORIZED);
+
+        return new ResponseEntity<>(userGeneralResponse, HttpStatus.UNAUTHORIZED);
     }
-*/
+
 
     @ExceptionHandler(EntityDeletionException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
