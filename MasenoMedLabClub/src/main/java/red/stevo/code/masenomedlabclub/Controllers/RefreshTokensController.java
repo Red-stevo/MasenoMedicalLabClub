@@ -15,7 +15,7 @@ import red.stevo.code.masenomedlabclub.Service.DetService.RefreshTokensService;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/apis")
-@CrossOrigin(value = "http://localhost/5173", allowCredentials = "true")
+@CrossOrigin(value = {"http://localhost/5173", "http://192.168.100.7/5173"}, allowCredentials = "true")
 public class RefreshTokensController {
 
     private final RefreshTokensService refreshTokensService;

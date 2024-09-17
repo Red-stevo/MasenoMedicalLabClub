@@ -16,6 +16,7 @@ const LoginPage = () => {
     const {errorMessage, isAuthenticated} = useSelector(state => state.loginReducer);
 
 
+    /*handle redirection after successful Authentication.*/
     useEffect(() => {
         /*display the error message for 5seconds.*/
         if (errorMessage){
@@ -37,6 +38,7 @@ const LoginPage = () => {
     const submitUserLogin = (data) => {
         persistor.purge();
         if (data) dispatch(loginRequest(data))
+
     }
 
     return (

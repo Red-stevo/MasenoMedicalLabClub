@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/apis/events")
-@CrossOrigin(value = "http://localhost/5173", allowCredentials = "true")
+@CrossOrigin(value = {"http://localhost/5173", "http://192.168.100.7/5173"}, allowCredentials = "true")
 public class EventsController {
     private final EventsService eventsService;
     private final EventImagesService imagesService;
