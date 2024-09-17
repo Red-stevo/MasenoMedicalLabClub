@@ -5,19 +5,26 @@ import {FaEye, FaEyeSlash} from "react-icons/fa";
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
-import {loginRequest} from "../../../ReduxStorage/LoginStore/LoginPageStore.js";
+import {clearLoginErrorMessage, loginRequest} from "../../../ReduxStorage/LoginStore/LoginPageStore.js";
 import {persistor} from "../../../ReduxStorage/Store.js";
 const LoginPage = () => {
     const [view, setView] = useState(false);
     const [inputState, setInputState] = useState("password");
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
-    const {errorMessage} = useSelector(state => state.loginReducer);
+    const {errorMessage, userRole, isAuthenticated} = useSelector(state => state.loginReducer);
 
 
     useEffect(() => {
-        console.log(errorMessage)
-    }, [errorMessage]);
+        /*display the error message for 5seconds.*/
+        if (errorMessage){
+            setTimeout(() => {
+                dispatch(clearLoginErrorMessage())
+            }, 6000)
+        }
+
+
+    }, [errorMessage, isAuthenticated, userRole]);
 
     /*Toggle between visible password and hidden.The js below changes the type for the
     * input filed when the user toggles.*/
@@ -33,6 +40,7 @@ const LoginPage = () => {
 
     return (
         <div className={"login-page"}>
+            {/*Handle error occurrences, slide imn the error message from the backend.*/}
             {errorMessage && <div className={"error-message-animation"}>{errorMessage }</div>}
             <div className={"login-section"}>
                 <div className={"login-header"}>

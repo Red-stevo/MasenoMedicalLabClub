@@ -28,7 +28,9 @@ export const loginRequest = createAsyncThunk("login/user-login",
 const loginPageStore = createSlice({
     name:"login",
     initialState,
-    reducers:{},
+    reducers:{
+        clearLoginErrorMessage:(state) => {state.errorMessage = null}
+    },
     extraReducers: builder => builder
         .addCase(loginRequest.pending, (state, action) => {
             state.status = "loading";
@@ -50,5 +52,6 @@ const loginPageStore = createSlice({
             state.isAuthenticated = false;
         })
 });
-
 export default loginPageStore.reducer
+
+export const {clearLoginErrorMessage} = loginPageStore.actions
