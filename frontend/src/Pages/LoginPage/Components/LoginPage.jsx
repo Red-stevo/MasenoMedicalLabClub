@@ -1,6 +1,6 @@
 import "./../LoginPageStyles/LoginPage.css";
 import {Button, Form} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
@@ -12,7 +12,8 @@ const LoginPage = () => {
     const [inputState, setInputState] = useState("password");
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
-    const {errorMessage, userRole, isAuthenticated} = useSelector(state => state.loginReducer);
+    const navigate = useNavigate();
+    const {errorMessage, isAuthenticated} = useSelector(state => state.loginReducer);
 
 
     useEffect(() => {
@@ -21,10 +22,10 @@ const LoginPage = () => {
             setTimeout(() => {
                 dispatch(clearLoginErrorMessage())
             }, 6000)
+        }else if (isAuthenticated){
+            navigate("/home");
         }
-
-
-    }, [errorMessage, isAuthenticated, userRole]);
+    }, [errorMessage, isAuthenticated]);
 
     /*Toggle between visible password and hidden.The js below changes the type for the
     * input filed when the user toggles.*/
