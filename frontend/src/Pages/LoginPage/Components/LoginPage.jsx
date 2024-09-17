@@ -12,12 +12,12 @@ const LoginPage = () => {
     const [inputState, setInputState] = useState("password");
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
-    const loginResponse = useSelector(state => state.loginReducer);
+    const {errorMessage} = useSelector(state => state.loginReducer);
 
 
     useEffect(() => {
-        console.log(loginResponse)
-    }, [loginResponse]);
+        console.log(errorMessage)
+    }, [errorMessage]);
 
     /*Toggle between visible password and hidden.The js below changes the type for the
     * input filed when the user toggles.*/
@@ -33,7 +33,7 @@ const LoginPage = () => {
 
     return (
         <div className={"login-page"}>
-            {loginResponse.errorMessage && <div>{loginResponse.errorMessage }</div>}
+            {errorMessage && <div className={"error-message-animation"}>{errorMessage }</div>}
             <div className={"login-section"}>
                 <div className={"login-header"}>
                     MMLSA Login

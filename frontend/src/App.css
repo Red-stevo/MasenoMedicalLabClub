@@ -1,0 +1,26 @@
+
+.error-message-animation {
+    display: flex;
+    margin-left: 77%;
+    margin-right: 2%;
+    position: absolute;
+    margin-top: 80vh;
+    font-weight: 600;
+    font-size: 18px;
+    border-right: red 8px solid;
+    border-top: rgba(83, 101, 83, 0.62) 1px solid;
+    border-bottom:rgba(83, 101, 83, 0.62) 1px solid;
+    border-left: rgba(83, 101, 83, 0.62) 1px solid;
+    border-radius: 10px;
+    padding: 5px;
+    color: red;
+    background: white;
+    animation: slide-up linear 2s;
+}
+
+
+@keyframes slide-up {
+    0% {
+        transform: translateY(21vh);
+    }
+}
