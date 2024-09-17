@@ -4,13 +4,20 @@ import {Link} from "react-router-dom";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginRequest} from "../../../ReduxStorage/LoginStore/LoginPageStore.js";
+import {persistor} from "../../../ReduxStorage/Store.js";
 const LoginPage = () => {
     const [view, setView] = useState(false);
     const [inputState, setInputState] = useState("password");
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
+    const loginResponse = useSelector(state => state.loginReducer);
+
+
+    useEffect(() => {
+        console.log(loginResponse)
+    }, [loginResponse]);
 
     /*Toggle between visible password and hidden.The js below changes the type for the
     * input filed when the user toggles.*/
@@ -20,11 +27,13 @@ const LoginPage = () => {
     }, [view]);
 
     const submitUserLogin = (data) => {
+        persistor.purge();
         if (data) dispatch(loginRequest(data))
     }
 
     return (
         <div className={"login-page"}>
+            {loginResponse.errorMessage && <div>{loginResponse.errorMessage }</div>}
             <div className={"login-section"}>
                 <div className={"login-header"}>
                     MMLSA Login

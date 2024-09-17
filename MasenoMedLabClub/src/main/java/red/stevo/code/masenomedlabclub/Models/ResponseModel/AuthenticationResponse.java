@@ -13,4 +13,5 @@ public class AuthenticationResponse {
     private Integer userId;
 
     private String userRole;
+    
 }

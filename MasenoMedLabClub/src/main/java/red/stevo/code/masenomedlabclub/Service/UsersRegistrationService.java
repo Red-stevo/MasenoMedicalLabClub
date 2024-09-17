@@ -153,7 +153,7 @@ public class UsersRegistrationService {
     }
 
     private static boolean isPasswordStrong(String password){
-        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!)(}{%^&+=])(?=\\S+$).{8,}$";
         return password.matches(passwordRegex);
     }
 
