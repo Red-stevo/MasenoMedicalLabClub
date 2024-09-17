@@ -13,9 +13,13 @@ public class Events {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String eventId;
+
     private String eventName;
+
     private String eventDescription;
+
     private Instant eventDate;
+
     private String eventLocation;
 
 }
