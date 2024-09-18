@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import red.stevo.code.masenomedlabclub.Entities.events.EventImages;
 import red.stevo.code.masenomedlabclub.Entities.events.Events;
-import red.stevo.code.masenomedlabclub.Models.RequestModels.events.EventImagesCreationRequest;
-import red.stevo.code.masenomedlabclub.Models.ResponseModel.EventsResponse;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Service.events.EventImagesService;
 import red.stevo.code.masenomedlabclub.Service.events.EventsService;

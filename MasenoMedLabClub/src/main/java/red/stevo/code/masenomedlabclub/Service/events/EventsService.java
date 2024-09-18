@@ -73,8 +73,9 @@ public class EventsService {
             events.setEventDescription(request.getEventDescription());
             events.setEventDate(request.getEventDate());
             events.setEventLocation(request.getEventLocation());
-            eventImagesService.addEventImage(request.getImageUrls(),eventId);
+
             eventsRepository.save(events);
+            eventImagesService.addEventImage(request.getImageUrls(),eventId);
 
             UserGeneralResponse response = new UserGeneralResponse();
             response.setMessage("event updated successfully");
