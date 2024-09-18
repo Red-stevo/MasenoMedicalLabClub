@@ -1,15 +1,16 @@
 .home-nav-bar {
     width: 100vw;
     min-height: 100vh;
-    background-color: #f3f0f0;
+    background-color: rgba(231, 207, 207, 0.3);
 }
 .home-bar {
+    position: absolute;
     display: flex;
     width: 100%;
     gap: 15%;
     height: 10vh;
     margin-bottom: 10px;
-    position: static;
+    background-color: white;
    /* border-bottom: solid 2px rgba(232, 122, 11, 0.95);*/
 }
 

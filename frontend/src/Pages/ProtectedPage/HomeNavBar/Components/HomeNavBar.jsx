@@ -33,7 +33,7 @@ const HomeNavBar = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <Container> <Outlet /></Container>
+            <Container className={"home-outlet"}> <Outlet /></Container>
         </div>
     );
 };
