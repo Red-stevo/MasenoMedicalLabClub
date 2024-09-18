@@ -157,6 +157,7 @@ public class UsersRegistrationService {
         return password.matches(passwordRegex);
     }
 
+
     public void deleteUser(List<String> emails){
         log.info("Service to delete the user");
         try {

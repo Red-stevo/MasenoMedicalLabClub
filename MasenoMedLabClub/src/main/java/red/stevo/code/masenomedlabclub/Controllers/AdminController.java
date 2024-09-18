@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.IndexPageImageModel;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
+import red.stevo.code.masenomedlabclub.Models.RequestModels.events.EventImagesCreationRequest;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.events.EventsCreationRequest;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Service.AdminIndexImagesStorageService;
@@ -68,10 +69,10 @@ public class AdminController {
     }
 
     @PostMapping("/events/create")
-    public ResponseEntity<String> createEvent(@RequestBody EventsCreationRequest request){
+    public ResponseEntity<UserGeneralResponse> createEvent(@RequestBody EventsCreationRequest request){
         log.info("Request to create event.");
-        eventsService.createEvent(request);
-        return ResponseEntity.ok("Event created");
+        UserGeneralResponse response = eventsService.createEvent(request);
+        return ResponseEntity.ok(response);
     }
 
 
