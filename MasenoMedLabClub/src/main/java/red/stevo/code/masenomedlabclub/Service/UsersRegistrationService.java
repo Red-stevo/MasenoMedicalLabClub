@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.InvalidEmailFormatException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UserAlreadyExistException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UsersCreationFailedException;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
@@ -45,7 +46,6 @@ public class UsersRegistrationService {
 
     private final UsersRepository usersRepository;
     private final JWTGenService jwtGenService;
-    private final RefreshTokensRepository refreshTokensRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final PasswordGenerator passwordGenerator;
@@ -54,36 +54,42 @@ public class UsersRegistrationService {
     private final HttpServletResponse response;
 
 
-    public List<String> createUser(List<UsersRegistrationRequests> regRequest) {
+    public UserGeneralResponse createUser(List<UsersRegistrationRequests> regRequest) {
         List<String> createdEmails = new ArrayList<>();
+
         List<Users> users = regRequest.stream()
                 .map(usersRegistrationRequests -> {
-                    Users users1 = new Users();
-                    if (!isEmailValid(usersRegistrationRequests.getEmail())) {
-                        try {
-                            throw new InvalidPropertiesFormatException("invalid email format");
-                        } catch (InvalidPropertiesFormatException e) {
-                            throw new RuntimeException(e);
-                        }
+                    if (usersRepository.existsByEmail(usersRegistrationRequests.getEmail())) {
+                        throw new UserAlreadyExistException("The user with that email already exists");
                     }
-                    users1.setEmail(usersRegistrationRequests.getEmail());
-                    String password = passwordGenerator.generateRandomPassword(8);
-                    System.out.println(password);
-                    log.error("your default password is " + password);
-                    users1.setPassword(passwordEncoder.encode(password));
-                    //emailService.sendRegistrationEmail(users1.getEmail(),password);
-                    users1.setRole(usersRegistrationRequests.getRoles());
-                    users1.setEnabled(true);
-                    if (usersRepository.existsByEmail(usersRegistrationRequests.getEmail())){
-                        throw new UserAlreadyExistException("the user with that email already exists");
-                    }
-                    createdEmails.add(users1.getEmail());
-                    return users1;
 
+                    Users user = new Users();
+                    if (!isEmailValid(usersRegistrationRequests.getEmail())) {
+                        throw new InvalidEmailFormatException("Invalid email format: " + usersRegistrationRequests.getEmail());
+                    }
+
+                    String password = passwordGenerator.generateRandomPassword(8);
+                    log.info("Default password is " + password);
+
+                    user.setEmail(usersRegistrationRequests.getEmail());
+                    user.setPassword(passwordEncoder.encode(password));
+                    user.setRole(usersRegistrationRequests.getRoles());
+                    user.setEnabled(true);
+
+                    createdEmails.add(user.getEmail());
+                    return user;
                 }).toList();
+
         usersRepository.saveAll(users);
-        return createdEmails;
+
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setMessage("Users created successfully");
+        response.setDate(new Date());
+        response.setHttpStatus(HttpStatus.OK);
+
+        return response;
     }
+
 
     private boolean isEmailValid(String email) {
         org.apache.commons.validator.routines.EmailValidator emailValidator = org.apache.commons.validator.routines.EmailValidator.getInstance();
@@ -158,7 +164,7 @@ public class UsersRegistrationService {
     }
 
 
-    public void deleteUser(List<String> emails){
+    public UserGeneralResponse deleteUser(List<String> emails){
         log.info("Service to delete the user");
         try {
 
@@ -171,6 +177,12 @@ public class UsersRegistrationService {
 
             ).toList();
             usersRepository.deleteAll(usersList);
+            UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
+            userGeneralResponse.setMessage("User deleted successfully");
+            userGeneralResponse.setDate(new Date());
+            userGeneralResponse.setHttpStatus(HttpStatus.OK);
+
+            return userGeneralResponse;
 
         }catch (Exception ex){
             throw new EntityDeletionException("could not delete the user");
@@ -183,27 +195,34 @@ public class UsersRegistrationService {
     @Value("${default-password}")
     private String adminPassword;
     @PostConstruct
-    public void createAdmin(){
-        try {
-            Users user = new Users();
-
-            user.setEmail(adminEmail);
-            if (!isPasswordStrong(adminPassword)){
-                throw new IllegalArgumentException("Weak password");
-            }
-            user.setPassword(passwordEncoder.encode(adminPassword));
-            user.setRole(Roles.ADMIN);
-            user.setEnabled(true);
-            if (usersRepository.existsByEmail(adminEmail)){
-                return;
-            }
-            usersRepository.save(user);
-            log.info("default admin is created");
-
-
-        }catch (Exception ex){
-            throw new UsersCreationFailedException("could not create the default admin", ex.getCause());
+    public UserGeneralResponse createAdmin() {
+        if (usersRepository.existsByEmail(adminEmail)) {
+            UserGeneralResponse response = new UserGeneralResponse();
+            response.setMessage("Admin account already exists");
+            response.setDate(new Date());
+            response.setHttpStatus(HttpStatus.OK);
+            return response;
         }
+
+        Users user = new Users();
+        user.setEmail(adminEmail);
+
+        if (!isPasswordStrong(adminPassword)) {
+            throw new IllegalArgumentException("Weak password");
+        }
+
+        user.setPassword(passwordEncoder.encode(adminPassword));
+        user.setRole(Roles.ADMIN);
+        user.setEnabled(true);
+
+        usersRepository.save(user);
+
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setMessage("Default admin created successfully");
+        response.setDate(new Date());
+        response.setHttpStatus(HttpStatus.OK);
+        return response;
     }
+
 
 }

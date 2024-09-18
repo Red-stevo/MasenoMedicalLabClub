@@ -8,6 +8,7 @@ import red.stevo.code.masenomedlabclub.Entities.events.EventImages;
 import red.stevo.code.masenomedlabclub.Entities.events.Events;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.events.EventImagesCreationRequest;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.EventsResponse;
+import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Service.events.EventImagesService;
 import red.stevo.code.masenomedlabclub.Service.events.EventsService;
 
@@ -36,9 +37,9 @@ public class EventsController {
     }*/
 
     @DeleteMapping("/delete/image")
-    public ResponseEntity<String> deleteEventImage(@RequestBody List<String> imageUrl) {
-        imagesService.deleteEventImages(imageUrl);
-        return ResponseEntity.ok("Images deleted successfully");
+    public ResponseEntity<UserGeneralResponse> deleteEventImage(@RequestBody List<String> imageUrl) {
+        UserGeneralResponse response = imagesService.deleteEventImages(imageUrl);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{eventId}/images")

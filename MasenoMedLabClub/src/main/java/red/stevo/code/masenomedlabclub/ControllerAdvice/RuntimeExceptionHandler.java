@@ -171,4 +171,14 @@ public class RuntimeExceptionHandler {
         errors.put("message"+ message+"cause", ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(EventsCreationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String,String>> handleInvalidEmailFormatException(InvalidEmailFormatException ex){
+        Map<String, String> errors = new HashMap<>();
+        String message = ex.getMessage();
+        errors.put("message"+ message+"cause", ex.getMessage());
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+
+    }
 }

@@ -86,22 +86,17 @@ public class AdminController {
     }
 
     @DeleteMapping("/event/delete")
-    public ResponseEntity<String> deleteEvent(String eventId){
-        eventsService.deleteEvent(eventId);
-        return ResponseEntity.ok("event deleted successfully");
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<String> test(){
-        log.info("Request to test.");
-        String response = "hello there";
+    public ResponseEntity<UserGeneralResponse> deleteEvent(String eventId){
+        UserGeneralResponse response = eventsService.deleteEvent(eventId);
         return ResponseEntity.ok(response);
     }
 
+
+
     @PostMapping("/register")
-    public ResponseEntity<List<String>> register(@RequestBody List<UsersRegistrationRequests> request){
+    public ResponseEntity<UserGeneralResponse> register(@RequestBody List<UsersRegistrationRequests> request){
         log.info("Request to register users.");
-        List<String> createUsers = usersRegistrationService.createUser(request);
+        UserGeneralResponse createUsers = usersRegistrationService.createUser(request);
         return ResponseEntity.ok(createUsers);
     }
 }
