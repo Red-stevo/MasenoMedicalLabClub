@@ -21,25 +21,19 @@ public class EventImagesService {
     private final EventsRepository eventsRepository;
     private final EventsImagesRepository eventsImagesRepository;
 
-    public void addEventImage(List<EventImagesCreationRequest> request) {
+    public void addEventImage(List<String> request,String eventId) {
         log.info("Adding event images");
 
         try {
             List<EventImages> images = request.stream().map(imageRequest -> {
-                // Fetch the event by its ID
-                Events event = eventsRepository.findEventsByEventId(imageRequest.getEventId());
 
                 // Check if the event exists
-                if (event == null) {
-                    throw new EventsCreationException("Event with ID " + imageRequest.getEventId() + " not found.");
-                }
 
                 // Create EventImages and set properties
                 EventImages eventImage = new EventImages();
-                eventImage.setImageUrl(imageRequest.getUrl());
-                eventImage.setEvent(event);
+                eventImage.setImageUrl(imageRequest);
+                eventImage.setEventId(eventId);
 
-                log.info("Adding image to event with ID: {}", imageRequest.getEventId());
                 return eventImage;
             }).toList();
 
@@ -69,5 +63,8 @@ public class EventImagesService {
         }
     }
 
+    public List<EventImages> getEventImages(String eventId) {
+        return imagesRepository.findAllByEventId(eventId);
+    }
 
 }
