@@ -1,0 +1,15 @@
+.home-nav-bar {
+    width: 100vw;
+    display: flex;
+    justify-items: center;
+}
+
+.home-bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-items {
+
+}
+

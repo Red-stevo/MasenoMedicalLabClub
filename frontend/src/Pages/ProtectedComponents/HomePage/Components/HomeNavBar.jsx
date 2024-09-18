@@ -7,13 +7,13 @@ const HomeNavBar = () => {
 
     return (
         <div className={"home-nav-bar"}>
-            <Navbar expand="md" className="bg-body-tertiary">
-                <Navbar.Brand href="#">Navbar</Navbar.Brand>
+            <Navbar expand="md" className="home-bar">
+                <Navbar.Brand className={"home-title"} href="#">MMLSA</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav variant="underline" defaultActiveKey="/home">
+                    <Nav variant="underline" defaultActiveKey="#" className={"nav-items"}>
                         <Nav.Item>
-                            <Nav.Link href={"#"}>Events</Nav.Link>
+                            <Nav.Link href={"/home/events"}>Events</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link href={"#"}>Messaging</Nav.Link>

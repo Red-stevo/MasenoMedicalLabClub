@@ -62,13 +62,11 @@ const LoginPage = () => {
                             <div className={"password-holder"}>
                                 <input className={'form-control'} id={"password"} type={inputState} required={true}
                                        {...register('password')}/>
-                                {view ?
-                                    <Button className={"eye-button"} onClick={() => setView(false)}>
-                                        <FaEye/>
-                                    </Button> :
-                                    <Button className={"eye-button"} onClick={() => setView(true)}>
-                                        <FaEyeSlash/>
-                                    </Button>}
+
+                                    <Button className={"eye-button"} onClick={() => setView(!view)}>
+                                        { view ? <FaEye/> : <FaEyeSlash/>}
+                                    </Button>
+
                             </div>
                         </Form.Group>
 
