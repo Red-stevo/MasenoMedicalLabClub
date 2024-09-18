@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EventsCreationException;
@@ -40,9 +41,11 @@ public class EventsService {
             event.setEventDescription(request.getEventDescription());
             event.setEventDate(request.getEventDate());
             event.setEventLocation(request.getEventLocation());
-            eventImagesService.addEventImage(request.getImageUrls(),event.getEventId());
+            Events savedEvent = eventsRepository.save(event);
+            System.out.println(savedEvent.getEventId());
+            eventImagesService.addEventImage(request.getImageUrls(),savedEvent.getEventId());
 
-            eventsRepository.save(event);
+
             return new UserGeneralResponse();
 
 
@@ -66,6 +69,7 @@ public class EventsService {
             events.setEventDescription(request.getEventDescription());
             events.setEventDate(request.getEventDate());
             events.setEventLocation(request.getEventLocation());
+            eventImagesService.addEventImage(request.getImageUrls(),eventId);
             eventsRepository.save(events);
         }catch (Exception e){
             throw new RuntimeException("could not update the event", e);
@@ -89,7 +93,7 @@ public class EventsService {
         log.info("Getting all the events");
 
         // Fetch all events
-        return eventsRepository.findAll();
+        return eventsRepository.findAll(Sort.by(Sort.Direction.DESC,"eventDate"));
 
 
     }

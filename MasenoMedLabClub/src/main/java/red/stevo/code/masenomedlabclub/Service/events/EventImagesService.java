@@ -63,8 +63,8 @@ public class EventImagesService {
         }
     }
 
-   /* public List<EventImages> getEventImages(Events events) {
-        return imagesRepository.findAllByEvent(events);
-    }*/
+    public List<EventImages> getEventImages(String eventId) {
+        return imagesRepository.findAllByEventId(eventId);
+    }
 
 }

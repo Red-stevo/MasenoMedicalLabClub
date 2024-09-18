@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface EventsImagesRepository extends JpaRepository<EventImages,String> {
     EventImages findByImageUrl(String todelete);
+
+    List<EventImages> findAllByEventId(String eventId);
 }

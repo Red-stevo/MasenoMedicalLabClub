@@ -1,5 +1,6 @@
 package red.stevo.code.masenomedlabclub.ControllerAdvice;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -100,6 +101,19 @@ public class RuntimeExceptionHandler {
         userGeneralResponse.setDate(new Date());
         userGeneralResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(userGeneralResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<UserGeneralResponse> handleExpiredJwtException(ExpiredJwtException ex){
+        log.warn("ExpiredJwtException");
+
+        UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
+        userGeneralResponse.setMessage(ex.getMessage());
+        userGeneralResponse.setDate(new Date());
+        userGeneralResponse.setHttpStatus(HttpStatus.UNAUTHORIZED);
+
+        return new ResponseEntity<>(userGeneralResponse, HttpStatus.UNAUTHORIZED);
     }
 
 /*    @ExceptionHandler(UserDoesNotExistException.class)
