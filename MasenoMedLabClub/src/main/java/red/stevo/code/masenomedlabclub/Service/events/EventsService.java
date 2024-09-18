@@ -18,8 +18,8 @@ import red.stevo.code.masenomedlabclub.Models.ResponseModel.ImageResponse;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Repositories.events.EventsRepository;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,8 +45,12 @@ public class EventsService {
             System.out.println(savedEvent.getEventId());
             eventImagesService.addEventImage(request.getImageUrls(),savedEvent.getEventId());
 
+            UserGeneralResponse response = new UserGeneralResponse();
+            response.setMessage("event created successfully");
+            response.setDate(new Date());
+            response.setHttpStatus(HttpStatus.OK);
 
-            return new UserGeneralResponse();
+            return response;
 
 
         }catch (Exception e){
@@ -57,7 +61,7 @@ public class EventsService {
     }
 
 
-    public void updateEvent(EventsCreationRequest request, String eventId){
+    public UserGeneralResponse updateEvent(EventsCreationRequest request, String eventId){
         log.info("Updating event");
         try {
             Events events = eventsRepository.findEventsByEventId(eventId);
@@ -71,12 +75,19 @@ public class EventsService {
             events.setEventLocation(request.getEventLocation());
             eventImagesService.addEventImage(request.getImageUrls(),eventId);
             eventsRepository.save(events);
+
+            UserGeneralResponse response = new UserGeneralResponse();
+            response.setMessage("event updated successfully");
+            response.setDate(new Date());
+            response.setHttpStatus(HttpStatus.OK);
+            return response;
+
         }catch (Exception e){
             throw new RuntimeException("could not update the event", e);
         }
     }
 
-    public void deleteEvent(String eventId){
+    public UserGeneralResponse deleteEvent(String eventId){
         log.info("Deleting event");
         try {
             Events events = eventsRepository.findEventsByEventId(eventId);
@@ -84,6 +95,11 @@ public class EventsService {
                 throw new IllegalArgumentException("the event with id " + eventId + " does not exist");
             }
             eventsRepository.delete(events);
+            UserGeneralResponse response = new UserGeneralResponse();
+            response.setMessage("event deleted successfully");
+            response.setDate(new Date());
+            response.setHttpStatus(HttpStatus.OK);
+            return response;
         }catch (Exception e){
             throw new RuntimeException("could not delete the event", e);
         }

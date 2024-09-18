@@ -78,11 +78,11 @@ public class AdminController {
 
 
     @PutMapping("/events/update")
-    public ResponseEntity<String> updateEvent(@RequestBody EventsCreationRequest request,
+    public ResponseEntity<UserGeneralResponse> updateEvent(@RequestBody EventsCreationRequest request,
                                               @RequestParam String eventId){
         log.info("request to create an event");
-        eventsService.updateEvent(request,eventId);
-        return ResponseEntity.ok("event updated successfully");
+        UserGeneralResponse response =  eventsService.updateEvent(request,eventId);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/event/delete")
