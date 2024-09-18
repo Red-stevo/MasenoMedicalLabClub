@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/apis/admin")
-@CrossOrigin(value ="http://localhost/5173", allowCredentials = "true")
+@CrossOrigin(value="http://localhost:5173", allowCredentials = "true")
 public class AdminController {
 
     private final AdminIndexImagesStorageService adminIndexImagesStorageService;

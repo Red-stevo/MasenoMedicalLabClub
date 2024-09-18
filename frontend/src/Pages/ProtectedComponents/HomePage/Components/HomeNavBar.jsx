@@ -1,6 +1,7 @@
 import "../Styles/HomeNavBar.css"
-import {Nav, Navbar} from "react-bootstrap";
+import {Container, Nav, Navbar} from "react-bootstrap";
 import {useSelector} from "react-redux";
+import {Outlet} from "react-router-dom";
 const HomeNavBar = () => {
     const role = useSelector(state => state.loginReducer.userRole);
 
@@ -9,7 +10,7 @@ const HomeNavBar = () => {
         <div className={"home-nav-bar"}>
             <Navbar expand="md" className="home-bar">
                 <Navbar.Brand className={"home-title"} href="#">MMLSA</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle className={"responsive-toggle"} aria-controls={"basic-navbar-nav"} />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav variant="underline" defaultActiveKey="#" className={"nav-items"}>
                         <Nav.Item>
@@ -32,6 +33,7 @@ const HomeNavBar = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
+            <Container> <Outlet /></Container>
         </div>
     );
 };
