@@ -8,3 +8,26 @@
     background-color: white;
     margin-left: 10%;
 }
+
+.event-title, .event-description {
+    margin-top: 5vh;
+}
+
+.event-description {
+    margin-bottom: 5vh;
+}
+
+.input-field {
+    border: solid 1px black;
+}
+
+.upload-button {
+    margin-top: 5vh;
+    align-self: end;
+    background-color: rgb(11, 136, 175);
+    width: 40%;
+}
+
+.upload-button:hover {
+    background-color: rgba(0, 166, 255, 0.62);
+}

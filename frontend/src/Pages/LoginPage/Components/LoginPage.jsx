@@ -44,7 +44,7 @@ const LoginPage = () => {
     return (
         <div className={"login-page"}>
             {/*Handle error occurrences, slide imn the error message from the backend.*/}
-            {errorMessage && <div className={"error-message-animation"}>{errorMessage }</div>}
+            {errorMessage && <div className={"error-message-animation"}>{errorMessage}</div>}
             <div className={"login-section"}>
                 <div className={"login-header"}>
                     MMLSA Login
