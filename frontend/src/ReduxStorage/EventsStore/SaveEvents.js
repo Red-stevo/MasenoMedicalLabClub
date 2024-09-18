@@ -1,6 +1,6 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
-import {copyWithStructuralSharing} from "@reduxjs/toolkit/query";
+
 
 const eventsAdapter = createEntityAdapter();
 const cloudName = "de91mnunt";
@@ -13,7 +13,7 @@ const initialState = eventsAdapter.getInitialState({
     uploadSuccess:null,
 });
 
-const uploadImages = createAsyncThunk("events/save",
+export const uploadImages = createAsyncThunk("events/save",
     (imageUrls, config) =>{
     try {
         let urls = [];
@@ -23,13 +23,14 @@ const uploadImages = createAsyncThunk("events/save",
             formData.append("upload_preset",uploadPreset);
 
             const response =
-                axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, image);
+                axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData);
             urls.concat(...urls, response.data.secure_url);
         });
         return config.fulfillWithValue(urls)
     }catch (error){
-        console.log(error.response.data.message);
-        return config.rejectWithValue(error.response.data.message)
+        if (error.response) return config.rejectWithValue(error.response.data);
+
+        else return config.rejectWithValue(error.data.message);
     }
 
 });
@@ -60,3 +61,5 @@ const SaveEvents = createSlice({
             })
     }
 });
+
+export default SaveEvents.reducer;

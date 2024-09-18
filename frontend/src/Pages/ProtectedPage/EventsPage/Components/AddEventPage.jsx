@@ -2,14 +2,17 @@ import {Button, FloatingLabel, Form} from "react-bootstrap";
 import "./../Styles/AddEventPage.css";
 import {useForm} from "react-hook-form";
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {uploadImages} from "../../../../ReduxStorage/EventsStore/SaveEvents.js";
 
 const AddEventPage = () => {
     const [eventImages, setEventImages] = useState([]);
     const {register, handleSubmit} = useForm();
+    const dispatch = useDispatch();
 
     const handleEventSubmit = (data) => {
-        const eventData = {...data, imageUrls:eventImages};
-        console.log(eventData);
+        const imageUrls= eventImages;
+        dispatch(uploadImages(imageUrls));
     }
 
     const handleImageAddition = (e) => {
