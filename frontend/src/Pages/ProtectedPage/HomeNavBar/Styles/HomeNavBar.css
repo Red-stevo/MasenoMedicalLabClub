@@ -1,7 +1,6 @@
 .home-nav-bar {
     width: 100vw;
-    min-height: 100vh;
-    background-color: rgba(231, 207, 207, 0.3);
+   /* background-color: rgba(231, 207, 207, 0.3);*/
 }
 .home-bar {
     position: fixed;
