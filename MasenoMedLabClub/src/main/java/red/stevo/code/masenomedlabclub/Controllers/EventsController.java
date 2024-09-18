@@ -19,7 +19,9 @@ import java.util.List;
 @RequestMapping("/apis/events")
 @CrossOrigin(value="http://localhost:5173", allowCredentials = "true")
 public class EventsController {
+
     private final EventsService eventsService;
+
     private final EventImagesService imagesService;
 
     @GetMapping("/our-events")
@@ -29,7 +31,7 @@ public class EventsController {
         return ResponseEntity.ok(eventsList);
     }
 
-    /*@PostMapping("/post/images")
+/*    @PostMapping("/post/images")
     public ResponseEntity<String> postEventImages(@RequestBody List<EventImagesCreationRequest> request) {
         imagesService.addEventImage(request);
         return ResponseEntity.ok("Images added successfully");

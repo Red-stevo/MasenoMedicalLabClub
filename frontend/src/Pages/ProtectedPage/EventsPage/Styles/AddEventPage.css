@@ -26,6 +26,7 @@
     align-self: end;
     background-color: rgb(11, 136, 175);
     width: 40%;
+    margin-bottom: 20vh;
 }
 
 .upload-button:hover {

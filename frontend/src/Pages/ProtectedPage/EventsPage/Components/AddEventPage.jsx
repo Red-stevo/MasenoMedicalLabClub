@@ -8,7 +8,7 @@ const AddEventPage = () => {
     const {register, handleSubmit} = useForm();
 
     const handleEventSubmit = (data) => {
-        const eventData = {...data, eventImages};
+        const eventData = {...data, imageUrls:eventImages};
         console.log(eventData);
     }
 
@@ -25,7 +25,25 @@ const AddEventPage = () => {
                 <input
                     className={"input-field form-control"}
                     type={"text"}
-                    {...register("eventTitle")}
+                    {...register("eventName")}
+                />
+            </Form.Group>
+
+            <Form.Group className={"event-title"}>
+                <Form.Label>Event Date : </Form.Label>
+                <input
+                    className={"input-field form-control"}
+                    type={"text"}
+                    {...register("eventDate")}
+                />
+            </Form.Group>
+
+            <Form.Group className={"event-title"}>
+                <Form.Label>Event Location : </Form.Label>
+                <input
+                    className={"input-field form-control"}
+                    type={"text"}
+                    {...register("eventLocation")}
                 />
             </Form.Group>
 
