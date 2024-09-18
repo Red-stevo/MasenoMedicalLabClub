@@ -6,6 +6,7 @@ import "./App.css";
 import ProtectedRoutes from "./RouteComponent/ProtectedRoutes.jsx";
 import HomeNavBar from "./Pages/ProtectedPage/HomeNavBar/Components/HomeNavBar.jsx";
 import EventsPage from "./Pages/ProtectedPage/EventsPage/Components/EventsPage.jsx";
+import AddEventPage from "./Pages/ProtectedPage/EventsPage/Components/AddEventPage.jsx";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                 <Route path={"/login"} element={<LoginPage />} />
                 <Route path={"/home"} element={<ProtectedRoutes><HomeNavBar /></ProtectedRoutes>}>
                     <Route path={"/home/events"} element={<EventsPage />} />
+                    <Route path={"/home/events/add"} element={<AddEventPage />} />
                 </Route>
             </Routes>
         </Router>

@@ -1,0 +1,9 @@
+
+.add-event-form {
+    display: flex;
+    justify-content: center;
+    margin-top: 10vh;
+    min-height: 90vh;
+    width: 100%;
+    background-color: white;
+}
