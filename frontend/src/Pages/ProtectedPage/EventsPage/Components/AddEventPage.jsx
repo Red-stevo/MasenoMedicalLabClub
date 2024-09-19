@@ -3,6 +3,7 @@ import "./../Styles/AddEventPage.css";
 import {useForm} from "react-hook-form";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
+import {saveEvent} from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
 
 
 const AddEventPage = () => {
@@ -41,6 +42,10 @@ const AddEventPage = () => {
     const handleEventSubmit = (data) => {
         const eventData = {...data, requestList:imageUrls}
         console.log(eventData);
+
+        dispatch(saveEvent(eventData));
+
+        setImageUrls([]);
     }
 
     return (

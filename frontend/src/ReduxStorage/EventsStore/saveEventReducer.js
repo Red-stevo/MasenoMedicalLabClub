@@ -10,7 +10,7 @@ const initialState = eventsDataAdapter.getInitialState({
     status:"idle",
 });
 
-const saveEvent = createAsyncThunk("save-event/new-event",
+export const saveEvent = createAsyncThunk("save-event/new-event",
     (eventData, config) => {
 
     try {
