@@ -1,7 +1,6 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import axiosConfig from "../../DataSourceConfig/axiosConfig.js";
 
-
 const eventsDataAdapter = createEntityAdapter();
 
 const initialState = eventsDataAdapter.getInitialState({
@@ -25,7 +24,10 @@ export const saveEvent = createAsyncThunk("save-event/new-event",
 const saveEventReducer = createSlice({
     name:"save-event",
     initialState,
-    reducers:{},
+    reducers:{
+        clearErrorMessage:(state) => state.errorMessage = null,
+        clearSuccessMessage:(state) => state.successMessage = null
+    },
     extraReducers:builder => {
         builder
             .addCase(saveEvent.pending, (state) => {
@@ -49,4 +51,8 @@ const saveEventReducer = createSlice({
     }
 });
 
+export const  {
+    clearErrorMessage,
+    clearSuccessMessage
+} = saveEventReducer.actions
 export default saveEventReducer.reducer;

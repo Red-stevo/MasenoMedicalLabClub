@@ -1,9 +1,9 @@
-import {Button, FloatingLabel, Form} from "react-bootstrap";
+import {Button, FloatingLabel, Form, Spinner} from "react-bootstrap";
 import "./../Styles/AddEventPage.css";
 import {useForm} from "react-hook-form";
-import {useState} from "react";
-import {useDispatch} from "react-redux";
-import {saveEvent} from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {clearErrorMessage, saveEvent} from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
 import dayjs from "dayjs";
 
 
@@ -11,7 +11,20 @@ const AddEventPage = () => {
     const [imageUrls, setImageUrls] = useState([]);
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
+    const {successMessage, errorMessage, status} = useSelector(state => state.saveEventReducer);
 
+
+    useEffect(() => {
+
+        if (errorMessage){
+            setTimeout(() => {
+                //clear the error message.
+                dispatch(clearErrorMessage());
+            }, 6000)
+        }else if (successMessage){
+
+        }
+    }, [successMessage, errorMessage]);
 
     /*Cloudinary upload widget setup.*/
     const uploadWidget = () => window.cloudinary.openUploadWidget(
@@ -53,10 +66,11 @@ const AddEventPage = () => {
     };
 
     return (
-        <Form className={"add-event-form"} onSubmit={handleSubmit(handleEventSubmit)}>
+        <Form className={"add-event-form"} onSubmit={handleSubmit(handleEventSubmit)} aria-disabled={true}>
             <Form.Group className={"event-title"}>
                 <Form.Label>Events Title : </Form.Label>
                 <input
+                    disabled={status === "loading"}
                     required={true}
                     className={"input-field form-control"}
                     type={"text"}
@@ -67,6 +81,7 @@ const AddEventPage = () => {
             <Form.Group className={"event-title"}>
                 <Form.Label>Event Date : </Form.Label>
                 <input
+                    disabled={status === "loading"}
                     required={true}
                     id={"date"}
                     className={"input-field form-control"}
@@ -78,6 +93,7 @@ const AddEventPage = () => {
             <Form.Group className={"event-title"}>
                 <Form.Label>Event Location : </Form.Label>
                 <input
+                    disabled={status === "loading"}
                     required={true}
                     className={"input-field form-control"}
                     type={"text"}
@@ -87,6 +103,7 @@ const AddEventPage = () => {
 
             <FloatingLabel className={"event-description"} controlId="floatingTextarea" label="Event Decription">
                 <input
+                    disabled={status === "loading"}
                     required={true}
                     className={"input-field form-control"}
                     as="textarea"
@@ -96,9 +113,19 @@ const AddEventPage = () => {
                 />
             </FloatingLabel>
 
-            <Button onClick={uploadWidget} className={"upload-widget"}>Upload Images</Button>
+            <Button disabled={status === "loading"} onClick={uploadWidget} className={"upload-widget"}>
+                Upload Images
+            </Button>
 
             <Button type={"submit"} className={"upload-button"}>Post</Button>
+
+            {status === "loading"&& <div className={"loading"}>
+                <Spinner animation={"grow"} />
+            </div>}
+
+            {errorMessage && <div className={"error-message-animation"}>{errorMessage}</div>}
+
+            {successMessage && <div className={"success-message-animation"}>{successMessage}</div>}
         </Form>
     );
 };
