@@ -1,7 +1,6 @@
 package red.stevo.code.masenomedlabclub.Controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ public class RefreshTokensController {
     private final RefreshTokensService refreshTokensService;
 
     @PutMapping("/refresh")
-    public ResponseEntity<AuthenticationResponse> refreshTokens(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<AuthenticationResponse> refreshTokens(HttpServletRequest request) {
         // Refresh the token
         AuthenticationResponse authenticationResponse = refreshTokensService.refreshToken(request);
 

@@ -3,23 +3,56 @@ import "./../Styles/AddEventPage.css";
 import {useForm} from "react-hook-form";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
-import {uploadImages} from "../../../../ReduxStorage/EventsStore/SaveEvents.js";
+import {saveEvent} from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
+import dayjs from "dayjs";
+
 
 const AddEventPage = () => {
-    const [eventImages, setEventImages] = useState([]);
+    const [imageUrls, setImageUrls] = useState([]);
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
 
+
+    /*Cloudinary upload widget setup.*/
+    const uploadWidget = () => window.cloudinary.openUploadWidget(
+        {
+            cloudName:"de91mnunt",
+            uploadPreset:"MasenoMedLabClub",
+            sources:["local", "camera", "url"],
+            multiple:true,
+            maxFiles: 20,
+            folder: "events_images_folder",
+            resourceType: "image",
+            cropping: false,
+            showUploadMoreButton: true,
+        },
+        (error, result) => {
+            if (error){
+                console.log("Error Occurred ", error)
+            }else if (result.event === "success"){
+                console.log(result);
+                setImageUrls((urls) =>[...urls,
+                    {url: result.info.secure_url, imageId:result.info.public_id}]);
+
+            }
+        }
+    );
+
+
+    /*Dispatch action to save new event.*/
     const handleEventSubmit = (data) => {
-        const imageUrls= eventImages;
-        dispatch(uploadImages(imageUrls));
-    }
+        /*Convert the date to be compatible with java Instance object for date and time.*/
+        const date = dayjs(data.eventDate).toISOString();
 
-    const handleImageAddition = (e) => {
-        const file = Array.from(e.target.files);
-        setEventImages([...eventImages, file]);
-    }
+        const eventData = {...data, requestList:imageUrls,eventDate:date }
+        console.log(eventData);
 
+        /*dispatch saving action*/
+        dispatch(saveEvent(eventData));
+
+        /*reset the input fields.*/
+        setImageUrls([]);
+    };
 
     return (
         <Form className={"add-event-form"} onSubmit={handleSubmit(handleEventSubmit)}>
@@ -35,8 +68,9 @@ const AddEventPage = () => {
             <Form.Group className={"event-title"}>
                 <Form.Label>Event Date : </Form.Label>
                 <input
+                    id={"date"}
                     className={"input-field form-control"}
-                    type={"text"}
+                    type={"datetime-local"}
                     {...register("eventDate")}
                 />
             </Form.Group>
@@ -60,15 +94,7 @@ const AddEventPage = () => {
                 />
             </FloatingLabel>
 
-            <Form.Group>
-                <Form.Label>Event Images : </Form.Label>
-                <input
-                    className={"form-control input-field"}
-                    type={"file"}
-                    multiple={true}
-                    onChange={handleImageAddition}
-                />
-            </Form.Group>
+            <Button onClick={uploadWidget} className={"upload-widget"}>Upload Images</Button>
 
             <Button type={"submit"} className={"upload-button"}>Post</Button>
         </Form>
