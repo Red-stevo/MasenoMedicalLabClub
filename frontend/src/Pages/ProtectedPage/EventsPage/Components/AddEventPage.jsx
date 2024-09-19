@@ -29,14 +29,18 @@ const AddEventPage = () => {
                 console.log("Error Occurred ", error)
             }else if (result.event === "success"){
                 console.log(result);
-                setImageUrls((urls) =>[...urls,  result.info.secure_url]);
+                setImageUrls((urls) =>[...urls,
+                    {url: result.info.secure_url, imageId:result.info.public_id}]);
+
             }
         }
     )
 
 
+    /*Dispatch action to save new event.*/
     const handleEventSubmit = (data) => {
-
+        const eventData = {...data, requestList:imageUrls}
+        console.log(eventData);
     }
 
     return (
@@ -54,7 +58,7 @@ const AddEventPage = () => {
                 <Form.Label>Event Date : </Form.Label>
                 <input
                     className={"input-field form-control"}
-                    type={"text"}
+                    type={"datetime-local"}
                     {...register("eventDate")}
                 />
             </Form.Group>
