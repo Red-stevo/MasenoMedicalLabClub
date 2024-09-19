@@ -5,10 +5,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
+import org.springframework.web.bind.annotation.*;
+=======
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+>>>>>>> e8ffdb5f31634f2055ec67b8095def49489b6814
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.AuthenticationResponse;
 import red.stevo.code.masenomedlabclub.Service.DetService.RefreshTokensService;
 

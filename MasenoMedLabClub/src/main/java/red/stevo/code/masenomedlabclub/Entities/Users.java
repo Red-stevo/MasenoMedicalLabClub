@@ -19,10 +19,6 @@ public class Users implements UserDetails {
     @Column(nullable = false,updatable = false)
     private Integer userId;
 
-    private String firstName;
-
-    private String lastName;
-
     @Column(nullable = false)
     private String password;
 

@@ -8,7 +8,6 @@ import lombok.Data;
 public class EventImages {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String imageId;
     private String eventId;
     private String imageUrl;

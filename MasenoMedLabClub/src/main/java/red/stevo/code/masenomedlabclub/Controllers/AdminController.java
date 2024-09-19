@@ -2,15 +2,12 @@ package red.stevo.code.masenomedlabclub.Controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.IndexPageImageModel;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
-import red.stevo.code.masenomedlabclub.Models.RequestModels.events.EventImagesCreationRequest;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.events.EventsCreationRequest;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Service.AdminIndexImagesStorageService;
@@ -86,22 +83,17 @@ public class AdminController {
     }
 
     @DeleteMapping("/event/delete")
-    public ResponseEntity<String> deleteEvent(String eventId){
-        eventsService.deleteEvent(eventId);
-        return ResponseEntity.ok("event deleted successfully");
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<String> test(){
-        log.info("Request to test.");
-        String response = "hello there";
+    public ResponseEntity<UserGeneralResponse> deleteEvent(String eventId){
+        UserGeneralResponse response = eventsService.deleteEvent(eventId);
         return ResponseEntity.ok(response);
     }
 
+
+
     @PostMapping("/register")
-    public ResponseEntity<List<String>> register(@RequestBody List<UsersRegistrationRequests> request){
+    public ResponseEntity<UserGeneralResponse> register(@RequestBody List<UsersRegistrationRequests> request){
         log.info("Request to register users.");
-        List<String> createUsers = usersRegistrationService.createUser(request);
+        UserGeneralResponse createUsers = usersRegistrationService.createUser(request);
         return ResponseEntity.ok(createUsers);
     }
 }
