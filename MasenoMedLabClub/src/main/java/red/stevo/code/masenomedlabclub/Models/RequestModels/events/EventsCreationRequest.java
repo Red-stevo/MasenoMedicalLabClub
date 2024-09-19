@@ -11,5 +11,5 @@ public class EventsCreationRequest {
     private String eventDescription;
     private Instant eventDate;
     private String eventLocation;
-    private List<String> imageUrls;
+    private List<EventImagesCreationRequest> requestList;
 }

@@ -80,7 +80,7 @@ public class ProfileService {
         // Save the social media accounts
         socialMediaAccountsRepository.saveAll(accountsToSave);
     }
-    public void  addStudentResearch(String profileId, List<StudentResearch> studentResearches){
+    public UserGeneralResponse  addStudentResearch(String profileId, List<StudentResearch> studentResearches){
         log.info("Adding student research for profile: " + profileId);
         List<StudentResearch> studentResearchesToSave = studentResearches.stream()
                 .map(researchReq->{
@@ -92,9 +92,14 @@ public class ProfileService {
                     return studentResearch;
                 }).toList();
         studentResearchRepository.saveAll(studentResearchesToSave);
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setMessage("research added successfully");
+        response.setDate(new Date());
+        response.setHttpStatus(HttpStatus.OK);
+        return response;
     }
 
-    private UserGeneralResponse updateProfile(ProfileCreationRequests requests, String profileId){
+    public UserGeneralResponse updateProfile(ProfileCreationRequests requests, String profileId){
         log.info("Updating profile");
         UserProfile userProfile = profileRepository.findByProfileId(profileId).orElseThrow();
         userProfile.setFirstName(requests.getFirstName());
@@ -115,7 +120,7 @@ public class ProfileService {
         return response;
 
     }
-    private void updateStudentResearch(ResearchRequests studentResearches, String researchId){
+    public UserGeneralResponse updateStudentResearch(ResearchRequests studentResearches, String researchId){
         log.info("Updating student research ");
         StudentResearch research = studentResearchRepository.findByResearchId(researchId);
         research.setResearchTitle(studentResearches.getResearchTitle());
@@ -123,33 +128,58 @@ public class ProfileService {
         research.setResearchDocuments(studentResearches.getResearchDocument());
         studentResearchRepository.save(research);
 
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setMessage("research updated successfully");
+        response.setDate(new Date());
+        response.setHttpStatus(HttpStatus.OK);
+        return response;
 
     }
 
-    private void updateSocialMedia(SocialMediaRequests socialMediaAccounts, String socialMediaAccountId){
+    public UserGeneralResponse updateSocialMedia(SocialMediaRequests socialMediaAccounts, String socialMediaAccountId){
         log.info("Updating social media accounts");
         SocialMediaAccounts mediaAccounts = socialMediaAccountsRepository.findBySocialMediaAccountId(socialMediaAccountId);
         mediaAccounts.setSocialMediaAccountName(socialMediaAccounts.getSocialMediaName());
         mediaAccounts.setSocialMediaAccountUrl(socialMediaAccounts.getSocialMediaUrl());
         socialMediaAccountsRepository.save(mediaAccounts);
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setMessage("social media updated successfully");
+        response.setDate(new Date());
+        response.setHttpStatus(HttpStatus.OK);
+        return response;
     }
-    private void deleteSocialMedia(String socialMediaAccountId){
+    private UserGeneralResponse deleteSocialMedia(String socialMediaAccountId){
         log.info("Deleting social media account");
         SocialMediaAccounts mediaAccounts = socialMediaAccountsRepository.findBySocialMediaAccountId(socialMediaAccountId);
         socialMediaAccountsRepository.delete(mediaAccounts);
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setMessage("social media deleted successfully");
+        response.setDate(new Date());
+        response.setHttpStatus(HttpStatus.OK);
+        return response;
     }
-    private void deleteStudentResearch(String researchId){
+    private UserGeneralResponse deleteStudentResearch(String researchId){
         log.info("Deleting student research");
         StudentResearch research = studentResearchRepository.findByResearchId(researchId);
         studentResearchRepository.delete(research);
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setMessage("research deleted successfully");
+        response.setDate(new Date());
+        response.setHttpStatus(HttpStatus.OK);
+        return response;
     }
 
-    private void deleteUserProfile(String profileId){
+    private UserGeneralResponse deleteUserProfile(String profileId){
         log.info("Deleting user profile");
         UserProfile profile = profileRepository.findByProfileId(profileId).orElseThrow();
         profileRepository.delete(profile);
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setMessage("profile deleted successfully");
+        response.setDate(new Date());
+        response.setHttpStatus(HttpStatus.OK);
+        return response;
     }
-    private ProfileCreationRequests getUserProfile(String userId){
+    public ProfileCreationRequests getUserProfile(String userId){
         log.info("Retrieving user profile");
         UserProfile profile = profileRepository.findByUserId(userId);
         modelMapper.getConfiguration()

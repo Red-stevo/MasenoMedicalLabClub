@@ -24,7 +24,7 @@ public class EventImagesService {
     private final EventsRepository eventsRepository;
     private final EventsImagesRepository eventsImagesRepository;
 
-    public UserGeneralResponse addEventImage(List<String> request,String eventId) {
+    public UserGeneralResponse addEventImage(List<EventImagesCreationRequest> request,String eventId) {
         log.info("Adding event images");
 
         try {
@@ -34,7 +34,8 @@ public class EventImagesService {
 
                 // Create EventImages and set properties
                 EventImages eventImage = new EventImages();
-                eventImage.setImageUrl(imageRequest);
+                eventImage.setImageId(imageRequest.getImageId());
+                eventImage.setImageUrl(imageRequest.getUrl());
                 eventImage.setEventId(eventId);
 
                 return eventImage;

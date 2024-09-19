@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class EventImagesCreationRequest {
-    String eventId;
+    String imageId;
     String url;
 }
