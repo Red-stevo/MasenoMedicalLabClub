@@ -116,6 +116,19 @@ public class RuntimeExceptionHandler {
         return new ResponseEntity<>(userGeneralResponse, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(InvalidEmailFormatException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<UserGeneralResponse> handleInvalidEmailFormatException(InvalidEmailFormatException ex){
+        log.warn("InvalidEmailFormatException");
+
+        UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
+        userGeneralResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+        userGeneralResponse.setDate(new Date());
+        userGeneralResponse.setMessage(ex.getMessage());
+
+        return new ResponseEntity<>(userGeneralResponse, HttpStatus.BAD_REQUEST);
+    }
+
 /*    @ExceptionHandler(UserDoesNotExistException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleUserDoesNotExistException(UserDoesNotExistException ex){
@@ -172,13 +185,4 @@ public class RuntimeExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(EventsCreationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Map<String,String>> handleInvalidEmailFormatException(InvalidEmailFormatException ex){
-        Map<String, String> errors = new HashMap<>();
-        String message = ex.getMessage();
-        errors.put("message"+ message+"cause", ex.getMessage());
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-
-    }
 }
