@@ -27,7 +27,13 @@ const loginPageStore = createSlice({
     name:"login",
     initialState,
     reducers:{
-        clearLoginErrorMessage:(state) => {state.errorMessage = null}
+        clearLoginErrorMessage:(state) => {state.errorMessage = null},
+        updateToken:(state, action) => {
+            const {accessToken, userId, userRole} = action.payload;
+            state.accessToken = accessToken;
+            state.userId = userId;
+            state.userRole = userRole;
+        },
     },
     extraReducers: builder => builder
         .addCase(loginRequest.pending, (state, action) => {
@@ -52,4 +58,5 @@ const loginPageStore = createSlice({
 });
 export default loginPageStore.reducer
 
-export const {clearLoginErrorMessage} = loginPageStore.actions
+export const
+    {clearLoginErrorMessage, updateToken} = loginPageStore.actions
