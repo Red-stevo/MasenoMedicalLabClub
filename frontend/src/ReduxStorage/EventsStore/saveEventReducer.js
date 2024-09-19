@@ -11,22 +11,19 @@ const initialState = eventsDataAdapter.getInitialState({
 });
 
 export const saveEvent = createAsyncThunk("save-event/new-event",
-    (eventData, config) => {
+    async (eventData, config) => {
 
     try {
-        const response = axiosConfig.post("/admin/events/create", eventData);
-        return config.fulfillWithValue(response.data.message);
+        const response = await axiosConfig.post("/admin/events/create", eventData);
+        return config.fulfillWithValue(response.data);
     }catch (error) {
-        if (error.response)
-            return config.rejectWithValue(error.response.data.message);
-
-        return config.rejectWithValue("Error posting event.");
+        return config.rejectWithValue(error.response.data);
     }
 });
 
 
 const saveEventReducer = createSlice({
-    name:"/save-event",
+    name:"save-event",
     initialState,
     reducers:{},
     extraReducers:builder => {
@@ -36,13 +33,18 @@ const saveEventReducer = createSlice({
             })
             .addCase(saveEvent.fulfilled, (state, action) => {
                 state.status = "success";
-                state.successMessage = action.payload;
+                state.successMessage = action.payload.message;
                 state.errorMessage = null;
             })
             .addCase(saveEvent.rejected, (state, action) => {
-                state.status = "failed";
-                state.errorMessage = action.payload;
+                /*console.log(action.payload.data);*/
+                if (action.payload.message)
+                    state.errorMessage = action.payload;
+                else
+                    state.errorMessage = "Error posting The Event.";
+
                 state.successMessage = null;
+                state.status = "failed";
             });
     }
 });

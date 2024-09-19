@@ -33,7 +33,6 @@ const AddEventPage = () => {
                 console.log(result);
                 setImageUrls((urls) =>[...urls,
                     {url: result.info.secure_url, imageId:result.info.public_id}]);
-
             }
         }
     );
@@ -45,7 +44,6 @@ const AddEventPage = () => {
         const date = dayjs(data.eventDate).toISOString();
 
         const eventData = {...data, requestList:imageUrls,eventDate:date }
-        console.log(eventData);
 
         /*dispatch saving action*/
         dispatch(saveEvent(eventData));
@@ -59,6 +57,7 @@ const AddEventPage = () => {
             <Form.Group className={"event-title"}>
                 <Form.Label>Events Title : </Form.Label>
                 <input
+                    required={true}
                     className={"input-field form-control"}
                     type={"text"}
                     {...register("eventName")}
@@ -68,6 +67,7 @@ const AddEventPage = () => {
             <Form.Group className={"event-title"}>
                 <Form.Label>Event Date : </Form.Label>
                 <input
+                    required={true}
                     id={"date"}
                     className={"input-field form-control"}
                     type={"datetime-local"}
@@ -78,6 +78,7 @@ const AddEventPage = () => {
             <Form.Group className={"event-title"}>
                 <Form.Label>Event Location : </Form.Label>
                 <input
+                    required={true}
                     className={"input-field form-control"}
                     type={"text"}
                     {...register("eventLocation")}
@@ -86,6 +87,7 @@ const AddEventPage = () => {
 
             <FloatingLabel className={"event-description"} controlId="floatingTextarea" label="Event Decription">
                 <input
+                    required={true}
                     className={"input-field form-control"}
                     as="textarea"
                     placeholder="Event Description"

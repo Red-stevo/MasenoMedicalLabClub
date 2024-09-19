@@ -16,6 +16,7 @@ const persistentReducer = persistReducer(config, loginPageStore);
 export const store = configureStore({
     reducer:{
         loginReducer:persistentReducer,
+
         saveEventReducer:saveEventReducer,
     }
 });

@@ -56,8 +56,13 @@ const loginPageStore = createSlice({
             state.isAuthenticated = true;
             state.errorMessage = null;
         }).addCase(loginRequest.rejected, (state, action) => {
+
+            if (action.payload.message)
+                state.errorMessage = action.payload.message;
+            else
+                state.errorMessage = "Internal Error during login.";
+
             state.status = "error";
-            state.errorMessage = action.payload.message;
             state.accessToken = null;
             state.userId = null;
             state.successMessage = null;
