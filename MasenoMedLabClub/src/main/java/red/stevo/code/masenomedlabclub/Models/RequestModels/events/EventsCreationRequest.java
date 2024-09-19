@@ -8,8 +8,12 @@ import java.util.List;
 @Data
 public class EventsCreationRequest {
     private String eventName;
+
     private String eventDescription;
+
     private Instant eventDate;
+
     private String eventLocation;
+
     private List<String> imageUrls;
 }
