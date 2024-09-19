@@ -148,7 +148,7 @@ public class ProfileService {
         response.setHttpStatus(HttpStatus.OK);
         return response;
     }
-    private UserGeneralResponse deleteSocialMedia(String socialMediaAccountId){
+    public UserGeneralResponse deleteSocialMedia(String socialMediaAccountId){
         log.info("Deleting social media account");
         SocialMediaAccounts mediaAccounts = socialMediaAccountsRepository.findBySocialMediaAccountId(socialMediaAccountId);
         socialMediaAccountsRepository.delete(mediaAccounts);
@@ -158,7 +158,7 @@ public class ProfileService {
         response.setHttpStatus(HttpStatus.OK);
         return response;
     }
-    private UserGeneralResponse deleteStudentResearch(String researchId){
+    public UserGeneralResponse deleteStudentResearch(String researchId){
         log.info("Deleting student research");
         StudentResearch research = studentResearchRepository.findByResearchId(researchId);
         studentResearchRepository.delete(research);
@@ -169,7 +169,7 @@ public class ProfileService {
         return response;
     }
 
-    private UserGeneralResponse deleteUserProfile(String profileId){
+    public UserGeneralResponse deleteUserProfile(String profileId){
         log.info("Deleting user profile");
         UserProfile profile = profileRepository.findByProfileId(profileId).orElseThrow();
         profileRepository.delete(profile);
