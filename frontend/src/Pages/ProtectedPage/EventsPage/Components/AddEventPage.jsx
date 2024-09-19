@@ -3,23 +3,41 @@ import "./../Styles/AddEventPage.css";
 import {useForm} from "react-hook-form";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
-import {uploadImages} from "../../../../ReduxStorage/EventsStore/SaveEvents.js";
+
 
 const AddEventPage = () => {
-    const [eventImages, setEventImages] = useState([]);
+    const [imageUrls, setImageUrls] = useState([]);
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
 
+
+    /*Cloudinary upload widget setup.*/
+    const uploadWidget = () => window.cloudinary.openUploadWidget(
+        {
+            cloudName:"de91mnunt",
+            uploadPreset:"MasenoMedLabClub",
+            sources:["local", "camera", "url"],
+            multiple:true,
+            maxFiles: 20,
+            folder: "events_images_folder",
+            resourceType: "image",
+            cropping: false,
+            showUploadMoreButton: true,
+        },
+        (error, result) => {
+            if (error){
+                console.log("Error Occurred ", error)
+            }else if (result.event === "success"){
+                console.log(result);
+                setImageUrls((urls) =>[...urls,  result.info.secure_url]);
+            }
+        }
+    )
+
+
     const handleEventSubmit = (data) => {
-        const imageUrls= eventImages;
-        dispatch(uploadImages(imageUrls));
-    }
 
-    const handleImageAddition = (e) => {
-        const file = Array.from(e.target.files);
-        setEventImages([...eventImages, file]);
     }
-
 
     return (
         <Form className={"add-event-form"} onSubmit={handleSubmit(handleEventSubmit)}>
@@ -60,15 +78,7 @@ const AddEventPage = () => {
                 />
             </FloatingLabel>
 
-            <Form.Group>
-                <Form.Label>Event Images : </Form.Label>
-                <input
-                    className={"form-control input-field"}
-                    type={"file"}
-                    multiple={true}
-                    onChange={handleImageAddition}
-                />
-            </Form.Group>
+            <Button onClick={uploadWidget} className={"upload-widget"}>Upload Images</Button>
 
             <Button type={"submit"} className={"upload-button"}>Post</Button>
         </Form>
