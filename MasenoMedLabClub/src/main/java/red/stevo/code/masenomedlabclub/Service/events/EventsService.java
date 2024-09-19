@@ -43,7 +43,7 @@ public class EventsService {
             event.setEventLocation(request.getEventLocation());
             Events savedEvent = eventsRepository.save(event);
             System.out.println(savedEvent.getEventId());
-            eventImagesService.addEventImage(request.getImageUrls(),savedEvent.getEventId());
+            eventImagesService.addEventImage(request.getRequestList(),savedEvent.getEventId());
 
             UserGeneralResponse response = new UserGeneralResponse();
             response.setMessage("event created successfully");
@@ -73,8 +73,9 @@ public class EventsService {
             events.setEventDescription(request.getEventDescription());
             events.setEventDate(request.getEventDate());
             events.setEventLocation(request.getEventLocation());
-            eventImagesService.addEventImage(request.getImageUrls(),eventId);
+
             eventsRepository.save(events);
+            eventImagesService.addEventImage(request.getRequestList(),eventId);
 
             UserGeneralResponse response = new UserGeneralResponse();
             response.setMessage("event updated successfully");
