@@ -16,8 +16,11 @@ export const saveEvent = createAsyncThunk("save-event/new-event",
     try {
         const response = axiosConfig.post("/admin/events/create", eventData);
         return config.fulfillWithValue(response.data.message);
-    }catch (error){
-        return config.rejectWithValue(error.response.data.message);
+    }catch (error) {
+        if (error.response)
+            return config.rejectWithValue(error.response.data.message);
+
+        return config.rejectWithValue("Error posting event.");
     }
 });
 
