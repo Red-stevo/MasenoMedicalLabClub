@@ -14,9 +14,7 @@ const initialState = loginAdapter.getInitialState({
 });
 
 
-export const loginRequest = createAsyncThunk("login/user-login",
-    async (credentials, { rejectWithValue,
-        fulfillWithValue}) => {
+export const loginRequest = createAsyncThunk("login/user-login", async (credentials, { rejectWithValue, fulfillWithValue}) => {
     try {
         const response = await axiosConfigFreeAPI.post("/login", credentials);
         return fulfillWithValue(response.data)

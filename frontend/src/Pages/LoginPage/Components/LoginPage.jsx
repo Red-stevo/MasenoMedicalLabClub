@@ -1,6 +1,6 @@
 import "./../LoginPageStyles/LoginPage.css";
 import {Button, Form} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
@@ -12,19 +12,21 @@ const LoginPage = () => {
     const [inputState, setInputState] = useState("password");
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
-    const {errorMessage, userRole, isAuthenticated} = useSelector(state => state.loginReducer);
+    const navigate = useNavigate();
+    const {errorMessage, isAuthenticated} = useSelector(state => state.loginReducer);
 
 
+    /*handle redirection after successful Authentication.*/
     useEffect(() => {
         /*display the error message for 5seconds.*/
         if (errorMessage){
             setTimeout(() => {
                 dispatch(clearLoginErrorMessage())
             }, 6000)
+        }else if (isAuthenticated){
+            navigate("/home");
         }
-
-
-    }, [errorMessage, isAuthenticated, userRole]);
+    }, [errorMessage, isAuthenticated]);
 
     /*Toggle between visible password and hidden.The js below changes the type for the
     * input filed when the user toggles.*/
@@ -36,12 +38,13 @@ const LoginPage = () => {
     const submitUserLogin = (data) => {
         persistor.purge();
         if (data) dispatch(loginRequest(data))
+
     }
 
     return (
         <div className={"login-page"}>
             {/*Handle error occurrences, slide imn the error message from the backend.*/}
-            {errorMessage && <div className={"error-message-animation"}>{errorMessage }</div>}
+            {errorMessage && <div className={"error-message-animation"}>{errorMessage}</div>}
             <div className={"login-section"}>
                 <div className={"login-header"}>
                     MMLSA Login
@@ -59,13 +62,11 @@ const LoginPage = () => {
                             <div className={"password-holder"}>
                                 <input className={'form-control'} id={"password"} type={inputState} required={true}
                                        {...register('password')}/>
-                                {view ?
-                                    <Button className={"eye-button"} onClick={() => setView(false)}>
-                                        <FaEye/>
-                                    </Button> :
-                                    <Button className={"eye-button"} onClick={() => setView(true)}>
-                                        <FaEyeSlash/>
-                                    </Button>}
+
+                                    <Button className={"eye-button"} onClick={() => setView(!view)}>
+                                        { view ? <FaEye/> : <FaEyeSlash/>}
+                                    </Button>
+
                             </div>
                         </Form.Group>
 
