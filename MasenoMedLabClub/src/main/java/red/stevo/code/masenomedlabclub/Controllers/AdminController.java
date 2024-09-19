@@ -76,7 +76,6 @@ public class AdminController {
     }
 
 
-
     @PutMapping("/events/update")
     public ResponseEntity<UserGeneralResponse> updateEvent(@RequestBody EventsCreationRequest request,
                                               @RequestParam String eventId){
@@ -89,13 +88,6 @@ public class AdminController {
     public ResponseEntity<String> deleteEvent(String eventId){
         eventsService.deleteEvent(eventId);
         return ResponseEntity.ok("event deleted successfully");
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<String> test(){
-        log.info("Request to test.");
-        String response = "hello there";
-        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")

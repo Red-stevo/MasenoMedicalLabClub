@@ -49,6 +49,7 @@ axiosConfig.interceptors.response.use((response) => {
 
             //try refreshing the token
             try {
+                /*Request to refresh the token.*/
                 const response = await axiosConfigFreeAPI.put("/refresh");
                 const {token, userId, userRole} = response.data;
 
