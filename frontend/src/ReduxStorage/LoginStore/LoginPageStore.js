@@ -17,7 +17,7 @@ const initialState = loginAdapter.getInitialState({
 export const loginRequest = createAsyncThunk("login/user-login", async (credentials, { rejectWithValue, fulfillWithValue}) => {
     try {
         const response = await axiosConfigFreeAPI.post("/login", credentials);
-        return fulfillWithValue(response.data)
+        return fulfillWithValue(response.data);
     }catch (error){
         return rejectWithValue(error.response.data);
     }
@@ -33,6 +33,15 @@ const loginPageStore = createSlice({
             state.accessToken = accessToken;
             state.userId = userId;
             state.userRole = userRole;
+        },
+        userLogout:(state) => {
+            state.status = "idle";
+            state.errorMessage = null;
+            state.accessToken = null;
+            state.userId = null;
+            state.successMessage = null;
+            state.userRole = null;
+            state.isAuthenticated = null;
         },
     },
     extraReducers: builder => builder
@@ -56,7 +65,11 @@ const loginPageStore = createSlice({
             state.isAuthenticated = false;
         })
 });
-export default loginPageStore.reducer
+export default loginPageStore.reducer;
 
 export const
-    {clearLoginErrorMessage, updateToken} = loginPageStore.actions
+    {
+        clearLoginErrorMessage,
+        updateToken,
+        userLogout
+    } = loginPageStore.actions;

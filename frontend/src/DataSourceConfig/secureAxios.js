@@ -1,7 +1,7 @@
-import axios, {request} from "axios";
+import axios from "axios";
 import axiosConfigFreeAPI from "./axiosConfig.js";
 import {store} from "../ReduxStorage/Store.js";
-import {updateToken} from "../ReduxStorage/LoginStore/LoginPageStore.js";
+import {updateToken, userLogout} from "../ReduxStorage/LoginStore/LoginPageStore.js";
 
 const secureAxios = ({token}) => {
     let isRefreshing = false;
@@ -50,6 +50,8 @@ const secureAxios = ({token}) => {
                 try {
                     const response = await axiosConfigFreeAPI.put("/refresh");
                     const {token, userId, userRole } = response.data;
+
+                    /*dispatch an action to update the old accessToken*/
                     store.dispatch(updateToken({accessToken:token, userId, userRole,}));
 
                     originalRequest.headers.Authorization = `${token}`;
@@ -63,6 +65,7 @@ const secureAxios = ({token}) => {
                     handleQueuedRequests(error, token);
 
                     //handle user logout.
+                    store.dispatch(userLogout());
 
                     return Promise.reject(error);
                 }finally {
@@ -72,3 +75,5 @@ const secureAxios = ({token}) => {
             return Promise.reject(error);
         });
 }
+
+export default secureAxios;
