@@ -1,6 +1,5 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
-import axiosConfig from "../../DataSourceConfig/axiosConfig.js";
-
+import {secureAxiosConfig} from "../../DataSourceConfig/secureAxios.js";
 
 const eventsDataAdapter = createEntityAdapter();
 
@@ -11,24 +10,25 @@ const initialState = eventsDataAdapter.getInitialState({
 });
 
 export const saveEvent = createAsyncThunk("save-event/new-event",
-    (eventData, config) => {
+    async (eventData, config) => {
 
     try {
-        const response = axiosConfig.post("/admin/events/create", eventData);
-        return config.fulfillWithValue(response.data.message);
+        const response = await secureAxiosConfig.post("/admin/events/create", eventData);
+        return config.fulfillWithValue(response.data);
     }catch (error) {
-        if (error.response)
-            return config.rejectWithValue(error.response.data.message);
-
-        return config.rejectWithValue("Error posting event.");
+        return config.rejectWithValue(error.response.data);
     }
 });
 
 
 const saveEventReducer = createSlice({
-    name:"/save-event",
+    name:"save-event",
     initialState,
-    reducers:{},
+    reducers:{
+        clearErrorMessage:(state) => state.errorMessage = null,
+        clearSuccessMessage:(state) => state.successMessage = null,
+        setUploadError:(state, action) => state.errorMessage = action.payload.error,
+    },
     extraReducers:builder => {
         builder
             .addCase(saveEvent.pending, (state) => {
@@ -36,15 +36,25 @@ const saveEventReducer = createSlice({
             })
             .addCase(saveEvent.fulfilled, (state, action) => {
                 state.status = "success";
-                state.successMessage = action.payload;
+                state.successMessage = action.payload.message;
                 state.errorMessage = null;
             })
             .addCase(saveEvent.rejected, (state, action) => {
-                state.status = "failed";
-                state.errorMessage = action.payload;
+                /*console.log(action.payload.data);*/
+                if (action.payload)
+                    state.errorMessage = action.payload.message;
+                else
+                    state.errorMessage = "Error posting The Event.";
+
                 state.successMessage = null;
+                state.status = "failed";
             });
     }
 });
 
+export const  {
+    clearErrorMessage,
+    clearSuccessMessage,
+    setUploadError
+} = saveEventReducer.actions
 export default saveEventReducer.reducer;

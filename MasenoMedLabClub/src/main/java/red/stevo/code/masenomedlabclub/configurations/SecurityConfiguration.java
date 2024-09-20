@@ -38,10 +38,12 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configure(http))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/**").permitAll()
-                        /*.requestMatchers("/apis/admin/**").hasRole("ADMIN").anyRequest().authenticated()*/)
+                        .requestMatchers("/apis/login", "/apis/refresh").permitAll()
+                        .requestMatchers("/apis/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .userDetailsService(userDetailsService)

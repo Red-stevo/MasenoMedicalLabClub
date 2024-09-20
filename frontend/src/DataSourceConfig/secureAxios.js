@@ -1,11 +1,10 @@
 import axios from "axios";
 import axiosConfigFreeAPI from "./axiosConfig.js";
-import {store} from "../ReduxStorage/Store.js";
+import {persistor, store} from "../ReduxStorage/Store.js";
 import {updateToken, userLogout} from "../ReduxStorage/LoginStore/LoginPageStore.js";
 
 let isRefreshing = false;
 let failedRequestsQueue = [];
-const old_token = store.getState().accessToken;
 
 const handleQueuedRequests = (error, token= null) => {
    failedRequestsQueue.forEach((request) => {
@@ -17,29 +16,31 @@ const handleQueuedRequests = (error, token= null) => {
    failedRequestsQueue = [];
 }
 
-export const  axiosConfig = axios.create({
+export const  secureAxiosConfig = axios.create({
     headers:{
         'Content-Type':'application/json',
         'Accept':'application/json',
-        'Authorization':`Bearer ${old_token}`
+       /* 'Authorization':`Bearer ${store.getState().accessToken}`*/
     },
     baseURL:'http://localhost:8080/apis',
     withCredentials:true,
 });
 
-axiosConfig.interceptors.response.use((response) => {
+secureAxiosConfig.interceptors.response.use((response) => {
+        console.log("response intercepted.")
     return response;
 },
     async (error) => {
         const originalRequest = error.config;
 
         if (error.response && error.response.status === 401 && !originalRequest._retry) {
+            console.info("Error info ",error.response)
             if (isRefreshing) {
                 return new Promise((resolve, reject) => {
                     failedRequestsQueue.push({resolve, reject});
                 }).then((token) => {
                     originalRequest.headers.Authorization = `Bearer ${token}`;
-                    return axiosConfig(originalRequest);
+                    return secureAxiosConfig(originalRequest);
                 }).catch((error) => {
                     return new Promise.reject(error);
                 })
@@ -49,6 +50,7 @@ axiosConfig.interceptors.response.use((response) => {
 
             //try refreshing the token
             try {
+                console.log("refreshing the token")
                 /*Request to refresh the token.*/
                 const response = await axiosConfigFreeAPI.put("/refresh");
                 const {token, userId, userRole} = response.data;
@@ -61,13 +63,16 @@ axiosConfig.interceptors.response.use((response) => {
                 //handle queued requests after a successful token refresh.
                 handleQueuedRequests(null, token);
 
-                return axiosConfig(originalRequest);
+                return secureAxiosConfig(originalRequest);
             } catch (error) {
                 //handle queued requests after a failed token refresh.
                 handleQueuedRequests(error, null);
 
                 //handle user logout.
                 store.dispatch(userLogout());
+
+                //clear the persisted data in the session storage.
+                await persistor.purge();
 
                 return Promise.reject(error);
             } finally {

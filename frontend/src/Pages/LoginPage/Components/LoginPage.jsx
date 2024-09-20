@@ -24,7 +24,7 @@ const LoginPage = () => {
                 dispatch(clearLoginErrorMessage())
             }, 6000)
         }else if (isAuthenticated){
-            navigate("/home");
+            navigate("/home/events");
         }
     }, [errorMessage, isAuthenticated]);
 
