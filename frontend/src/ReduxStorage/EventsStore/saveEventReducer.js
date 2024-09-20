@@ -26,7 +26,8 @@ const saveEventReducer = createSlice({
     initialState,
     reducers:{
         clearErrorMessage:(state) => state.errorMessage = null,
-        clearSuccessMessage:(state) => state.successMessage = null
+        clearSuccessMessage:(state) => state.successMessage = null,
+        setUploadError:(state, action) => state.errorMessage = action.payload.error,
     },
     extraReducers:builder => {
         builder
@@ -53,6 +54,7 @@ const saveEventReducer = createSlice({
 
 export const  {
     clearErrorMessage,
-    clearSuccessMessage
+    clearSuccessMessage,
+    setUploadError
 } = saveEventReducer.actions
 export default saveEventReducer.reducer;

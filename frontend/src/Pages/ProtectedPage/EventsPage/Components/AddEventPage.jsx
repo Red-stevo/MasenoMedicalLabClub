@@ -3,7 +3,7 @@ import "./../Styles/AddEventPage.css";
 import {useForm} from "react-hook-form";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {clearErrorMessage, saveEvent} from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
+import {clearErrorMessage, saveEvent, setUploadError} from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
 import dayjs from "dayjs";
 
 
@@ -22,7 +22,9 @@ const AddEventPage = () => {
                 dispatch(clearErrorMessage());
             }, 6000)
         }else if (successMessage){
-
+            setTimeout(() => {
+                dispatch(clearErrorMessage);
+            }, 6000)
         }
     }, [successMessage, errorMessage]);
 
@@ -41,9 +43,8 @@ const AddEventPage = () => {
         },
         (error, result) => {
             if (error){
-                console.log("Error Occurred ", error)
+                dispatch(setUploadError(error.message));
             }else if (result.event === "success"){
-                console.log(result);
                 setImageUrls((urls) =>[...urls,
                     {url: result.info.secure_url, imageId:result.info.public_id}]);
             }
