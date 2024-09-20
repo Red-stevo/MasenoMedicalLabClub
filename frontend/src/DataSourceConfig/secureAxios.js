@@ -2,7 +2,6 @@ import axios from "axios";
 import axiosConfigFreeAPI from "./axiosConfig.js";
 import {persistor, store} from "../ReduxStorage/Store.js";
 import {updateToken, userLogout} from "../ReduxStorage/LoginStore/LoginPageStore.js";
-import config from "bootstrap/js/src/util/config.js";
 
 let isRefreshing = false;
 let failedRequestsQueue = [];
@@ -20,7 +19,6 @@ const handleQueuedRequests = (error, token= null) => {
 export const  secureAxiosConfig = axios.create({
     headers:{
         'Content-Type':'application/json',
-        'Accept':'application/json',
     },
     baseURL:'http://localhost:8080/apis',
     withCredentials:true,
@@ -54,6 +52,8 @@ secureAxiosConfig.interceptors.response.use((response) => {
                 console.log("refreshing the token")
                 /*Request to refresh the token.*/
                 const response = await axiosConfigFreeAPI.put("/refresh");
+                console.log("server response", response);
+                console.log("Refresh response.",response.data);
                 const {token, userId, userRole} = response.data;
 
                 /*dispatch an action to update the old accessToken*/
@@ -75,20 +75,20 @@ secureAxiosConfig.interceptors.response.use((response) => {
                 //clear the persisted data in the session storage.
                 await persistor.purge();
 
-                return Promise.reject(error);
+                return new Promise.reject(error);
             } finally {
                 isRefreshing = false;
             }
         }
-        return Promise.reject(error);
+        return new Promise.reject(error);
     });
 
 
 
 secureAxiosConfig.interceptors.request.use(
     config => {
-        config.headers.Authorization = `Bearer ${store.getState().accessToken}`;
-        return config;
+        console.log(config)
+        return config
     },
     error => {
         return Promise.reject(error);

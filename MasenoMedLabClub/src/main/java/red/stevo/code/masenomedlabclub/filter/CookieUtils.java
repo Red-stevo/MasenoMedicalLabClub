@@ -37,12 +37,10 @@ public class CookieUtils {
     }
 
     public  String extractJwtFromCookie(HttpServletRequest request) {
-
-
         String token = request.getHeader("cookie").substring(16);
+        token = token.split(";")[0];
         System.out.println(token);
 
         return token;
-
     }
 }
