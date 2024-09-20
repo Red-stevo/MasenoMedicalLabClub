@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/apis/login", "/apis/refresh").permitAll()
-                        .requestMatchers("/apis/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/apis/admin/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
