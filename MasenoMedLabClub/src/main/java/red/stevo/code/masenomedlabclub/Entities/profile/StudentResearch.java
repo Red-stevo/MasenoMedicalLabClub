@@ -15,5 +15,5 @@ public class StudentResearch {
     private String profileId;
     private String researchTitle;
     private String researchDescription;
-    private byte[] researchDocuments;
+    private String researchDocuments;
 }
