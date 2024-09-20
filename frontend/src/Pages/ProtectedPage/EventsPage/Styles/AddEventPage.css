@@ -1,0 +1,44 @@
+
+.add-event-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10vh;
+    min-height: 90vh;
+    width: 70%;
+    background-color: white;
+    margin-left: 10%;
+}
+
+.event-title, .event-description {
+    margin-top: 5vh;
+}
+
+.event-description {
+    margin-bottom: 5vh;
+}
+
+.input-field {
+    border: solid 1px black;
+}
+
+.upload-button {
+    border: none;
+    margin-top: 5vh;
+    align-self: end;
+    background-color: rgb(11, 136, 175);
+    width: 40%;
+    margin-bottom: 20vh;
+}
+
+.upload-widget {
+    border: none;
+    margin-top: 5vh;
+    align-self: start;
+    background-color: rgb(11, 136, 175);
+    width: 60%;
+    margin-bottom: 5vh;
+}
+
+.upload-button:hover, .upload-widget:hover {
+    background-color: rgba(0, 166, 255, 0.62);
+}

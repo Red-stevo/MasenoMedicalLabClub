@@ -2,11 +2,9 @@ package red.stevo.code.masenomedlabclub.Controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.IndexPageImageModel;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
@@ -20,9 +18,9 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@CrossOrigin("*")
 @RequiredArgsConstructor
 @RequestMapping("/apis/admin")
+@CrossOrigin(value="http://localhost:5173", allowCredentials = "true")
 public class AdminController {
 
     private final AdminIndexImagesStorageService adminIndexImagesStorageService;
@@ -53,12 +51,7 @@ public class AdminController {
         return adminIndexImagesStorageService.deleteIndexPageImage(imageId);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<List<String>> register(@RequestBody List<UsersRegistrationRequests> request){
-        log.info("Request to register users.");
-        List<String> createUsers = usersRegistrationService.createUser(request);
-        return ResponseEntity.ok(createUsers);
-    }
+
 
     @DeleteMapping("/delete")
     public ResponseEntity<UserGeneralResponse> deleteUser(@RequestBody List<String> emails){
@@ -73,18 +66,19 @@ public class AdminController {
     }
 
     @PostMapping("/events/create")
-    public ResponseEntity<String> createEvent(@RequestBody EventsCreationRequest request){
+    public ResponseEntity<UserGeneralResponse> createEvent(@RequestBody EventsCreationRequest request){
         log.info("Request to create event.");
-        eventsService.createEvent(request);
-        return ResponseEntity.ok("Event created");
+        UserGeneralResponse response = eventsService.createEvent(request);
+        return ResponseEntity.ok(response);
     }
 
+
     @PutMapping("/events/update")
-    public ResponseEntity<String> updateEvent(@RequestBody EventsCreationRequest request,
+    public ResponseEntity<UserGeneralResponse> updateEvent(@RequestBody EventsCreationRequest request,
                                               @RequestParam String eventId){
         log.info("request to create an event");
-        eventsService.updateEvent(request,eventId);
-        return ResponseEntity.ok("event updated successfully");
+        UserGeneralResponse response =  eventsService.updateEvent(request,eventId);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/event/delete")
@@ -93,10 +87,10 @@ public class AdminController {
         return ResponseEntity.ok("event deleted successfully");
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test(){
-        log.info("Request to test.");
-        String response = "hello there";
-        return ResponseEntity.ok(response);
+    @PostMapping("/register")
+    public ResponseEntity<UserGeneralResponse> register(@RequestBody List<UsersRegistrationRequests> request){
+        log.info("Request to register users.");
+        UserGeneralResponse createUsers = usersRegistrationService.createUser(request);
+        return ResponseEntity.ok(createUsers);
     }
 }

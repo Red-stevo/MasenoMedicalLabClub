@@ -1,0 +1,49 @@
+
+.error-message-animation, .success-message-animation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 39%;
+    margin-right: 40%;
+    position: absolute;
+    margin-top: 80vh;
+    font-weight: 600;
+    font-size: 18px;
+    border-top: rgba(83, 101, 83, 0.62) 1px solid;
+    border-bottom:rgba(83, 101, 83, 0.62) 1px solid;
+    border-left: rgba(83, 101, 83, 0.62) 1px solid;
+    border-radius: 10px;
+    padding: 5px;
+    background: white;
+    width: 300px;
+    height: 80px;
+    animation: slide-up linear 2s;
+}
+
+
+.error-message-animation {
+    border-right: red 10px solid;
+    color: red;
+}
+
+.success-message-animation {
+    border-right: rgb(68, 255, 0) 10px solid;
+    color: #06330b;
+}
+
+
+@keyframes slide-up {
+    0% {
+        transform: translateY(21vh);
+    }
+}
+
+.loading {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}

@@ -104,7 +104,7 @@ span.arrow {
 }
 
 .login {
-    margin-left: 5%;
+    margin-top: 5%;
     font-size: 20px;
     font-weight: 500;
     width: 40%;
@@ -161,7 +161,6 @@ span.arrow {
         height: 70px;
         font-size: 34px;
     }
-
 }
 
 @media all and (max-device-width: 480px){
@@ -187,5 +186,4 @@ span.arrow {
     .login-section {
         margin-top: 20%;
     }
-
 }

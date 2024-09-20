@@ -1,9 +1,13 @@
 import axios from "axios";
 
-const axiosConfig = axios.create({
-    headers:{},
-    baseURL:""
+const axiosConfigFreeAPI = axios.create({
+    headers:{
+        'Content-Type':'application/json',
+        'Accept':'application/json',
+    },
+    baseURL:"http://localhost:8080/apis",
+    withCredentials:true,
 });
 
-export default axiosConfig
+export default axiosConfigFreeAPI;
 

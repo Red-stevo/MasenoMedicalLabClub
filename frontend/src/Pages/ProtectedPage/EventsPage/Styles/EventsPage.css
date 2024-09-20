@@ -1,0 +1,31 @@
+.events-page {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-top: 10vh;
+    min-height: 100vh;
+    width: 100%;
+    background-color: white;
+}
+
+.events-card {
+    width: 250px;
+    height: 250px;
+    margin: 5%;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.add-event {
+    align-content: center;
+    position: fixed;
+    border: none;
+    background-color: rgb(11, 136, 175);
+    top: 80vh;
+    right: 9vw;
+    width: 100px;
+}
+
+.add-event:hover {
+    background-color: rgba(0, 166, 255, 0.62);
+}

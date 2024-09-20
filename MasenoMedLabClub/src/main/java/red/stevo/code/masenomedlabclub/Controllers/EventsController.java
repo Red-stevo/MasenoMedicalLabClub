@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import red.stevo.code.masenomedlabclub.Entities.events.EventImages;
 import red.stevo.code.masenomedlabclub.Entities.events.Events;
-import red.stevo.code.masenomedlabclub.Models.RequestModels.events.EventImagesCreationRequest;
+import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Service.events.EventImagesService;
 import red.stevo.code.masenomedlabclub.Service.events.EventsService;
 
@@ -13,11 +14,13 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@CrossOrigin("*")
 @RequiredArgsConstructor
 @RequestMapping("/apis/events")
+@CrossOrigin(value="http://localhost:5173", allowCredentials = "true")
 public class EventsController {
+
     private final EventsService eventsService;
+
     private final EventImagesService imagesService;
 
     @GetMapping("/our-events")
@@ -27,15 +30,20 @@ public class EventsController {
         return ResponseEntity.ok(eventsList);
     }
 
-    @PostMapping("/post/images")
+/*    @PostMapping("/post/images")
     public ResponseEntity<String> postEventImages(@RequestBody List<EventImagesCreationRequest> request) {
         imagesService.addEventImage(request);
         return ResponseEntity.ok("Images added successfully");
-    }
+    }*/
 
     @DeleteMapping("/delete/image")
-    public ResponseEntity<String> deleteEventImage(@RequestBody List<String> imageUrl) {
-        imagesService.deleteEventImages(imageUrl);
-        return ResponseEntity.ok("Images deleted successfully");
+    public ResponseEntity<UserGeneralResponse> deleteEventImage(@RequestBody List<String> imageUrl) {
+        UserGeneralResponse response = imagesService.deleteEventImages(imageUrl);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{eventId}/images")
+    public ResponseEntity<List<EventImages>> getEventImages(@PathVariable String eventId) {
+        return ResponseEntity.ok(imagesService.getEventImages(eventId));
     }
 }
