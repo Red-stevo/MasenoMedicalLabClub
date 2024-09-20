@@ -11,8 +11,6 @@ import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
 import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepository;
 import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
 
-import java.util.Arrays;
-
 @Configuration
 @RequiredArgsConstructor
 public class CookieUtils {

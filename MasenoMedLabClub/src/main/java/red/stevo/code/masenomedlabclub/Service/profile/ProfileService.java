@@ -29,7 +29,7 @@ public class ProfileService {
     private final StudentResearchRepository studentResearchRepository;
     private final ModelMapper modelMapper;
 
-    public UserGeneralResponse createProfile(ProfileCreationRequests requests, String userId) {
+    public UserGeneralResponse createProfile(ProfileCreationRequests requests, int userId) {
         try {
             log.info("Creating profile");
 
@@ -45,8 +45,8 @@ public class ProfileService {
             UserProfile savedProfile = profileRepository.save(userProfile);
 
             // Add social media accounts if provided
-            if (requests.getSocialMediaAccounts() != null && !requests.getSocialMediaAccounts().isEmpty()) {
-                addSocialMedia(savedProfile.getProfileId(), requests.getSocialMediaAccounts());
+            if (requests.getMediaRequests() != null && !requests.getMediaRequests().isEmpty()) {
+                addSocialMedia(savedProfile.getProfileId(), requests.getMediaRequests());
             }
 
             if (requests.getStudentResearches() != null && !requests.getStudentResearches().isEmpty()){
@@ -65,15 +65,15 @@ public class ProfileService {
         }
     }
 
-    public void addSocialMedia(String profileId, List<SocialMediaAccounts> socialMediaAccounts) {
+    public void addSocialMedia(String profileId, List<SocialMediaRequests> mediaRequests) {
         log.info("Adding social media accounts for profile: " + profileId);
 
-        List<SocialMediaAccounts> accountsToSave = socialMediaAccounts.stream()
+        List<SocialMediaAccounts> accountsToSave = mediaRequests.stream()
                 .map(accountRequest -> {
                     SocialMediaAccounts account = new SocialMediaAccounts();
-                    account.setProfileId(accountRequest.getProfileId());
-                    account.setSocialMediaAccountName(accountRequest.getSocialMediaAccountName());
-                    account.setSocialMediaAccountUrl(accountRequest.getSocialMediaAccountUrl());
+                    account.setProfileId(profileId);
+                    account.setSocialMediaAccountName(accountRequest.getSocialMediaName());
+                    account.setSocialMediaAccountUrl(accountRequest.getSocialMediaUrl());
                     return account;
                 }).toList();
 
@@ -99,19 +99,19 @@ public class ProfileService {
         return response;
     }
 
-    public UserGeneralResponse updateProfile(ProfileCreationRequests requests, String profileId){
+    public UserGeneralResponse updateProfile(ProfileCreationRequests requests, int userId){
         log.info("Updating profile");
-        UserProfile userProfile = profileRepository.findByProfileId(profileId).orElseThrow();
+        UserProfile userProfile = profileRepository.findByUserId(userId);
         userProfile.setFirstName(requests.getFirstName());
         userProfile.setLastName(requests.getLastName());
         userProfile.setProfileImage(requests.getProfileImage());
         userProfile.setRegistrationNo(requests.getRegistrationNo());
-        UserProfile updatedProfile = profileRepository.save(userProfile);
-        if (requests.getSocialMediaAccounts() != null && !requests.getSocialMediaAccounts().isEmpty()) {
-            addSocialMedia(updatedProfile.getProfileId(), requests.getSocialMediaAccounts());
+        UserProfile userProfile1 = profileRepository.save(userProfile);
+        if (requests.getMediaRequests() != null && !requests.getMediaRequests().isEmpty()) {
+            addSocialMedia(userProfile1.getProfileId(), requests.getMediaRequests());
         }
         if (requests.getStudentResearches() != null && !requests.getStudentResearches().isEmpty()) {
-            addStudentResearch(updatedProfile.getProfileId(), requests.getStudentResearches());
+            addStudentResearch(userProfile.getProfileId(), requests.getStudentResearches());
         }
         UserGeneralResponse response = new UserGeneralResponse();
         response.setMessage("Profile updated successfully");
@@ -169,9 +169,9 @@ public class ProfileService {
         return response;
     }
 
-    public UserGeneralResponse deleteUserProfile(String profileId){
+    public UserGeneralResponse deleteUserProfile(int userId){
         log.info("Deleting user profile");
-        UserProfile profile = profileRepository.findByProfileId(profileId).orElseThrow();
+        UserProfile profile = profileRepository.findByUserId(userId);
         profileRepository.delete(profile);
         UserGeneralResponse response = new UserGeneralResponse();
         response.setMessage("profile deleted successfully");
@@ -179,13 +179,10 @@ public class ProfileService {
         response.setHttpStatus(HttpStatus.OK);
         return response;
     }
-    public ProfileCreationRequests getUserProfile(String userId){
+    public UserProfile getUserProfile(int userId){
         log.info("Retrieving user profile");
         UserProfile profile = profileRepository.findByUserId(userId);
-        modelMapper.getConfiguration()
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
-                .setFieldMatchingEnabled(true);
-        return modelMapper.map(profile, ProfileCreationRequests.class);
+        return profile;
 
     }
 }
