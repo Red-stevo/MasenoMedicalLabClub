@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configure(http))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/apis/login", "/apis/refresh","apis/user/profile").permitAll()
+                        .requestMatchers("/apis/login", "/apis/refresh","apis/user/profile","apis/logout").permitAll()
                         .requestMatchers("/apis/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
