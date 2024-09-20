@@ -12,7 +12,7 @@ public class ProfileCreationRequests {
     private String firstName;
     private String lastName;
     private String registrationNo;
-    private byte[] profileImage;
+    private String profileImage;
     private List<SocialMediaAccounts> socialMediaAccounts;
     private List<StudentResearch> studentResearches;
 }

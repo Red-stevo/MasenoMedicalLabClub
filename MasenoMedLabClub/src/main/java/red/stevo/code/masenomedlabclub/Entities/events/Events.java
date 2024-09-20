@@ -23,7 +23,8 @@ public class Events {
 
     private String eventLocation;
 
-    @OneToMany(mappedBy = "eventId", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // Establishing relationship
+    @OneToMany(mappedBy = "eventId", cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER, orphanRemoval = true) // Establishing relationship
     private List<EventImages> eventImages;
 
 
