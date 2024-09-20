@@ -20,11 +20,11 @@ const AddEventPage = () => {
             setTimeout(() => {
                 //clear the error message.
                 dispatch(clearErrorMessage());
-            }, 6000)
+            }, 5000)
         }else if (successMessage){
             setTimeout(() => {
                 dispatch(clearErrorMessage);
-            }, 6000)
+            }, 5000)
         }
     }, [successMessage, errorMessage]);
 
@@ -56,6 +56,7 @@ const AddEventPage = () => {
     const handleEventSubmit = (data) => {
         /*Convert the date to be compatible with java Instance object for date and time.*/
         const date = dayjs(data.eventDate).toISOString();
+        console.log(data.eventDate);
 
         const eventData = {...data, requestList:imageUrls,eventDate:date }
 

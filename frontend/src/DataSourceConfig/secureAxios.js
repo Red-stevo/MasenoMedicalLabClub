@@ -2,6 +2,7 @@ import axios from "axios";
 import axiosConfigFreeAPI from "./axiosConfig.js";
 import {persistor, store} from "../ReduxStorage/Store.js";
 import {updateToken, userLogout} from "../ReduxStorage/LoginStore/LoginPageStore.js";
+import config from "bootstrap/js/src/util/config.js";
 
 let isRefreshing = false;
 let failedRequestsQueue = [];
@@ -20,14 +21,13 @@ export const  secureAxiosConfig = axios.create({
     headers:{
         'Content-Type':'application/json',
         'Accept':'application/json',
-       /* 'Authorization':`Bearer ${store.getState().accessToken}`*/
     },
     baseURL:'http://localhost:8080/apis',
     withCredentials:true,
 });
 
 secureAxiosConfig.interceptors.response.use((response) => {
-        console.log("response intercepted.")
+        console.log("response intercepted.", response);
     return response;
 },
     async (error) => {
@@ -45,6 +45,7 @@ secureAxiosConfig.interceptors.response.use((response) => {
                     return new Promise.reject(error);
                 })
             }
+
             originalRequest._retry = true;
             isRefreshing = true;
 
@@ -56,7 +57,7 @@ secureAxiosConfig.interceptors.response.use((response) => {
                 const {token, userId, userRole} = response.data;
 
                 /*dispatch an action to update the old accessToken*/
-                store.dispatch(updateToken({accessToken: token, userId, userRole,}));
+                store.dispatch(updateToken({accessToken: token, userId, userRole}));
 
                 originalRequest.headers.Authorization = `${token}`;
 
@@ -82,3 +83,14 @@ secureAxiosConfig.interceptors.response.use((response) => {
         return Promise.reject(error);
     });
 
+
+
+secureAxiosConfig.interceptors.request.use(
+    config => {
+        config.headers.Authorization = `Bearer ${store.getState().accessToken}`;
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
