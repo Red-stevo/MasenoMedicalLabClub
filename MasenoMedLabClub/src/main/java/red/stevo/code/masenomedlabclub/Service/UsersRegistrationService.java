@@ -30,6 +30,7 @@ import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepositor
 import red.stevo.code.masenomedlabclub.Repositories.users.UsersRepository;
 import red.stevo.code.masenomedlabclub.Service.DetService.EmailService;
 import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
+import red.stevo.code.masenomedlabclub.Service.DetService.LogoutService;
 import red.stevo.code.masenomedlabclub.configurations.PasswordGenerator;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
@@ -52,6 +53,7 @@ public class UsersRegistrationService {
     private final CookieUtils cookieUtils;
     private final EmailService emailService;
     private final HttpServletResponse response;
+    private final RefreshTokensRepository refreshTokensRepository;
 
 
     public UserGeneralResponse createUser(List<UsersRegistrationRequests> regRequest) {
@@ -176,6 +178,7 @@ public class UsersRegistrationService {
                     }
 
             ).toList();
+
             usersRepository.deleteAll(usersList);
             UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
             userGeneralResponse.setMessage("User deleted successfully");
