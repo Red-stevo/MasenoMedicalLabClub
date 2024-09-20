@@ -4,10 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.AuthenticationResponse;
 import red.stevo.code.masenomedlabclub.Service.DetService.RefreshTokensService;
 
@@ -20,7 +17,7 @@ public class RefreshTokensController {
 
     private final RefreshTokensService refreshTokensService;
 
-    @PutMapping("/refresh")
+    @GetMapping("/refresh")
     public ResponseEntity<AuthenticationResponse> refreshTokens(HttpServletRequest request) {
         // Refresh the token
         AuthenticationResponse authenticationResponse = refreshTokensService.refreshToken(request);
