@@ -19,15 +19,13 @@ const handleQueuedRequests = (error, token= null) => {
 export const  secureAxiosConfig = axios.create({
     headers:{
         'Content-Type':'application/json',
-        'Accept':'application/json',
-       /* 'Authorization':`Bearer ${store.getState().accessToken}`*/
     },
     baseURL:'http://localhost:8080/apis',
     withCredentials:true,
 });
 
 secureAxiosConfig.interceptors.response.use((response) => {
-        console.log("response intercepted.")
+        console.log("response intercepted.", response);
     return response;
 },
     async (error) => {
@@ -45,6 +43,7 @@ secureAxiosConfig.interceptors.response.use((response) => {
                     return new Promise.reject(error);
                 })
             }
+
             originalRequest._retry = true;
             isRefreshing = true;
 
@@ -53,10 +52,12 @@ secureAxiosConfig.interceptors.response.use((response) => {
                 console.log("refreshing the token")
                 /*Request to refresh the token.*/
                 const response = await axiosConfigFreeAPI.put("/refresh");
+                console.log("server response", response);
+                console.log("Refresh response.",response.data);
                 const {token, userId, userRole} = response.data;
 
                 /*dispatch an action to update the old accessToken*/
-                store.dispatch(updateToken({accessToken: token, userId, userRole,}));
+                store.dispatch(updateToken({accessToken: token, userId, userRole}));
 
                 originalRequest.headers.Authorization = `${token}`;
 
@@ -74,11 +75,22 @@ secureAxiosConfig.interceptors.response.use((response) => {
                 //clear the persisted data in the session storage.
                 await persistor.purge();
 
-                return Promise.reject(error);
+                return new Promise.reject(error);
             } finally {
                 isRefreshing = false;
             }
         }
-        return Promise.reject(error);
+        return new Promise.reject(error);
     });
 
+
+
+secureAxiosConfig.interceptors.request.use(
+    config => {
+        console.log(config)
+        return config
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);

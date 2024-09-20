@@ -3,7 +3,12 @@ import "./../Styles/AddEventPage.css";
 import {useForm} from "react-hook-form";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {clearErrorMessage, saveEvent, setUploadError} from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
+import {
+    clearErrorMessage,
+    clearSuccessMessage,
+    saveEvent,
+    setUploadError
+} from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
 import dayjs from "dayjs";
 
 
@@ -15,18 +20,22 @@ const AddEventPage = () => {
 
 
     useEffect(() => {
-
+        console.log("message.")
         if (errorMessage){
+            console.log("to be cleared soon.")
             setTimeout(() => {
                 //clear the error message.
                 dispatch(clearErrorMessage());
-            }, 6000)
+                console.log("message cleared")
+            }, 5000);
+
         }else if (successMessage){
             setTimeout(() => {
-                dispatch(clearErrorMessage);
-            }, 6000)
+                dispatch(clearSuccessMessage());
+            }, 5000);
+
         }
-    }, [successMessage, errorMessage]);
+    }, [successMessage, errorMessage, status]);
 
     /*Cloudinary upload widget setup.*/
     const uploadWidget = () => window.cloudinary.openUploadWidget(
@@ -56,6 +65,7 @@ const AddEventPage = () => {
     const handleEventSubmit = (data) => {
         /*Convert the date to be compatible with java Instance object for date and time.*/
         const date = dayjs(data.eventDate).toISOString();
+        console.log(data.eventDate);
 
         const eventData = {...data, requestList:imageUrls,eventDate:date }
 

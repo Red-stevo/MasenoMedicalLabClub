@@ -11,7 +11,9 @@ public class RefreshTokens {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int tokenId;
+
     private String refreshToken;
+
     @ManyToOne
     private Users user;
 }
