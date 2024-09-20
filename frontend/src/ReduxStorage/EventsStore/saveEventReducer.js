@@ -1,5 +1,5 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
-import axiosConfig from "../../DataSourceConfig/axiosConfig.js";
+import {secureAxiosConfig} from "../../DataSourceConfig/secureAxios.js";
 
 const eventsDataAdapter = createEntityAdapter();
 
@@ -13,7 +13,7 @@ export const saveEvent = createAsyncThunk("save-event/new-event",
     async (eventData, config) => {
 
     try {
-        const response = await axiosConfig.post("/admin/events/create", eventData);
+        const response = await secureAxiosConfig.post("/admin/events/create", eventData);
         return config.fulfillWithValue(response.data);
     }catch (error) {
         return config.rejectWithValue(error.response.data);
@@ -41,8 +41,8 @@ const saveEventReducer = createSlice({
             })
             .addCase(saveEvent.rejected, (state, action) => {
                 /*console.log(action.payload.data);*/
-                if (action.payload.message)
-                    state.errorMessage = action.payload;
+                if (action.payload)
+                    state.errorMessage = action.payload.message;
                 else
                     state.errorMessage = "Error posting The Event.";
 

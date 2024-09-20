@@ -15,6 +15,8 @@
     border-radius: 10px;
     padding: 5px;
     background: white;
+    width: 300px;
+    height: 80px;
     animation: slide-up linear 2s;
 }
 
@@ -25,8 +27,6 @@
 }
 
 .success-message-animation {
-    width: 300px;
-    height: 80px;
     border-right: rgb(68, 255, 0) 10px solid;
     color: #06330b;
 }
