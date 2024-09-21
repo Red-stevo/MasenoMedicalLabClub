@@ -3,7 +3,7 @@ import axiosConfigFreeAPI from "./axiosConfig.js";
 import {persistor, store} from "../ReduxStorage/Store.js";
 import {updateToken, userLogout} from "../ReduxStorage/LoginStore/LoginPageStore.js";
 
-/*let isRefreshing = false;
+let isRefreshing = false;
 let failedRequestsQueue = [];
 
 const handleQueuedRequests = (error, token= null) => {
@@ -14,7 +14,7 @@ const handleQueuedRequests = (error, token= null) => {
            return request.reject(error);
    });
    failedRequestsQueue = [];
-}*/
+}
 
 export const  secureAxiosConfig = axios.create({
     headers:{
@@ -24,7 +24,6 @@ export const  secureAxiosConfig = axios.create({
     withCredentials:true,
 });
 
-/*
 secureAxiosConfig.interceptors.response.use((response) => {
         console.log("response intercepted.", response);
     return response;
@@ -51,13 +50,13 @@ secureAxiosConfig.interceptors.response.use((response) => {
             //try refreshing the token
             try {
                 console.log("refreshing the token")
-                /!*Request to refresh the token.*!/
+                /*Request to refresh the token.*/
                 const response = await axiosConfigFreeAPI.put("/refresh");
                 console.log("server response", response);
                 console.log("Refresh response.",response.data);
                 const {token, userId, userRole} = response.data;
 
-                /!*dispatch an action to update the old accessToken*!/
+                /*dispatch an action to update the old accessToken*/
                 store.dispatch(updateToken({accessToken: token, userId, userRole}));
 
                 originalRequest.headers.Authorization = `${token}`;
@@ -95,4 +94,3 @@ secureAxiosConfig.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-*/
