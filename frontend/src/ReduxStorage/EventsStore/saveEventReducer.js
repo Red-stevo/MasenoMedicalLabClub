@@ -20,7 +20,6 @@ export const saveEvent = createAsyncThunk("save-event/new-event",
     }
 });
 
-
 const saveEventReducer = createSlice({
     name:"save-event",
     initialState,

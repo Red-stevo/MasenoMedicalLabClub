@@ -2,6 +2,7 @@ import "./../Styles/EventsPage.css";
 import {Button, Card} from "react-bootstrap";
 import {IoAddSharp} from "react-icons/io5";
 import {Link, useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 const EventsPage = () => {
     const navigate = useNavigate();
 
@@ -10,6 +11,10 @@ const EventsPage = () => {
 
         navigate("/home/events/add");
     }
+
+    useEffect(() => {
+
+    }, []);
 
     return (
         <div className={"events-page"}>
