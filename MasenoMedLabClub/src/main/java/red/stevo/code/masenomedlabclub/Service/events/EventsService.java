@@ -115,6 +115,11 @@ public class EventsService {
 
     }
 
+    public Events getEventById(String eventId){
+        log.info("Getting event by id");
+        return eventsRepository.findEventsByEventId(eventId);
+    }
+
 
 
 }
