@@ -3,18 +3,24 @@ import {Button, Card} from "react-bootstrap";
 import {IoAddSharp} from "react-icons/io5";
 import {Link, useNavigate} from "react-router-dom";
 import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import getEvents, {fetchEvents} from "../../../../ReduxStorage/EventsStore/GetEvents.js";
 const EventsPage = () => {
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
+    const events = useSelector((state) => state.events);
+    /*handled redirection to the add events page.*/
     const handleAddEventClick = (event) => {
         event.preventDefault();
 
         navigate("/home/events/add");
     }
 
+    //get user events when the page loads.
     useEffect(() => {
+        dispatch(fetchEvents());
+    }, [1]);
 
-    }, []);
 
     return (
         <div className={"events-page"}>
