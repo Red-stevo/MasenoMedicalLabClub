@@ -15,6 +15,7 @@ import red.stevo.code.masenomedlabclub.Service.profile.ProfileService;
 @Data
 @RequiredArgsConstructor
 @RequestMapping("/apis/user/profile")
+@CrossOrigin(value={"http://localhost:5173"}, allowCredentials = "true")
 public class UserProfileController {
 
     private final ProfileService profileService;
