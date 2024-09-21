@@ -8,6 +8,7 @@ import HomeNavBar from "./Pages/ProtectedPage/HomeNavBar/Components/HomeNavBar.j
 import EventsPage from "./Pages/ProtectedPage/EventsPage/Components/EventsPage.jsx";
 import AddEventPage from "./Pages/ProtectedPage/EventsPage/Components/AddEventPage.jsx";
 import AdminRouteProtection from "./RouterProtectionComponent/AdminRouteProtection.jsx";
+import EventDataView from "./Pages/ProtectedPage/EventsPage/Components/EventDataView.jsx";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                     <Route path={"/home/events"} element={<EventsPage />} />
                     <Route path={"/home/events/add"}
                            element={<AdminRouteProtection><AddEventPage /></AdminRouteProtection>} />
+                    <Route path={"/home/events/:eventId"} element={<EventDataView />}/>
                 </Route>
             </Routes>
         </Router>

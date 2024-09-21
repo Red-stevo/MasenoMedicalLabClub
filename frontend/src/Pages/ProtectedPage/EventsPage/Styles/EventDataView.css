@@ -1,0 +1,9 @@
+.images-view-page {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-top: 10vh;
+    min-height: 100vh;
+    width: 100%;
+    background-color: transparent;
+}
