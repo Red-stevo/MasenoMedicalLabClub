@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import red.stevo.code.masenomedlabclub.Entities.constitution.ConstitutionSection;
+import red.stevo.code.masenomedlabclub.Models.RequestModels.ConstitutionSectionRequest;
 import red.stevo.code.masenomedlabclub.Service.constitution.ConstitutionService;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public class ConstitutionController {
 
     // Create a section
     @PostMapping
-    public ResponseEntity<ConstitutionSection> createSection(@RequestBody ConstitutionSection section) {
-        return new ResponseEntity<>(constitutionService.createSection(section), HttpStatus.CREATED);
+    public ResponseEntity<?> createSection(@RequestBody List<ConstitutionSectionRequest> sections) {
+        return new ResponseEntity<>(constitutionService.createSection(sections), HttpStatus.CREATED);
     }
 
     // Get all sections
@@ -36,15 +37,16 @@ public class ConstitutionController {
 
     // Update a section by ID
     @PutMapping("/{id}")
-    public ResponseEntity<ConstitutionSection> updateSection(@PathVariable Long id, @RequestBody ConstitutionSection section) {
+    public ResponseEntity<?> updateSection(@PathVariable Long id,
+                                           @RequestBody ConstitutionSectionRequest section) {
         return ResponseEntity.ok(constitutionService.updateSection(id, section));
     }
 
     // Delete a section by ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSection(@PathVariable Long id) {
+    public ResponseEntity<?> deleteSection(@PathVariable Long id) {
         constitutionService.deleteSection(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("deleted successfully");
     }
 }
 

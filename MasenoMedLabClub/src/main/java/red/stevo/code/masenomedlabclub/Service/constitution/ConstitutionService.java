@@ -53,7 +53,7 @@ public class ConstitutionService {
         return response;
     }
 
-    public UserGeneralResponse updateSection(Long id, ConstitutionSection updatedSection) {
+    public UserGeneralResponse updateSection(Long id, ConstitutionSectionRequest updatedSection) {
         ConstitutionSection existingSection = getSectionById(id);
         existingSection.setTitle(updatedSection.getTitle());
         existingSection.setContent(updatedSection.getContent());
@@ -67,8 +67,14 @@ public class ConstitutionService {
         return response;
     }
 
-    public void deleteSection(Long id) {
+    public UserGeneralResponse deleteSection(Long id) {
         constitutionRepository.deleteById(id);
+
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setHttpStatus(HttpStatus.OK);
+        response.setMessage("user deleted successfully");
+        response.setDate(new Date());
+        return response;
     }
 }
 
