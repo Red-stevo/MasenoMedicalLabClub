@@ -1,5 +1,6 @@
 package red.stevo.code.masenomedlabclub.Entities.events;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -24,7 +25,7 @@ public class Events {
     private String eventLocation;
 
     @OneToMany(mappedBy = "eventId", cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER, orphanRemoval = true) // Establishing relationship
+            fetch = FetchType.EAGER, orphanRemoval = true)
     private List<EventImages> eventImages;
 
 

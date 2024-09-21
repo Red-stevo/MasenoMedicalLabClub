@@ -23,7 +23,7 @@ public class EventsController {
 
     private final EventImagesService imagesService;
 
-    @GetMapping("/our-events")
+    @GetMapping("/get-events")
     public ResponseEntity<List<Events>> getEvents() {
         log.info("Get our-events");
         List<Events> eventsList = eventsService.getAllEvents();
