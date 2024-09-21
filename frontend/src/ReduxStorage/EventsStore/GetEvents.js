@@ -21,29 +21,12 @@ const GetEvents = createSlice({
     initialState,
     reducers:{},
     extraReducers: builder =>  {
-        builder.addCase(fetchEvents.pending,(state)  => {
-            state.eventId = null;
-            state.eventName = null;
-            state.eventDescription = null;
-            state.eventDate = null;
-            state.eventLocation = null;
-            state.eventImages = null;
-            state.status = "loading";
+        builder.addCase(fetchEvents.pending,()  => {
+            return [];
         }).addCase(fetchEvents.fulfilled,(state, action)  => {
-            console.log(action.payload);
-            return {...action.payload, status:"success"}
-        }).addCase(fetchEvents.rejected,(state, action)  => {
-            if (action.payload.error.response)
-                state.errorMessage = action.payload.error.response.data.message;
-            else state.errorMessage = "Error Fetching Events."
-
-            state.eventName = null;
-            state.eventDescription = null;
-            state.eventDate = null;
-            state.eventLocation = null;
-            state.eventImages = null;
-            state.status = "failed";
-            state.eventId = null;
+            return [...action.payload];
+        }).addCase(fetchEvents.rejected,()  => {
+            return [];
         })
     }
 });
