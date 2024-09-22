@@ -118,6 +118,11 @@ public class EventsService {
         return  eventsRepository.findByEventId(eventId).orElseThrow(() -> new EventNotFoundException("Event Not Found."));
     }
 
+    public Events getEventById(String eventId){
+        log.info("Getting event by id");
+        return eventsRepository.findEventsByEventId(eventId);
+    }
+
 
 
 }

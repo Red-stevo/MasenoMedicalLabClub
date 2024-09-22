@@ -12,6 +12,7 @@ import red.stevo.code.masenomedlabclub.Models.RequestModels.events.EventsCreatio
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Service.AdminIndexImagesStorageService;
 import red.stevo.code.masenomedlabclub.Service.UsersRegistrationService;
+import red.stevo.code.masenomedlabclub.Service.events.EventImagesService;
 import red.stevo.code.masenomedlabclub.Service.events.EventsService;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class AdminController {
     private final AdminIndexImagesStorageService adminIndexImagesStorageService;
     private final UsersRegistrationService usersRegistrationService;
     private final EventsService eventsService;
+    private final EventImagesService imagesService;
 
     /*This end point handles storing of url, name and description of the upload images.
     * These values are received from the font-end provided by the cloudinary API.*/
@@ -85,6 +87,12 @@ public class AdminController {
     public ResponseEntity<String> deleteEvent(String eventId){
         eventsService.deleteEvent(eventId);
         return ResponseEntity.ok("event deleted successfully");
+    }
+
+    @DeleteMapping("/delete/image")
+    public ResponseEntity<UserGeneralResponse> deleteEventImage(@RequestBody List<String> imageUrl) {
+        UserGeneralResponse response = imagesService.deleteEventImages(imageUrl);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")

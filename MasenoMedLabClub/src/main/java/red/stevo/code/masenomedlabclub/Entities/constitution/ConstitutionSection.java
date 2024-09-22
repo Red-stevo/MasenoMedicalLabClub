@@ -3,6 +3,7 @@ package red.stevo.code.masenomedlabclub.Entities.constitution;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,7 +18,7 @@ public class ConstitutionSection {
     @Lob // For long text content
     private String content;
 
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
 }
