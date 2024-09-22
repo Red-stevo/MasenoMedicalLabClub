@@ -55,12 +55,4 @@ public class EventsController {
         return new ResponseEntity<>(eventsService.getEventById(eventId), HttpStatus.OK);
     }
 
-    /*This API will handle fetching index page saved image urls,
-     * description, image titles and their ids.
-     * Returns a list of all available images in the table.*/
-   /* @GetMapping("/get-all/images")
-    public ResponseEntity<List<IndexPageImageModel>> getAllSavedImages(){
-        log.info("Getting Index page Images.");
-        return adminIndexImagesStorageService.getAllIndexPageImages();
-    }*/
 }
