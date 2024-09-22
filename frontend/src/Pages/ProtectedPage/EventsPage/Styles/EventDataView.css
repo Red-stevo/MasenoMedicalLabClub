@@ -1,9 +1,31 @@
 .images-view-page {
     display: flex;
-    flex-flow: row wrap;
+    flex-direction: column;
     justify-content: center;
     margin-top: 10vh;
     min-height: 100vh;
     width: 100%;
     background-color: transparent;
+}
+
+.event-details {
+    justify-self: flex-end;
+    background-image: url("./../Assets/EventTextDisplayBG.svg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 300px;
+    width: 100%;
+}
+
+.images-section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.image-holder {
+    margin: 2%;
 }

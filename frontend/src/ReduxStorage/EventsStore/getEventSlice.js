@@ -40,7 +40,7 @@ const getEventSlice = createSlice({
                 return {status:"loading", ...state, errorMessage:null};
             })
             .addCase(getEventAsyncReducer.fulfilled, (state, action) => {
-                return {...state, ...action.payload, status:"idle", errorMessage:null};
+                return {...state, ...action.payload, status:"success", errorMessage:null};
             })
             .addCase(getEventAsyncReducer.rejected, (state,action) => {
                 if (action.payload.response)
