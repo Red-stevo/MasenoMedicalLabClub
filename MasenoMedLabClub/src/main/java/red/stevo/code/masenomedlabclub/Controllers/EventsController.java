@@ -38,13 +38,6 @@ public class EventsController {
         return ResponseEntity.ok("Images added successfully");
     }*/
 
-    @GetMapping("/{eventId}")
-    public ResponseEntity<Events> getEventById(@PathVariable("eventId") String eventId) {
-        log.info("Get events by ID {}", eventId);
-        Events events = eventsService.getEventById(eventId);
-        return ResponseEntity.ok(events);
-    }
-
     @GetMapping("/{eventId}/images")
     public ResponseEntity<List<EventImages>> getEventImages(@PathVariable String eventId) {
         return ResponseEntity.ok(imagesService.getEventImages(eventId));
