@@ -17,7 +17,55 @@ const EventDataView = () => {
     const [updates, setUpdates] = useState(false);
     const [zoomImage, setZoomImage] = useState(null);
     const  userRole = useSelector(state => state.loginReducer.userRole);
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, reset} = useForm();
+    const [structuredDate , setStructuredDate] = useState({});
+
+    useEffect(() => {
+        const convertToLocalDateTimeFormat = (isoDateString) => {
+            const date = new Date(isoDateString);
+
+            // Pad the month, day, hours, and minutes with leading zeros if needed
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            // Return the formatted string suitable for input[type="datetime-local"]
+            return `${year}-${month}-${day}T${hours}:${minutes}`;
+        }
+
+
+        if (eventDate && eventLocation && eventName && eventDescription){
+            reset(
+                {
+                    eventName:eventName,
+                    eventDescription:eventDescription,
+                    eventDate:convertToLocalDateTimeFormat(eventDate),
+                    eventLocation:eventLocation
+                }
+            );
+        }
+
+        setStructuredDate(structureDateFormat(eventDate));
+    }, [reset, eventDate, eventLocation, eventName, eventDescription]);
+
+    const handleEventUpdate = (data) => {
+
+    }
+
+    const structureDateFormat = (date) => {
+        const newDate = new Date(date);
+
+        const year = newDate.getFullYear();
+        const month = String(newDate.getMonth() + 1).padStart(2, '0');
+        const day = String(newDate.getDate()).padStart(2, '0');
+        const hours = String(newDate.getHours()).padStart(2, '0');
+        const minutes = String(newDate.getMinutes()).padStart(2, '0');
+
+        return {date:`${year}-${month}-${day}` , time:`${hours}:${minutes}`}
+
+    }
 
 
     useEffect(() => {
@@ -28,7 +76,7 @@ const EventDataView = () => {
         <div className={"images-view-page"}>
             {status === "success" &&
                 <>
-                {updates ? userRole === "ADMIN" &&<><Form className={"update-form"} >
+                {updates ? userRole === "ADMIN" &&<><Form onSubmit={handleSubmit(handleEventUpdate)} className={"update-form"} >
                         <Form.Group>
                             <Form.Label className={"form-label"} htmlFor={"eventName"}>Event Name : </Form.Label>
                             <input className={"form-control"} id={"eventName"} {...register("eventName")}  />
@@ -57,7 +105,7 @@ const EventDataView = () => {
                             {...register("eventDescription")}
                         />
                     </FloatingLabel>
-                            <Button className={"update-button"}>Update</Button>
+                            <Button type={"submit"} className={"update-button"}>Update</Button>
                     </Form>
                     <Button className={"plus-images"}><FaPlus /> Images</Button>
                 </> :
@@ -72,7 +120,8 @@ const EventDataView = () => {
                             </DropdownButton>}
                             <h2 className={"display-event-name"}>{eventName}</h2>
                             <div className={"location-date-holder"}>
-                                <h3 className={"display-event-date"}>Date : {eventDate}</h3>
+                                <h3 className={"display-event-date"}>
+                                    Date : {structuredDate.date} Time : {structuredDate.time}</h3>
                                 <h3 className={"display-event-location"}>Location : {eventLocation}</h3>
                             </div>
                             <h3 className={"display-event-description-title"}>Description : </h3>
