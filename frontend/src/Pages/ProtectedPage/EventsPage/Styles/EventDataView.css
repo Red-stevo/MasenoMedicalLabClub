@@ -10,13 +10,60 @@
 
 .event-details {
     justify-self: flex-end;
-    background-image: url("./../Assets/EventTextDisplayBG.svg");
+    background-image: url("./../Assets/eventHeaderBG.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 300px;
+    min-height: 300px;
     width: 100%;
 }
+
+.event-details-shiny-effect {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 300px;
+    padding-left: 20px;
+    background-color: rgba(255, 255, 255, 0.51);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.display-event-name {
+    justify-self: center;
+    align-self: center;
+}
+
+.location-date-holder {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20%;
+}
+
+.display-event-description-title, .display-event-location, .display-event-date, .display-event-name {
+    background: linear-gradient(90deg, #57040f, #063a83, #073a02);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 30px;
+}
+
+.display-event-description-text {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    color: #342d2d;
+    font-size: 20px;
+    margin-left: -20px;
+    max-height: 200px;
+    overflow: scroll;
+   padding: 20px;
+}
+
 
 .images-section {
     display: flex;
@@ -27,5 +74,7 @@
 }
 
 .image-holder {
-    margin: 2%;
+    margin: 5%;
+    width: 120px;
+    height: 120px;
 }
