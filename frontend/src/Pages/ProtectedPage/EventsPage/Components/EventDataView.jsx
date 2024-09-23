@@ -3,10 +3,10 @@ import {useEffect, useState} from "react";
 import "./../Styles/EventDataView.css";
 import {useDispatch, useSelector} from "react-redux";
 import {getEventAsyncReducer} from "../../../../ReduxStorage/EventsStore/getEventSlice.js";
-import {Dropdown, DropdownButton, Form, Image} from "react-bootstrap";
+import {Button, Dropdown, DropdownButton, Form, Image} from "react-bootstrap";
 import {SlArrowDown} from "react-icons/sl";
-import {GoTrash} from "react-icons/go";
 import DeleteImageModel from "./DeleteImageModel.jsx";
+import {FaAd, FaPlus} from "react-icons/fa";
 
 const EventDataView = () => {
     const {eventId} = useParams();
@@ -15,7 +15,6 @@ const EventDataView = () => {
     const [updates, setUpdates] = useState(false);
     const [zoomImage, setZoomImage] = useState(null);
     const  userRole = useSelector(state => state.loginReducer.userRole);
-    const  [deleteImage, setDeleteImage] = useState(false);
 
 
     useEffect(() => {
@@ -26,7 +25,7 @@ const EventDataView = () => {
         <div className={"images-view-page"}>
             {status === "success" &&
                 <>
-                {updates ? <Form >
+                {updates ? userRole === "ADMIN" &&<><Form >
                         <Form.Group>
                             <Form.Label>Event Name : </Form.Label>
                             <input className={"form-control"}  />
@@ -43,13 +42,17 @@ const EventDataView = () => {
                             <Form.Label>Event Description : </Form.Label>
                             <input className={"form-control"}  />
                         </Form.Group>
-                    </Form> :
+                            <Button className={"update-button"}>Update</Button>
+                    </Form>
+                    <Button className={"plus-images"}><FaPlus /> Images</Button>
+                </> :
 
                     <section className={"event-details"}>
                         <div className={"event-details-shiny-effect"}>
                             { userRole === "ADMIN" &&
                             <DropdownButton className={"edit-dropdown"} title={<SlArrowDown className={"edit-arrow"} />}>
-                                <Dropdown.Item>Edit</Dropdown.Item>
+                                <Dropdown.Item onClick={() => setUpdates(prevState => !prevState)}>Edit
+                                </Dropdown.Item>
                                 <Dropdown.Item>Delete</Dropdown.Item>
                             </DropdownButton>}
                             <h2 className={"display-event-name"}>{eventName}</h2>
@@ -65,7 +68,7 @@ const EventDataView = () => {
                     <div className={"images-section"}>
                         {eventImages.map(({imageUrl, imageId}) => (
                                 <div className={"image-delete"} key={imageId}>
-                                   <DeleteImageModel />
+                                    {userRole === "ADMIN" && updates && <DeleteImageModel/>}
                                     <Image src={imageUrl} alt={`img-${imageId}`}
                                         className={zoomImage === imageId ? "zoomed-image" : "image-holder"}
                                     onClick={() => setZoomImage(zoomImage ? null : imageId)}/>
@@ -73,8 +76,7 @@ const EventDataView = () => {
                             )
                         )}
                     </div>
-            </>
-}
+            </>}
         </div>
     );
 };

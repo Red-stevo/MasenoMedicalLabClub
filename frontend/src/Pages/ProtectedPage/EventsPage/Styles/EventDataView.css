@@ -87,8 +87,8 @@
 }
 
 .zoomed-image {
-    width: 90vw;
-    height: 90%;
+    width: 80vw;
+    height: 60%;
     object-fit: cover;
     transition: transform 0.3s ease-in-out;
 }
@@ -116,4 +116,26 @@
 
 .image-delete {
     display: flex;
+}
+
+.plus-images, .update-button {
+    align-content: center;
+    position: fixed;
+    border: none;
+    background-color: rgb(11, 136, 175);
+    right: 9vw;
+    width: 120px;
+}
+
+.plus-images {
+    top: 70vh;
+}
+
+.update-button{
+    top: 80vh;
+}
+
+
+.plus-images:hover, .update-button:hover {
+    background-color: rgba(0, 166, 255, 0.62);
 }
