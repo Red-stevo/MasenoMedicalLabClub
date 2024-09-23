@@ -15,19 +15,21 @@ const DeleteImageModel = () => {
                 <GoTrash className={"trash"} />
             </Button>
 
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
+            <Modal show={show} onHide={handleClose} >
+                <div className={"modal-image-deletion"}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>DELETE IMAGE</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Are You Sure You Want To Delete The Image</Modal.Body>
+                    <Modal.Footer>
+                        <Button className={"cancel-button"} onClick={handleClose}>
+                            CANCEL
+                        </Button>
+                        <Button className={"confirm-delete"} onClick={handleClose}>
+                            CONFIRM DELETION
+                        </Button>
+                    </Modal.Footer>
+                </div>
             </Modal>
         </>
     );
