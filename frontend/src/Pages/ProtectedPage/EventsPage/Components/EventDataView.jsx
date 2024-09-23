@@ -3,18 +3,21 @@ import {useEffect, useState} from "react";
 import "./../Styles/EventDataView.css";
 import {useDispatch, useSelector} from "react-redux";
 import {getEventAsyncReducer} from "../../../../ReduxStorage/EventsStore/getEventSlice.js";
-import {Button, Dropdown, DropdownButton, Form, Image} from "react-bootstrap";
+import {Button, Dropdown, DropdownButton, FloatingLabel, Form, Image} from "react-bootstrap";
 import {SlArrowDown} from "react-icons/sl";
 import DeleteImageModel from "./DeleteImageModel.jsx";
 import {FaAd, FaPlus} from "react-icons/fa";
+import {useForm} from "react-hook-form";
 
 const EventDataView = () => {
+    const {eventName, eventDescription, eventDate, eventLocation, eventImages, status, errorMessage}
+        = useSelector(state =>  state.eventReducer);
     const {eventId} = useParams();
     const dispatch = useDispatch();
-    const {eventName, eventDescription, eventDate, eventLocation, eventImages, status, errorMessage} = useSelector(state =>  state.eventReducer);
     const [updates, setUpdates] = useState(false);
     const [zoomImage, setZoomImage] = useState(null);
     const  userRole = useSelector(state => state.loginReducer.userRole);
+    const {register, handleSubmit} = useForm();
 
 
     useEffect(() => {
@@ -25,23 +28,35 @@ const EventDataView = () => {
         <div className={"images-view-page"}>
             {status === "success" &&
                 <>
-                {updates ? userRole === "ADMIN" &&<><Form >
+                {updates ? userRole === "ADMIN" &&<><Form className={"update-form"} >
                         <Form.Group>
-                            <Form.Label>Event Name : </Form.Label>
-                            <input className={"form-control"}  />
+                            <Form.Label className={"form-label"} htmlFor={"eventName"}>Event Name : </Form.Label>
+                            <input className={"form-control"} id={"eventName"} {...register("eventName")}  />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Event Date : </Form.Label>
-                            <input className={"form-control"}  />
+                            <Form.Label  className={"form-label"} htmlFor={"eventDate"}>Event Date : </Form.Label>
+                            <input className={"form-control"}
+                                   id={"eventDate"}
+                                   type={"datetime-local"}
+                                   {...register("eventDate")}  />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Event Location : </Form.Label>
-                            <input className={"form-control"}  />
+                            <Form.Label className={"form-label"} htmlFor={"eventLocation"}>Event Location : </Form.Label>
+                            <input className={"form-control"}
+                                   id={"eventLocation"}
+                                   {...register("eventLocation")} />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Event Description : </Form.Label>
-                            <input className={"form-control"}  />
-                        </Form.Group>
+                    <FloatingLabel className={"description-text-area"} controlId="floatingTextarea" label="Event Decription">
+                        <input
+                            required={true}
+                            id={"eventDescription"}
+                            className={"form-control"}
+                            as="textarea"
+                            placeholder="Event Description"
+                            style={{ height: '150px' }}
+                            {...register("eventDescription")}
+                        />
+                    </FloatingLabel>
                             <Button className={"update-button"}>Update</Button>
                     </Form>
                     <Button className={"plus-images"}><FaPlus /> Images</Button>

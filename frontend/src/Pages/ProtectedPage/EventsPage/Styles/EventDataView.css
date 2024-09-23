@@ -139,3 +139,28 @@
 .plus-images:hover, .update-button:hover {
     background-color: rgba(0, 166, 255, 0.62);
 }
+
+
+.update-form {
+    justify-self: center;
+    align-self: center;
+    margin-top: 40px;
+    width: 70%;
+}
+
+.form-label {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#eventDescription, #eventDate, #eventName, #eventLocation {
+    border: 1px solid black;
+    width: 100%;
+}
+.description-text-area {
+    margin-top: 20px;
+}
