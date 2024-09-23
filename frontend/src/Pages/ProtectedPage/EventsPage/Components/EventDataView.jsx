@@ -115,9 +115,9 @@ const EventDataView = () => {
                         <div className={"event-details-shiny-effect"}>
                             { userRole === "ADMIN" &&
                             <DropdownButton className={"edit-dropdown"} title={<SlArrowDown className={"edit-arrow"} />}>
-                                <Dropdown.Item onClick={() => setUpdates(prevState => !prevState)}>Edit
+                                <Dropdown.Item className={"edit-event"} onClick={() => setUpdates(prevState => !prevState)}>Edit
                                 </Dropdown.Item>
-                                <Dropdown.Item><DeleteEventModal /></Dropdown.Item>
+                                <Dropdown.Item className={"delete-event"}><DeleteEventModal /></Dropdown.Item>
                             </DropdownButton>}
                             <h2 className={"display-event-name"}>{eventName}</h2>
                             <div className={"location-date-holder"}>

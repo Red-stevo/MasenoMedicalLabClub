@@ -140,6 +140,11 @@
     background-color: rgba(0, 166, 255, 0.62);
 }
 
+.edit-event, .delete-event {
+    text-align: center;
+}
+
+
 
 .update-form {
     justify-self: center;
