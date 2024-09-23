@@ -1,0 +1,14 @@
+.delete-button {
+    background-color: transparent;
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    justify-self: flex-end;
+    align-self: flex-end;
+    font-size: 13px;
+    position: sticky;
+}
+
+.delete-button:hover, .button:active{
+    background:none;
+}

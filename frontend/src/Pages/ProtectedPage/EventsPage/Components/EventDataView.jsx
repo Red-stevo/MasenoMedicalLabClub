@@ -3,16 +3,19 @@ import {useEffect, useState} from "react";
 import "./../Styles/EventDataView.css";
 import {useDispatch, useSelector} from "react-redux";
 import {getEventAsyncReducer} from "../../../../ReduxStorage/EventsStore/getEventSlice.js";
-import Masonry from "react-masonry-css";
-import {Form} from "react-bootstrap";
+import {Dropdown, DropdownButton, Form, Image} from "react-bootstrap";
+import {SlArrowDown} from "react-icons/sl";
+import {GoTrash} from "react-icons/go";
+import DeleteImageModel from "./DeleteImageModel.jsx";
 
 const EventDataView = () => {
     const {eventId} = useParams();
     const dispatch = useDispatch();
-    const {eventName, eventDescription, eventDate, eventLocation, eventImages, status, errorMessage} =
-        useSelector(state =>  state.eventReducer);
+    const {eventName, eventDescription, eventDate, eventLocation, eventImages, status, errorMessage} = useSelector(state =>  state.eventReducer);
     const [updates, setUpdates] = useState(false);
     const [zoomImage, setZoomImage] = useState(null);
+    const  userRole = useSelector(state => state.loginReducer.userRole);
+    const  [deleteImage, setDeleteImage] = useState(false);
 
 
     useEffect(() => {
@@ -44,6 +47,11 @@ const EventDataView = () => {
 
                     <section className={"event-details"}>
                         <div className={"event-details-shiny-effect"}>
+                            { userRole === "ADMIN" &&
+                            <DropdownButton className={"edit-dropdown"} title={<SlArrowDown className={"edit-arrow"} />}>
+                                <Dropdown.Item>Edit</Dropdown.Item>
+                                <Dropdown.Item>Delete</Dropdown.Item>
+                            </DropdownButton>}
                             <h2 className={"display-event-name"}>{eventName}</h2>
                             <div className={"location-date-holder"}>
                                 <h3 className={"display-event-date"}>Date : {eventDate}</h3>
@@ -56,8 +64,9 @@ const EventDataView = () => {
                 }
                     <div className={"images-section"}>
                         {eventImages.map(({imageUrl, imageId}) => (
-                                <div key={imageId}>
-                                    <img src={imageUrl} alt={`img-${imageId}`}
+                                <div className={"image-delete"} key={imageId}>
+                                   <DeleteImageModel />
+                                    <Image src={imageUrl} alt={`img-${imageId}`}
                                         className={zoomImage === imageId ? "zoomed-image" : "image-holder"}
                                     onClick={() => setZoomImage(zoomImage ? null : imageId)}/>
                                 </div>

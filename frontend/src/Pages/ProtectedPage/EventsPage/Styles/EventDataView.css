@@ -73,12 +73,13 @@
     flex-wrap: wrap;
     width: 100%;
     margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .image-holder {
     margin: 20px;
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
 }
 
 .image-holder:hover {
@@ -90,4 +91,29 @@
     height: 90%;
     object-fit: cover;
     transition: transform 0.3s ease-in-out;
+}
+
+.edit-arrow {
+    font-weight: 900;
+    font-size: 32px;
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.edit-dropdown {
+    width: 20px;
+    background-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.trash {
+    position: absolute;
+    align-self: flex-end;
+    justify-self: flex-end;
+    color: red;
+}
+
+.image-delete {
+    display: flex;
 }
