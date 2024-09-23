@@ -5,17 +5,14 @@
     width: fit-content;
     justify-self: flex-end;
     align-self: flex-end;
-    font-size: 13px;
     position: sticky;
+    color: black;
 }
 
-/*.modal-image-deletion {
-    color: white;
-    background-color: rgba(12, 12, 12, 0.89);
-}*/
 
 .delete-button:hover, .button:active{
-    background:none;
+    background: none;
+    color: black;
 }
 
 .cancel-button {

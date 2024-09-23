@@ -8,6 +8,7 @@ import {SlArrowDown} from "react-icons/sl";
 import DeleteImageModel from "./DeleteImageModel.jsx";
 import {FaAd, FaPlus} from "react-icons/fa";
 import {useForm} from "react-hook-form";
+import DeleteEventModal from "./DeleteEventModal.jsx";
 
 const EventDataView = () => {
     const {eventName, eventDescription, eventDate, eventLocation, eventImages, status, errorMessage}
@@ -116,7 +117,7 @@ const EventDataView = () => {
                             <DropdownButton className={"edit-dropdown"} title={<SlArrowDown className={"edit-arrow"} />}>
                                 <Dropdown.Item onClick={() => setUpdates(prevState => !prevState)}>Edit
                                 </Dropdown.Item>
-                                <Dropdown.Item>Delete</Dropdown.Item>
+                                <Dropdown.Item><DeleteEventModal /></Dropdown.Item>
                             </DropdownButton>}
                             <h2 className={"display-event-name"}>{eventName}</h2>
                             <div className={"location-date-holder"}>
