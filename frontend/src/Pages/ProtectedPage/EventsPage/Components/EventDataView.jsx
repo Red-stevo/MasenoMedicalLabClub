@@ -115,7 +115,6 @@ const EventDataView = () => {
 
                     <Button onClick={() => uploadWidget(setImageUrls)} className={"plus-images"}><FaPlus /> Images</Button>
                 </> :
-
                     <section className={"event-details"}>
                         <div className={"event-details-shiny-effect"}>
                             { userRole === "ADMIN" &&
