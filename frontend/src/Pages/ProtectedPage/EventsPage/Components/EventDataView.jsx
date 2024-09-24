@@ -6,7 +6,7 @@ import {getEventAsyncReducer} from "../../../../ReduxStorage/EventsStore/getEven
 import {Button, Dropdown, DropdownButton, FloatingLabel, Form, Image} from "react-bootstrap";
 import {SlArrowDown} from "react-icons/sl";
 import DeleteImageModel from "./DeleteImageModel.jsx";
-import {FaAd, FaPlus} from "react-icons/fa";
+import {FaPlus} from "react-icons/fa";
 import {useForm} from "react-hook-form";
 import DeleteEventModal from "./DeleteEventModal.jsx";
 
