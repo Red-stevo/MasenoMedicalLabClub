@@ -12,6 +12,8 @@ import DeleteEventModal from "./DeleteEventModal.jsx";
 import {structureDateFormat} from "../../CommonJS/structureDateFormat.js";
 import {convertToLocalDateTimeFormat} from "../../CommonJS/convertToLocalDateTimeFormat.js";
 import {uploadWidget} from "../../CommonJS/uploadWidget.js";
+import {updateEventReducer} from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
+import dayjs from "dayjs";
 
 const EventDataView = () => {
     const {eventName, eventDescription, eventDate, eventLocation, eventImages, status, errorMessage
@@ -25,7 +27,6 @@ const EventDataView = () => {
     const  userRole = useSelector(state => state.loginReducer.userRole);
     const [structuredDate , setStructuredDate] = useState({});
     const [imageUrls, setImageUrls] = useState([]);
-    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -35,8 +36,7 @@ const EventDataView = () => {
                 eventName: eventName,
                 eventDescription: eventDescription,
                 eventDate: convertToLocalDateTimeFormat(eventDate),
-                eventLocation: eventLocation
-            });
+                eventLocation: eventLocation});
         }
 
         setStructuredDate(structureDateFormat(eventDate));
@@ -45,7 +45,14 @@ const EventDataView = () => {
 
     /*Handle sending updates to the server.*/
     const handleEventUpdate = (data) => {
-        const putDate = {...data, requestList:imageUrls, eventId};
+        console.log("updated data",data);
+        const putData={...data, requestList:imageUrls, eventId, eventDate:dayjs(data.eventDate).toISOString()};
+
+        dispatch(updateEventReducer(putData));
+
+        setImageUrls([]);
+        window.location.reload();
+
     }
 
     /*Get event details whe thr component mounts.*/
@@ -89,6 +96,7 @@ const EventDataView = () => {
                     </FloatingLabel>
                             <Button type={"submit"} className={"update-button"}>Update</Button>
                     </Form>
+
                     <Button onClick={() => uploadWidget(setImageUrls)} className={"plus-images"}><FaPlus /> Images</Button>
                 </> :
 

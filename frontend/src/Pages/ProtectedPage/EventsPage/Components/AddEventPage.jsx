@@ -21,13 +21,10 @@ const AddEventPage = () => {
 
 
     useEffect(() => {
-        console.log("message.")
         if (errorMessage){
-            console.log("to be cleared soon.")
             setTimeout(() => {
                 //clear the error message.
                 dispatch(clearErrorMessage());
-                console.log("message cleared")
             }, 5000);
 
         }else if (successMessage){
@@ -42,10 +39,7 @@ const AddEventPage = () => {
     /*Dispatch action to save new event.*/
     const handleEventSubmit = (data) => {
         /*Convert the date to be compatible with java Instance object for date and time.*/
-        const date = dayjs(data.eventDate).toISOString();
-        console.log(data.eventDate);
-
-        const eventData = {...data, requestList:imageUrls,eventDate:date }
+        const eventData = {...data, requestList:imageUrls,eventDate:dayjs(data.eventDate).toISOString() }
 
         /*dispatch saving action*/
         dispatch(saveEvent(eventData));

@@ -1,6 +1,5 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import {secureAxiosConfig} from "../../DataSourceConfig/secureAxios.js";
-import config from "bootstrap/js/src/util/config.js";
 
 const eventsDataAdapter = createEntityAdapter();
 
@@ -12,17 +11,19 @@ const initialState = eventsDataAdapter.getInitialState({
 
 export const updateEventReducer = createAsyncThunk("save-event/update",
     async (eventUpdates, config) => {
+        console.log("update request", eventUpdates);
+        try {
+            const response = await secureAxiosConfig.put(`/admin/events/update/${eventUpdates.eventId}`
+                , {
+                    eventName: eventUpdates.eventName, eventLocation: eventUpdates.eventLocation,
+                    eventDate: eventUpdates.eventDate, eventDescription: eventUpdates.eventDescription,
+                    requestList: eventUpdates.requestList
+                });
 
-    try {
-        const response = secureAxiosConfig.put(`/admin/events/update/${eventUpdates.eventId}`
-            , {eventName:eventUpdates.eventName, eventLocation:eventUpdates.eventLocation,
-            eventDate:eventUpdates.eventDate, eventDescription:eventUpdates.eventDescription,
-                requestList:eventUpdates.requestList});
-
-        return config.fulfillWithValue((await response).data);
-    }catch (error){
-        return config.rejectWithValue(error.response);
-    }
+            return config.fulfillWithValue(response.data);
+        } catch (error) {
+            return config.rejectWithValue(error.response);
+        }
 
     });
 
@@ -82,7 +83,7 @@ const saveEventReducer = createSlice({
 
                 state.successMessage = null;
                 state.status = "failed";
-            })
+            });
     }
 });
 
