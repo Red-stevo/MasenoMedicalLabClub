@@ -19,6 +19,8 @@ const initialState = getEventAdapter.getInitialState({
 
 });
 
+
+
 export const getEventAsyncReducer = createAsyncThunk("get-event-by-id/get-user-event",
     async (eventId, config) => {
         try {

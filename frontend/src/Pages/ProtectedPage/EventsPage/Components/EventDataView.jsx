@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import "./../Styles/EventDataView.css";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,6 +11,7 @@ import {useForm} from "react-hook-form";
 import DeleteEventModal from "./DeleteEventModal.jsx";
 import {structureDateFormat} from "../../CommonJS/structureDateFormat.js";
 import {convertToLocalDateTimeFormat} from "../../CommonJS/convertToLocalDateTimeFormat.js";
+import {uploadWidget} from "../../CommonJS/uploadWidget.js";
 
 const EventDataView = () => {
     const {eventName, eventDescription, eventDate, eventLocation, eventImages, status, errorMessage
@@ -23,6 +24,8 @@ const EventDataView = () => {
     const [zoomImage, setZoomImage] = useState(null);
     const  userRole = useSelector(state => state.loginReducer.userRole);
     const [structuredDate , setStructuredDate] = useState({});
+    const [imageUrls, setImageUrls] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -42,7 +45,7 @@ const EventDataView = () => {
 
     /*Handle sending updates to the server.*/
     const handleEventUpdate = (data) => {
-
+        const putDate = {...data, requestList:imageUrls, eventId};
     }
 
     /*Get event details whe thr component mounts.*/
@@ -54,7 +57,8 @@ const EventDataView = () => {
         <div className={"images-view-page"}>
             {status === "success" &&
                 <>
-                {updates ? userRole === "ADMIN" &&<><Form onSubmit={handleSubmit(handleEventUpdate)} className={"update-form"} >
+                {updates ? userRole === "ADMIN" &&<>
+                    <Form onSubmit={handleSubmit(handleEventUpdate)} className={"update-form"} >
                         <Form.Group>
                             <Form.Label className={"form-label"} htmlFor={"eventName"}>Event Name : </Form.Label>
                             <input className={"form-control"} id={"eventName"} {...register("eventName")}  />
@@ -85,14 +89,15 @@ const EventDataView = () => {
                     </FloatingLabel>
                             <Button type={"submit"} className={"update-button"}>Update</Button>
                     </Form>
-                    <Button className={"plus-images"}><FaPlus /> Images</Button>
+                    <Button onClick={() => uploadWidget(setImageUrls)} className={"plus-images"}><FaPlus /> Images</Button>
                 </> :
 
                     <section className={"event-details"}>
                         <div className={"event-details-shiny-effect"}>
                             { userRole === "ADMIN" &&
                             <DropdownButton className={"edit-dropdown"} title={<SlArrowDown className={"edit-arrow"} />}>
-                                <Dropdown.Item className={"edit-event"} onClick={() => setUpdates(prevState => !prevState)}>Edit
+                                <Dropdown.Item className={"edit-event"}
+                                               onClick={() => setUpdates(prevState => !prevState)}>Edit
                                 </Dropdown.Item>
                                 <Dropdown.Item className={"delete-event"}><DeleteEventModal /></Dropdown.Item>
                             </DropdownButton>}

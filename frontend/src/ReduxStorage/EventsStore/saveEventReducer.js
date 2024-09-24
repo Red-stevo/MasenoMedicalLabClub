@@ -1,5 +1,6 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import {secureAxiosConfig} from "../../DataSourceConfig/secureAxios.js";
+import config from "bootstrap/js/src/util/config.js";
 
 const eventsDataAdapter = createEntityAdapter();
 
@@ -8,6 +9,23 @@ const initialState = eventsDataAdapter.getInitialState({
     errorMessage:null,
     status:"idle",
 });
+
+export const updateEventReducer = createAsyncThunk("save-event/update",
+    async (eventUpdates, config) => {
+
+    try {
+        const response = secureAxiosConfig.put(`/admin/events/update/${eventUpdates.eventId}`
+            , {eventName:eventUpdates.eventName, eventLocation:eventUpdates.eventLocation,
+            eventDate:eventUpdates.eventDate, eventDescription:eventUpdates.eventDescription,
+                requestList:eventUpdates.requestList});
+
+        return config.fulfillWithValue((await response).data);
+    }catch (error){
+        return config.rejectWithValue(error.response);
+    }
+
+    });
+
 
 export const saveEvent = createAsyncThunk("save-event/new-event",
     async (eventData, config) => {
@@ -47,7 +65,24 @@ const saveEventReducer = createSlice({
 
                 state.successMessage = null;
                 state.status = "failed";
-            });
+            })
+            .addCase(updateEventReducer.pending, (state) => {
+                state.status = "loading";
+            })
+            .addCase(updateEventReducer.fulfilled, (state, action) => {
+                state.status = "success";
+                state.successMessage = action.payload.message;
+                state.errorMessage = null;
+            })
+            .addCase(updateEventReducer.rejected, (state, action) => {
+                /*console.log(action.payload.data);*/
+                if (action.payload) state.errorMessage = action.payload.message;
+
+                else state.errorMessage = "Error posting The Event.";
+
+                state.successMessage = null;
+                state.status = "failed";
+            })
     }
 });
 

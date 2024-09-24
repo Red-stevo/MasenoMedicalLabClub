@@ -1,11 +1,12 @@
 import "./../Styles/EventsPage.css";
-import {Button, Card, Image} from "react-bootstrap";
+import {Button, Card} from "react-bootstrap";
 import {IoAddSharp} from "react-icons/io5";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchEvents} from "../../../../ReduxStorage/EventsStore/GetEvents.js";
 import imagePlaceHolder from "./../Assets/missingImageHolder.png";
+import {random} from "../../CommonJS/Random.js";
 const EventsPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -24,10 +25,6 @@ const EventsPage = () => {
         dispatch(fetchEvents());
     }, []);
 
-    /*generate random numbers in range.*/
-    const random = (max) => {
-        return Math.floor(Math.random() * max);
-    }
 
     return (
         <div className={"events-page"}>
