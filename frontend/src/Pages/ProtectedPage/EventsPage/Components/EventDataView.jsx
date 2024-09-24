@@ -9,66 +9,43 @@ import DeleteImageModel from "./DeleteImageModel.jsx";
 import {FaPlus} from "react-icons/fa";
 import {useForm} from "react-hook-form";
 import DeleteEventModal from "./DeleteEventModal.jsx";
+import {structureDateFormat} from "../../CommonJS/structureDateFormat.js";
+import {convertToLocalDateTimeFormat} from "../../CommonJS/convertToLocalDateTimeFormat.js";
 
 const EventDataView = () => {
-    const {eventName, eventDescription, eventDate, eventLocation, eventImages, status, errorMessage}
-        = useSelector(state =>  state.eventReducer);
+    const {eventName, eventDescription, eventDate, eventLocation, eventImages, status, errorMessage
+    } = useSelector(state =>  state.eventReducer);
+    const {register, handleSubmit, reset
+    } = useForm();
     const {eventId} = useParams();
     const dispatch = useDispatch();
     const [updates, setUpdates] = useState(false);
     const [zoomImage, setZoomImage] = useState(null);
     const  userRole = useSelector(state => state.loginReducer.userRole);
-    const {register, handleSubmit, reset} = useForm();
     const [structuredDate , setStructuredDate] = useState({});
 
     useEffect(() => {
-        const convertToLocalDateTimeFormat = (isoDateString) => {
-            const date = new Date(isoDateString);
 
-            // Pad the month, day, hours, and minutes with leading zeros if needed
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            const hours = String(date.getHours()).padStart(2, '0');
-            const minutes = String(date.getMinutes()).padStart(2, '0');
-
-            // Return the formatted string suitable for input[type="datetime-local"]
-            return `${year}-${month}-${day}T${hours}:${minutes}`;
-        }
-
-
-        if (eventDate && eventLocation && eventName && eventDescription){
-            reset(
-                {
-                    eventName:eventName,
-                    eventDescription:eventDescription,
-                    eventDate:convertToLocalDateTimeFormat(eventDate),
-                    eventLocation:eventLocation
-                }
-            );
+        /*Set all field values to be updated.*/
+        if (eventDate && eventLocation && eventName && eventDescription) {
+            reset({
+                eventName: eventName,
+                eventDescription: eventDescription,
+                eventDate: convertToLocalDateTimeFormat(eventDate),
+                eventLocation: eventLocation
+            });
         }
 
         setStructuredDate(structureDateFormat(eventDate));
     }, [reset, eventDate, eventLocation, eventName, eventDescription]);
 
+
+    /*Handle sending updates to the server.*/
     const handleEventUpdate = (data) => {
 
     }
 
-    const structureDateFormat = (date) => {
-        const newDate = new Date(date);
-
-        const year = newDate.getFullYear();
-        const month = String(newDate.getMonth() + 1).padStart(2, '0');
-        const day = String(newDate.getDate()).padStart(2, '0');
-        const hours = String(newDate.getHours()).padStart(2, '0');
-        const minutes = String(newDate.getMinutes()).padStart(2, '0');
-
-        return {date:`${year}-${month}-${day}` , time:`${hours}:${minutes}`}
-
-    }
-
-
+    /*Get event details whe thr component mounts.*/
     useEffect(() => {
         dispatch(getEventAsyncReducer(eventId));
     }, []);

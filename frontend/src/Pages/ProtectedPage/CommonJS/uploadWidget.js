@@ -1,5 +1,5 @@
-import {setUploadError} from "../../ReduxStorage/EventsStore/saveEventReducer.js";
-import {store} from "../../ReduxStorage/Store.js";
+import {setUploadError} from "../../../ReduxStorage/EventsStore/saveEventReducer.js";
+import {store} from "../../../ReduxStorage/Store.js";
 
 export  const uploadWidget = (setImageUrls) => window.cloudinary.openUploadWidget(
     {

@@ -10,7 +10,7 @@ import {
     setUploadError
 } from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
 import dayjs from "dayjs";
-import {uploadWidget} from "../../CommonJS.js";
+import {uploadWidget} from "../../CommonJS/uploadWidget.js";
 
 
 const AddEventPage = () => {
