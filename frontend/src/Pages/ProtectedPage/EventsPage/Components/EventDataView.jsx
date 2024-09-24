@@ -1,4 +1,4 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import "./../Styles/EventDataView.css";
 import {useDispatch, useSelector} from "react-redux";
@@ -12,7 +12,7 @@ import DeleteEventModal from "./DeleteEventModal.jsx";
 import {structureDateFormat} from "../../CommonJS/structureDateFormat.js";
 import {convertToLocalDateTimeFormat} from "../../CommonJS/convertToLocalDateTimeFormat.js";
 import {uploadWidget} from "../../CommonJS/uploadWidget.js";
-import {updateEventReducer} from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
+import {clearErrorMessage, updateEventReducer} from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
 import dayjs from "dayjs";
 
 const EventDataView = () => {
@@ -67,9 +67,18 @@ const EventDataView = () => {
         dispatch(getEventAsyncReducer(eventId));
     }, []);
 
+    /*clear the errorMessage*/
+    useEffect(() => {
+        if(errorMessage){
+            setTimeout(() => {
+                dispatch(clearErrorMessage())
+            }, 600)
+        }
+    }, []);
+
     return (
         <div className={"images-view-page"}>
-            {status === "success" &&
+            {status === "success" ?
                 <>
                 {updates ? userRole === "ADMIN" &&<>
                     <Form onSubmit={handleSubmit(handleEventUpdate)} className={"update-form"} >
@@ -138,7 +147,8 @@ const EventDataView = () => {
                             )
                         )}
                     </div>
-            </>}
+                </> : errorMessage && <div className={"error-message-animation"}>{errorMessage}</div>
+            }
         </div>
     );
 };
