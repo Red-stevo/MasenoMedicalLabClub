@@ -79,7 +79,7 @@ const saveEventReducer = createSlice({
                 /*console.log(action.payload.data);*/
                 if (action.payload) state.errorMessage = action.payload.message;
 
-                else state.errorMessage = "Error posting The Event.";
+                else state.errorMessage = "Error updating The Event.";
 
                 state.successMessage = null;
                 state.status = "failed";

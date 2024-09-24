@@ -27,6 +27,7 @@ const EventDataView = () => {
     const  userRole = useSelector(state => state.loginReducer.userRole);
     const [structuredDate , setStructuredDate] = useState({});
     const [imageUrls, setImageUrls] = useState([]);
+    const updateSuccess = useSelector(state => state.saveEventReducer.successMessage);
 
     useEffect(() => {
 
@@ -42,17 +43,23 @@ const EventDataView = () => {
         setStructuredDate(structureDateFormat(eventDate));
     }, [reset, eventDate, eventLocation, eventName, eventDescription]);
 
+    /*reload page on successful event update*/
+    useEffect(() => {
+        if (updateSuccess === "event updated successfully"){
+            window.location.reload();
+        }
+    }, [updateSuccess]);
+
+
 
     /*Handle sending updates to the server.*/
     const handleEventUpdate = (data) => {
-        console.log("updated data",data);
+        console.error("updated data",data);
         const putData={...data, requestList:imageUrls, eventId, eventDate:dayjs(data.eventDate).toISOString()};
-
+        console.error("updated data",putData);
         dispatch(updateEventReducer(putData));
 
         setImageUrls([]);
-        window.location.reload();
-
     }
 
     /*Get event details whe thr component mounts.*/
