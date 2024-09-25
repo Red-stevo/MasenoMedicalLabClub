@@ -30,8 +30,7 @@ const DeleteEventModal = () => {
                     </Modal.Footer>
                 </div>
             </Modal>
-        </>
-);
+        </>);
 };
 
 export default DeleteEventModal;
