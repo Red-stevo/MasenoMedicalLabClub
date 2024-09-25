@@ -27,7 +27,7 @@ const HomeNavBar = () => {
                         </Nav.Item>
                         {role === "ADMIN" &&
                         <Nav.Item>
-                            <Nav.Link href={"#"}>Members</Nav.Link>
+                            <Nav.Link href={"/home/admin/user-management"}>Members</Nav.Link>
                         </Nav.Item>
                         }
                     </Nav>

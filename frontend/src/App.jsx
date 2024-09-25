@@ -9,6 +9,7 @@ import EventsPage from "./Pages/ProtectedPage/EventsPage/Components/EventsPage.j
 import AddEventPage from "./Pages/ProtectedPage/EventsPage/Components/AddEventPage.jsx";
 import AdminRouteProtection from "./RouterProtectionComponent/AdminRouteProtection.jsx";
 import EventDataView from "./Pages/ProtectedPage/EventsPage/Components/EventDataView.jsx";
+import UserManagement from "./Pages/ProtectedPage/UserManagement/Components/UserManagement.jsx";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <Route path={"/home/events/add"}
                            element={<AdminRouteProtection><AddEventPage /></AdminRouteProtection>} />
                     <Route path={"/home/events/:eventId"} element={<EventDataView />}/>
+                    <Route path={"/home/admin/user-management"} element={<UserManagement />} />
                 </Route>
             </Routes>
         </Router>
