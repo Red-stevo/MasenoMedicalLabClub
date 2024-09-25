@@ -15,5 +15,6 @@ public class StudentResearch {
     private String profileId;
     private String researchTitle;
     private String researchDescription;
-    private String researchDocuments;
+    private String researchDocumentsUrl;
+    private String researchDocsId;
 }

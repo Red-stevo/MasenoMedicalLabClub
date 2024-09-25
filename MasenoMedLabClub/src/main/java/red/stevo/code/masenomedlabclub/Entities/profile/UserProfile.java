@@ -17,6 +17,7 @@ public class UserProfile {
     private String lastName;
     private String registrationNo;
     private String profileImage;
+    private String profileImageId;
     @OneToMany(mappedBy = "profileId",cascade = CascadeType.ALL,
             orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = SocialMediaAccounts.class)
     private List<SocialMediaAccounts> socialMediaAccounts;

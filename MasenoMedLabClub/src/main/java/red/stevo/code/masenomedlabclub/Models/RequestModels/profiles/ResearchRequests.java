@@ -6,5 +6,6 @@ import lombok.Data;
 public class ResearchRequests {
     private String researchTitle;
     private String researchDescription;
-    private String researchDocument;
+    private String researchDocumentUrl;
+    private String researchDocsId;
 }

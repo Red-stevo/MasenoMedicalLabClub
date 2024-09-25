@@ -27,6 +27,9 @@ public class IndexPageImages {
     @URL(regexp = "^https:\\/\\/res\\.cloudinary\\.com\\/.*")
     private String url;
 
+    @Column(unique = true, nullable = false, name = "cloudinary_public_id")
+    private String imagePublicId;
+
     @Column(name = "image_name", nullable = false)
     @Size(min = 4, message = "Image Name is too short.")
     private String name;

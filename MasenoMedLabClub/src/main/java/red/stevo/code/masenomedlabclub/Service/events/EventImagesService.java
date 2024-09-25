@@ -1,5 +1,7 @@
 package red.stevo.code.masenomedlabclub.Service.events;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ public class EventImagesService {
     private final EventsImagesRepository imagesRepository;
     private final EventsRepository eventsRepository;
     private final EventsImagesRepository eventsImagesRepository;
+    private final Cloudinary cloudinary;
 
     public UserGeneralResponse addEventImage(List<EventImagesCreationRequest> request,String eventId) {
         log.info("Adding event images");
@@ -62,6 +65,7 @@ public class EventImagesService {
                         if (eventImage == null) {
                             throw new RuntimeException("such image not found");
                         }
+                        deleteImageFromCloudinary(eventImage.getImageId());
                         return eventImage;
                     }
             ).toList();
@@ -79,6 +83,14 @@ public class EventImagesService {
 
     public List<EventImages> getEventImages(String eventId) {
         return imagesRepository.findAllByEventId(eventId);
+    }
+
+    public void deleteImageFromCloudinary(String imageId){
+        try {
+            cloudinary.uploader().destroy(imageId, ObjectUtils.emptyMap());
+        } catch (Exception e) {
+            throw new RuntimeException("Error deleting image from Cloudinary with publicId: "+imageId);
+        }
     }
 
 }

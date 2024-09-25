@@ -13,6 +13,7 @@ public class ProfileCreationRequests {
     private String lastName;
     private String registrationNo;
     private String profileImage;
+    private String profileImageId;
     private List<SocialMediaRequests> mediaRequests;
-    private List<StudentResearch> studentResearches;
+    private List<ResearchRequests> studentResearches;
 }
