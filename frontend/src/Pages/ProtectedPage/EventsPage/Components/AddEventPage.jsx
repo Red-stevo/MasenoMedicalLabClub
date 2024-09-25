@@ -10,6 +10,7 @@ import {
     setUploadError
 } from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
 import dayjs from "dayjs";
+import {uploadWidget} from "../../CommonJS/uploadWidget.js";
 
 
 const AddEventPage = () => {
@@ -20,13 +21,10 @@ const AddEventPage = () => {
 
 
     useEffect(() => {
-        console.log("message.")
         if (errorMessage){
-            console.log("to be cleared soon.")
             setTimeout(() => {
                 //clear the error message.
                 dispatch(clearErrorMessage());
-                console.log("message cleared")
             }, 5000);
 
         }else if (successMessage){
@@ -37,37 +35,11 @@ const AddEventPage = () => {
         }
     }, [successMessage, errorMessage, status]);
 
-    /*Cloudinary upload widget setup.*/
-    const uploadWidget = () => window.cloudinary.openUploadWidget(
-        {
-            cloudName:"de91mnunt",
-            uploadPreset:"MasenoMedLabClub",
-            sources:["local", "camera", "url"],
-            multiple:true,
-            maxFiles: 20,
-            folder: "events_images_folder",
-            resourceType: "image",
-            cropping: false,
-            showUploadMoreButton: true,
-        },
-        (error, result) => {
-            if (error){
-                dispatch(setUploadError(error.message));
-            }else if (result.event === "success"){
-                setImageUrls((urls) =>[...urls,
-                    {url: result.info.secure_url, imageId:result.info.public_id}]);
-            }
-        }
-    );
-
 
     /*Dispatch action to save new event.*/
     const handleEventSubmit = (data) => {
         /*Convert the date to be compatible with java Instance object for date and time.*/
-        const date = dayjs(data.eventDate).toISOString();
-        console.log(data.eventDate);
-
-        const eventData = {...data, requestList:imageUrls,eventDate:date }
+        const eventData = {...data, requestList:imageUrls,eventDate:dayjs(data.eventDate).toISOString() }
 
         /*dispatch saving action*/
         dispatch(saveEvent(eventData));
@@ -124,7 +96,8 @@ const AddEventPage = () => {
                 />
             </FloatingLabel>
 
-            <Button disabled={status === "loading"} onClick={uploadWidget} className={"upload-widget"}>
+            <Button disabled={status === "loading"} onClick={() => uploadWidget(setImageUrls)}
+                    className={"upload-widget"}>
                 Upload Images
             </Button>
 
