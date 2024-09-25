@@ -17,6 +17,8 @@ public class IndexPageImageModel {
     @URL(regexp = "^https:\\/\\/res\\.cloudinary\\.com\\/.*")
     private String imageUrl;
 
+    private String imagePublicId;
+
     private String imageDescription;
 
     private String imageTitle;

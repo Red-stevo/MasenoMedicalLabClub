@@ -7,7 +7,6 @@ import lombok.ToString;
 @ToString
 public class EventImagesCreationRequest {
     String imageId;
-
     String url;
 
 }

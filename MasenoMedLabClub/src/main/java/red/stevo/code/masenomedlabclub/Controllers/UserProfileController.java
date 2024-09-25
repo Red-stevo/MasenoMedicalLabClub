@@ -70,5 +70,10 @@ public class UserProfileController {
         return ResponseEntity.ok(response);
 
     }
+    @DeleteMapping("/delete/profileImage")
+    public ResponseEntity<UserGeneralResponse> deleteProfileImage(@RequestParam int userId){
+        UserGeneralResponse response = profileService.deleteProfileImage(userId);
+        return ResponseEntity.ok(response);
+    }
 
 }
