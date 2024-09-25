@@ -1,9 +1,35 @@
 .user-management-page {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
+    flex-flow: column;
+    align-content: center;
     margin-top: 10vh;
     min-height: 100vh;
     width: 100%;
     background-color: transparent;
+}
+
+.user-display-title {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10%;
+    height: fit-content;
+    padding: 9px;
+    background-color: rgba(245, 222, 179, 0.2);
+    margin-top: 10px;
+    transition: ease-in-out .4s linear;
+}
+
+.users-holder {
+    margin-top: 60px;
+}
+
+
+.users-view:hover {
+    transform: scale(1.02);
+    box-shadow: 2px 4px 8px #861bf1;
+}
+
+.title-user-management {
+    position: fixed;
+    width: 82%;
 }
