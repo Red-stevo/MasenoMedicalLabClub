@@ -201,4 +201,17 @@ public class RuntimeExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(EventNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<UserGeneralResponse> handleEventNotFoundException(EventNotFoundException e){
+        log.warn("EventNotFoundException");
+
+        UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
+        userGeneralResponse.setMessage(e.getMessage());
+        userGeneralResponse.setDate(new Date());
+        userGeneralResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(userGeneralResponse, HttpStatus.NOT_FOUND);
+    }
+
 }

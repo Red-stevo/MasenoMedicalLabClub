@@ -1,0 +1,171 @@
+.images-view-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10vh;
+    min-height: 100vh;
+    width: 100%;
+    background-color: transparent;
+}
+
+.event-details {
+    justify-self: flex-end;
+    background-image: url("./../Assets/eventHeaderBG.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 300px;
+    width: 100%;
+}
+
+.event-details-shiny-effect {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 300px;
+    padding-left: 20px;
+    background-color: rgba(255, 255, 255, 0.51);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.display-event-name {
+    justify-self: center;
+    align-self: center;
+}
+
+.location-date-holder {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20%;
+}
+
+.display-event-description-title, .display-event-location, .display-event-date, .display-event-name {
+    background: linear-gradient(90deg, #57040f, #063a83, #073a02);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 30px;
+}
+
+.display-event-description-text {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    color: #342d2d;
+    font-size: 20px;
+    margin-left: -20px;
+    max-height: 200px;
+    overflow: scroll;
+    padding: 20px;
+}
+
+
+.images-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.image-holder {
+    margin: 20px;
+    width: 200px;
+    height: 200px;
+}
+
+.image-holder:hover {
+    transform: scale(1.05);
+}
+
+.zoomed-image {
+    width: 80vw;
+    height: 60%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.edit-arrow {
+    font-weight: 900;
+    font-size: 32px;
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.edit-dropdown {
+    width: 20px;
+    background-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.trash {
+    position: absolute;
+    align-self: flex-end;
+    justify-self: flex-end;
+    color: red;
+}
+
+.image-delete {
+    display: flex;
+}
+
+.plus-images, .update-button {
+    align-content: center;
+    position: fixed;
+    border: none;
+    background-color: rgb(11, 136, 175);
+    right: 9vw;
+    width: 120px;
+}
+
+.plus-images {
+    top: 70vh;
+}
+
+.update-button{
+    top: 80vh;
+}
+
+
+.plus-images:hover, .update-button:hover {
+    background-color: rgba(0, 166, 255, 0.62);
+}
+
+.edit-event, .delete-event {
+    text-align: center;
+}
+
+
+
+.update-form {
+    justify-self: center;
+    align-self: center;
+    margin-top: 40px;
+    width: 70%;
+}
+
+.form-label {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#eventDescription, #eventDate, #eventName, #eventLocation {
+    border: 1px solid black;
+    width: 100%;
+}
+.description-text-area {
+    margin-top: 20px;
+}

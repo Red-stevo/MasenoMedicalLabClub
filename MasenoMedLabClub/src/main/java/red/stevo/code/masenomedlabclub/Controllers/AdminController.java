@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/apis/admin")
-@CrossOrigin(value="http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(value={"http://localhost:5173"}, allowCredentials = "true")
 public class AdminController {
 
     private final AdminIndexImagesStorageService adminIndexImagesStorageService;
@@ -32,8 +32,8 @@ public class AdminController {
     /*This end point handles storing of url, name and description of the upload images.
     * These values are received from the font-end provided by the cloudinary API.*/
     @PostMapping("/save/images")
-    public ResponseEntity<UserGeneralResponse>
-    uploadedImage(@RequestBody @Validated List<IndexPageImageModel> uploadedImage){
+    public ResponseEntity<UserGeneralResponse> uploadedImage(@RequestBody @Validated
+                                                                 List<IndexPageImageModel> uploadedImage){
         log.info("Request to store upload images");
         return adminIndexImagesStorageService.storeUploadedImagesUrl(uploadedImage);
     }
@@ -75,10 +75,11 @@ public class AdminController {
     }
 
 
-    @PutMapping("/events/update")
+    @PutMapping("/events/update/{eventId}")
     public ResponseEntity<UserGeneralResponse> updateEvent(@RequestBody EventsCreationRequest request,
-                                              @RequestParam String eventId){
-        log.info("request to create an event");
+                                              @PathVariable("eventId") String eventId){
+        log.info("request to update an event");
+        System.out.println(request.toString());
         UserGeneralResponse response =  eventsService.updateEvent(request,eventId);
         return ResponseEntity.ok(response);
     }

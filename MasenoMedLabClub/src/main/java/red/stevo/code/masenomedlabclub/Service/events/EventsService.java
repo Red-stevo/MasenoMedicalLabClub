@@ -8,6 +8,7 @@ import org.modelmapper.config.Configuration;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EventNotFoundException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EventsCreationException;
 import red.stevo.code.masenomedlabclub.Entities.events.EventImages;
 import red.stevo.code.masenomedlabclub.Entities.events.Events;
@@ -29,7 +30,6 @@ import java.util.List;
 public class EventsService {
 
     private final EventsRepository eventsRepository;
-    private final ModelMapper modelMapper;
     private final EventImagesService eventImagesService;
 
     public UserGeneralResponse createEvent(EventsCreationRequest request){
@@ -111,15 +111,11 @@ public class EventsService {
 
         // Fetch all events
         return eventsRepository.findAll(Sort.by(Sort.Direction.DESC,"eventDate"));
-
-
     }
 
     public Events getEventById(String eventId){
-        log.info("Getting event by id");
-        return eventsRepository.findEventsByEventId(eventId);
+        log.info("Processing the get event request.");
+        return  eventsRepository.findByEventId(eventId).orElseThrow(()->new EventNotFoundException("Event Not Found."));
     }
-
-
 
 }
