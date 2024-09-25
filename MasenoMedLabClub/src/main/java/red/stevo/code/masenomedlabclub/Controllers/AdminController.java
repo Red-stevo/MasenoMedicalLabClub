@@ -10,6 +10,7 @@ import red.stevo.code.masenomedlabclub.Models.RequestModels.IndexPageImageModel;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.events.EventsCreationRequest;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
+import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserResponse;
 import red.stevo.code.masenomedlabclub.Service.AdminIndexImagesStorageService;
 import red.stevo.code.masenomedlabclub.Service.UsersRegistrationService;
 import red.stevo.code.masenomedlabclub.Service.events.EventImagesService;
@@ -100,5 +101,12 @@ public class AdminController {
         log.info("Request to register users.");
         UserGeneralResponse createUsers = usersRegistrationService.createUser(request);
         return ResponseEntity.ok(createUsers);
+    }
+
+    @GetMapping("/get_all_users")
+    public ResponseEntity<List<UserResponse>> getAllUsers(){
+        log.info("getting all the users");
+        List<UserResponse> users = usersRegistrationService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 }

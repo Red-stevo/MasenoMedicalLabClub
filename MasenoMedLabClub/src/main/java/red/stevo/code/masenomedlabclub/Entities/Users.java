@@ -25,6 +25,8 @@ public class Users implements UserDetails {
     @Column(nullable = false)
     private String email;
 
+    private String position;
+
     private Roles role;
 
     @Column(nullable = false)

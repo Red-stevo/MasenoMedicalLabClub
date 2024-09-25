@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -14,10 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
-import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.InvalidEmailFormatException;
-import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UserAlreadyExistException;
-import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UsersCreationFailedException;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.*;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
 import red.stevo.code.masenomedlabclub.Entities.Users;
 import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
@@ -26,6 +25,7 @@ import red.stevo.code.masenomedlabclub.Models.RequestModels.ResetPasswordDetails
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.AuthenticationResponse;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
+import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserResponse;
 import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepository;
 import red.stevo.code.masenomedlabclub.Repositories.users.UsersRepository;
 import red.stevo.code.masenomedlabclub.Service.DetService.EmailService;
@@ -53,7 +53,7 @@ public class UsersRegistrationService {
     private final CookieUtils cookieUtils;
     private final EmailService emailService;
     private final HttpServletResponse response;
-    private final RefreshTokensRepository refreshTokensRepository;
+    private final ModelMapper modelMapper;
 
 
     public UserGeneralResponse createUser(List<UsersRegistrationRequests> regRequest) {
@@ -76,6 +76,7 @@ public class UsersRegistrationService {
                     user.setEmail(usersRegistrationRequests.getEmail());
                     user.setPassword(passwordEncoder.encode(password));
                     user.setRole(usersRegistrationRequests.getRoles());
+                    user.setPosition(usersRegistrationRequests.getPosition());
                     user.setEnabled(true);
 
                     createdEmails.add(user.getEmail());
@@ -165,6 +166,19 @@ public class UsersRegistrationService {
         return password.matches(passwordRegex);
     }
 
+    public List<UserResponse> getAllUsers(){
+        try {
+            List<Users> users = usersRepository.findAll();
+            modelMapper.getConfiguration()
+                    .setFieldMatchingEnabled(true)
+                    .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+
+            return users.stream().map(user->modelMapper.map(user,UserResponse.class))
+                    .toList();
+        }catch (Exception e){
+            throw new ResourceNotFoundException("the users could not be retrieved");
+        }
+    }
 
     public UserGeneralResponse deleteUser(List<String> emails){
         log.info("Service to delete the user");

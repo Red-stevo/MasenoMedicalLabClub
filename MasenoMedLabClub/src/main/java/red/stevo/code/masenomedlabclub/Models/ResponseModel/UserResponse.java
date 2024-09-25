@@ -1,13 +1,11 @@
-package red.stevo.code.masenomedlabclub.Models.RequestModels;
+package red.stevo.code.masenomedlabclub.Models.ResponseModel;
 
 import lombok.Data;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
-
 @Data
-public class UsersRegistrationRequests {
-
+public class UserResponse {
     private String email;
     private Roles roles;
     private String position;
-
+    private int userId;
 }
