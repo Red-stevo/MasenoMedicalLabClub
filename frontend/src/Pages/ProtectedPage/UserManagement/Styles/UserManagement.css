@@ -10,13 +10,15 @@
 
 .user-display-title {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     gap: 10%;
     height: fit-content;
-    padding: 9px;
+    padding: 9px 40px 9px 40px;
     background-color: rgba(245, 222, 179, 0.2);
     margin-top: 10px;
     transition: ease-in-out .4s linear;
+    text-justify: distribute-center-last;
+    text-align: center;
 }
 
 .users-holder {
@@ -32,4 +34,34 @@
 .title-user-management {
     position: fixed;
     width: 82%;
+}
+
+.space {
+    width: 20%;
+}
+
+.user-reg-form {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    gap: 5%;
+}
+
+.role-select {
+    width: 24%;
+    text-align: center;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-bottom: 1px solid black;
+}
+
+.position-select {
+    width: 46%;
+    text-align: center;
+}
+
+.email-input {
+    width: 60%;
+    text-align: center;
 }
