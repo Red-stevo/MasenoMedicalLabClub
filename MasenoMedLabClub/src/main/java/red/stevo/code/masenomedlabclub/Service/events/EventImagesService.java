@@ -93,4 +93,12 @@ public class EventImagesService {
         }
     }
 
+    public void deleteImagesByEventId(String eventId){
+        List<EventImages> images = eventsImagesRepository.findAllByEventId(eventId);
+        for (EventImages image: images) {
+            deleteImageFromCloudinary(image.getImageId());
+        }
+        eventsImagesRepository.deleteAll(images);
+    }
+
 }

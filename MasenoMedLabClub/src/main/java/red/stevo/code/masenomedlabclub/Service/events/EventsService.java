@@ -95,6 +95,7 @@ public class EventsService {
             if (events == null) {
                 throw new IllegalArgumentException("the event with id " + eventId + " does not exist");
             }
+            eventImagesService.deleteImagesByEventId(eventId);
             eventsRepository.delete(events);
             UserGeneralResponse response = new UserGeneralResponse();
             response.setMessage("event deleted successfully");
