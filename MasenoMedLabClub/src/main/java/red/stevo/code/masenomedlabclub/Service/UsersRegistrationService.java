@@ -173,8 +173,17 @@ public class UsersRegistrationService {
                     .setFieldMatchingEnabled(true)
                     .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
 
-            return users.stream().map(user->modelMapper.map(user,UserResponse.class))
+            return users.stream().map(user->{
+                UserResponse userResponse = new UserResponse();
+                userResponse.setEmail(user.getEmail());
+                userResponse.setUserId(user.getUserId());
+                userResponse.setPosition(user.getPosition());
+                userResponse.setRoles(user.getRole().toString());
+
+                return userResponse;
+                    })
                     .toList();
+
         }catch (Exception e){
             throw new ResourceNotFoundException("the users could not be retrieved");
         }
@@ -230,6 +239,7 @@ public class UsersRegistrationService {
 
         user.setPassword(passwordEncoder.encode(adminPassword));
         user.setRole(Roles.ADMIN);
+        user.setPosition("Chair Person");
         user.setEnabled(true);
 
         usersRepository.save(user);
