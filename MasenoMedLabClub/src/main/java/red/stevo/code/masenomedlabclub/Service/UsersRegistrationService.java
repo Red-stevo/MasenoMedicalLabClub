@@ -34,6 +34,7 @@ import red.stevo.code.masenomedlabclub.Service.DetService.LogoutService;
 import red.stevo.code.masenomedlabclub.configurations.PasswordGenerator;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.InvalidPropertiesFormatException;
@@ -178,7 +179,7 @@ public class UsersRegistrationService {
                 userResponse.setEmail(user.getEmail());
                 userResponse.setUserId(user.getUserId());
                 userResponse.setPosition(user.getPosition());
-                userResponse.setRoles(user.getRole().toString());
+                userResponse.setRoles(Roles.valueOf(user.getRole().toString()));
 
                 return userResponse;
                     })
