@@ -91,6 +91,7 @@ public class AdminController {
         return ResponseEntity.ok("event deleted successfully");
     }
 
+
     @DeleteMapping("/delete/image")
     public ResponseEntity<UserGeneralResponse> deleteEventImage(@RequestBody List<String> imageUrl) {
         UserGeneralResponse response = imagesService.deleteEventImages(imageUrl);
@@ -109,5 +110,12 @@ public class AdminController {
         log.info("getting all the users");
         List<UserResponse> users = usersRegistrationService.getAllUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<UserGeneralResponse> updateUser(@RequestBody UserResponse regRequest,
+                                                          @PathVariable int userId){
+        UserGeneralResponse response = usersRegistrationService.updateUser(regRequest, userId);
+        return ResponseEntity.ok(response);
     }
 }
