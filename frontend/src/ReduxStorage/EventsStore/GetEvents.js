@@ -2,7 +2,7 @@ import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolk
 import {secureAxiosConfig} from "../../DataSourceConfig/secureAxios.js";
 
 export const  fetchEvents = createAsyncThunk("save-event/get-events",
-    async (data,config) => {
+    async (data = null,config) => {
         try {
             const response = await secureAxiosConfig.get("/events/get-events");
             return config.fulfillWithValue(response.data);

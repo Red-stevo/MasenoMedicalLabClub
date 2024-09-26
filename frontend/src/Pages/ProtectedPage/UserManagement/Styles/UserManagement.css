@@ -22,9 +22,12 @@
 }
 
 .users-holder {
-    margin-top: 60px;
+    margin-top: 3px;
 }
 
+.user-field-spacer {
+    margin-top: 60px;
+}
 
 .users-view:hover {
     transform: scale(1.02);

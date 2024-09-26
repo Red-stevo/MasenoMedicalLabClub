@@ -5,11 +5,11 @@ const userManagementAdapter = createEntityAdapter()
 
 const initialState = userManagementAdapter.getInitialState([]);
 
-const getUsers = createAsyncThunk("user-management/get-users",
-    async (data=null, config) => {
+export const getUsers = createAsyncThunk("user-management/get-users",
+    async (data= null, config) => {
         try {
             const response = await secureAxiosConfig.get("/admin/get_all_users");
-            return config.fulfillWithValue(response);
+            return config.fulfillWithValue(response.data);
         }catch (error){
             return config.rejectWithValue(error);
         }
