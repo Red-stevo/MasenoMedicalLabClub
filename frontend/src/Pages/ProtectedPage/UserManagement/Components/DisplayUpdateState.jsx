@@ -6,11 +6,11 @@ import {useEffect, useState} from "react";
 const DisplayUpdateState = ({index, email, position, role, userId}) => {
     const {register, handleSubmit,
         reset} = useForm();
-    const [editUserState, setEditUserState] = useState(null);
+    const [editUserState, setEditUserState] = useState(false);
 
     const handleUpdateUser = (data) => {
         console.log("submit called.")
-        setEditUserState(null)
+
     }
 
     useEffect(() => {
@@ -21,10 +21,10 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
 
     return (
         <div className={"users-holder"} key={userId}>
-            {editUserState !== index ?
+            {!editUserState ?
                 <div className={"user-display-title users-view"}
                      onDoubleClick={() => {
-                         setEditUserState(editUserState ? null : index)
+                         setEditUserState(true)
                      }}>
                     <div>{(index + 1)}</div>
                     <div>{email}</div>
@@ -33,7 +33,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
                 </div> :
 
                 <Form className={"user-reg-form"}
-                      onDoubleClick={handleSubmit(handleUpdateUser)}>
+                      onDoubleClick={() => setEditUserState(false)}>
                     <span className={"space"}></span>
                     <input className={"form-control email-input"}
                            placeholder={"Email e.g. jameskago@gmail.com"}
