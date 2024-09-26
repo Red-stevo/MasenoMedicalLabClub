@@ -25,9 +25,9 @@ const UserManagement = () => {
             </div>
             <div className={"user-field-spacer"}>
             {users.length !== 0 ? users.length >= 1 && !users.status ?
-                    users.map(({userId, email, position, role}, index) =>
+                    users.map(({userId, email, position, roles}, index) =>
                         <DisplayUpdateState
-                            userId={userId} position={position} role={role} email={email} index={index} />
+                            userId={userId} position={position} role={roles} email={email} index={index} />
                     )
                     : <div>Loading</div>
                 : <div>Error</div>

@@ -39,7 +39,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
                            placeholder={"Email e.g. jameskago@gmail.com"}
                            {...register("email")}/>
 
-                    <select className={"form-select position-select"} defaultValue={"Member"}
+                    <select className={"form-select position-select"} defaultValue={"Secretary"}
                             {...register("position")}>
                         <option value={"Chair Person"}>Chair Person</option>
                         <option value={"Vise Chair Person"}>Vise Chair Person</option>
