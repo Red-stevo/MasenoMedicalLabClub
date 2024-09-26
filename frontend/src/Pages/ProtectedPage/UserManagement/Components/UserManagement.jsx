@@ -1,5 +1,5 @@
 import "./../Styles/UserManagement.css";
-import {Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 
 const UserManagement = () => {
     return (
@@ -37,8 +37,9 @@ const UserManagement = () => {
                         <option value={"ADMIN"}>ADMIN</option>
                     </select>
 
+                    <Button className={"apply-button"}>Apply</Button>
                 </Form>
-
+                    <Button className={"cancel-changes-button"}>Cancel</Button>
             </div>
         </div>
     );

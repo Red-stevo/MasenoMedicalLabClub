@@ -54,14 +54,53 @@
     border-left: none;
     border-top: none;
     border-bottom: 1px solid black;
+    border-radius: 0;
 }
 
 .position-select {
     width: 46%;
     text-align: center;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-bottom: 1px solid black;
+    border-radius: 0;
 }
 
 .email-input {
     width: 60%;
     text-align: center;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-bottom: 1px solid black;
+    border-radius: 0;
+}
+
+
+.cancel-changes-button, .apply-button {
+    align-content: center;
+    position: fixed;
+    border: 1px solid rgb(11, 136, 175);
+    background-color: rgb(11, 136, 175);
+    width: 100px;
+    font-weight: 600;
+}
+
+.cancel-changes-button:hover, .apply-button:hover {
+    border: 1px solid rgb(11, 136, 175);
+    background-color:whitesmoke;
+    color: rgb(11, 136, 175);
+}
+
+
+.apply-button {
+    right: 10vw;
+    bottom: 10vh;
+}
+
+
+.cancel-changes-button {
+    right: 30vw;
+    bottom: 10vh;
 }
