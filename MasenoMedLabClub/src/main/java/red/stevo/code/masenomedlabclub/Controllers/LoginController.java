@@ -29,12 +29,10 @@ public class LoginController {
 
     }
 
-
     @PutMapping("/update/password")
     public ResponseEntity<UserGeneralResponse> updatePassword(@RequestBody ResetPasswordDetails details){
         log.info("Request to update password.");
         return ResponseEntity.ok(usersRegistrationService.resetPassword(details));
     }
-
 
 }

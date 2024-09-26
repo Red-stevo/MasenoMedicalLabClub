@@ -17,16 +17,13 @@ import org.springframework.stereotype.Service;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.InvalidEmailFormatException;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UserAlreadyExistException;
-import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UsersCreationFailedException;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
 import red.stevo.code.masenomedlabclub.Entities.Users;
-import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.LoginRequests;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.ResetPasswordDetails;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.AuthenticationResponse;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
-import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepository;
 import red.stevo.code.masenomedlabclub.Repositories.users.UsersRepository;
 import red.stevo.code.masenomedlabclub.Service.DetService.EmailService;
 import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
@@ -35,9 +32,7 @@ import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.InvalidPropertiesFormatException;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Service
 @Slf4j
