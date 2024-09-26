@@ -9,5 +9,6 @@ public class UserResponse {
     private Roles roles;
 
     private String position;
+
     private int userId;
 }
