@@ -1,0 +1,8 @@
+package red.stevo.code.masenomedlabclub.ControllerAdvice.custom;
+
+public class MessageNotFoundException extends RuntimeException {
+
+    public MessageNotFoundException (String message){
+        super(message);
+    }
+}
