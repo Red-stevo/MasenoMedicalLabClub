@@ -251,5 +251,22 @@ public class UsersRegistrationService {
         return response;
     }
 
+    public UserGeneralResponse updateUser(UserResponse regRequest,int userId) {
+        Users user = usersRepository.findById(userId).orElseThrow(()->new UserDoesNotExistException("user not found"));
+
+        user.setEmail(regRequest.getEmail());
+        user.setPosition(regRequest.getPosition());
+        user.setRole(Roles.valueOf(regRequest.getRoles()));
+
+        usersRepository.save(user);
+
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setMessage("User updated successfully");
+        response.setDate(new Date());
+        response.setHttpStatus(HttpStatus.OK);
+
+        return response;
+    }
+
 
 }
