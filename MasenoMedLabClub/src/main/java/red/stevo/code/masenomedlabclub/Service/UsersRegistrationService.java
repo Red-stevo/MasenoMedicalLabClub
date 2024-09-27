@@ -5,8 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -16,7 +14,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.*;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.EntityDeletionException;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.InvalidEmailFormatException;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UserAlreadyExistException;
+import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.UsersCreationFailedException;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
 import red.stevo.code.masenomedlabclub.Entities.Users;
 import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
@@ -25,12 +26,10 @@ import red.stevo.code.masenomedlabclub.Models.RequestModels.ResetPasswordDetails
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.AuthenticationResponse;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
-import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserResponse;
 import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepository;
 import red.stevo.code.masenomedlabclub.Repositories.users.UsersRepository;
 import red.stevo.code.masenomedlabclub.Service.DetService.EmailService;
 import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
-import red.stevo.code.masenomedlabclub.Service.DetService.LogoutService;
 import red.stevo.code.masenomedlabclub.configurations.PasswordGenerator;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
@@ -54,7 +53,6 @@ public class UsersRegistrationService {
     private final CookieUtils cookieUtils;
     private final EmailService emailService;
     private final HttpServletResponse response;
-    private final ModelMapper modelMapper;
 
 
     public UserGeneralResponse createUser(List<UsersRegistrationRequests> regRequest) {
@@ -78,7 +76,6 @@ public class UsersRegistrationService {
                     user.setEmail(usersRegistrationRequests.getEmail());
                     user.setPassword(passwordEncoder.encode(password));
                     user.setRole(usersRegistrationRequests.getRoles());
-                    user.setPosition(usersRegistrationRequests.getPosition());
                     user.setEnabled(true);
 
                     createdEmails.add(user.getEmail());
@@ -204,7 +201,6 @@ public class UsersRegistrationService {
                     }
 
             ).toList();
-
             usersRepository.deleteAll(usersList);
             UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
             userGeneralResponse.setMessage("User deleted successfully");
