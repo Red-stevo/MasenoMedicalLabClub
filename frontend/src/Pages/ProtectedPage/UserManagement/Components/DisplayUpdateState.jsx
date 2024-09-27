@@ -10,10 +10,13 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
 
 
     useEffect(() => {
-        if (editUserState)
             reset({email, role, position})
-
     }, [editUserState, reset]);
+
+    const handleStateUpdate = (data) => {
+        console.log(data);
+    }
+
 
 
     return (
@@ -31,7 +34,8 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
 
                 <Form className={"user-reg-form"}
                       onDoubleClick={() => setEditUserState(false)}>
-                    <Button className={"space user-update-button"}>Update</Button>
+                    <Button onClick={handleSubmit(handleStateUpdate)}
+                            className={"space user-update-button"}>Update</Button>
                     <input className={"form-control email-input"}
                            placeholder={"Email e.g. jameskago@gmail.com"}
                            {...register("email")}/>
