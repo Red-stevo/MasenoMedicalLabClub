@@ -1,4 +1,4 @@
-import {Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {useEffect, useState} from "react";
 
@@ -8,16 +8,13 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
         reset} = useForm();
     const [editUserState, setEditUserState] = useState(false);
 
-    const handleUpdateUser = (data) => {
-        console.log("submit called.")
-
-    }
 
     useEffect(() => {
         if (editUserState)
             reset({email, role, position})
 
-    }, [editUserState, reset])
+    }, [editUserState, reset]);
+
 
     return (
         <div className={"users-holder"} key={userId}>
@@ -34,7 +31,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
 
                 <Form className={"user-reg-form"}
                       onDoubleClick={() => setEditUserState(false)}>
-                    <span className={"space"}></span>
+                    <Button className={"space user-update-button"}>Update</Button>
                     <input className={"form-control email-input"}
                            placeholder={"Email e.g. jameskago@gmail.com"}
                            {...register("email")}/>

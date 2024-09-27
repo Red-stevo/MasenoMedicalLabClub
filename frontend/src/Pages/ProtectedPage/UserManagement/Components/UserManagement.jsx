@@ -1,12 +1,13 @@
 import "./../Styles/UserManagement.css";
 import {Button} from "react-bootstrap";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getUsers} from "../../../../ReduxStorage/UserManagementStore.js";
 import DisplayUpdateState from "./DisplayUpdateState.jsx";
 
 const UserManagement = () => {
     const users = useSelector(state => state.userManagementReducer);
+    const [update, setUpdate] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -26,14 +27,14 @@ const UserManagement = () => {
             <div className={"user-field-spacer"}>
             {users.length !== 0 ? users.length >= 1 && !users.status ?
                     users.map(({userId, email, position, roles}, index) =>
-                        <DisplayUpdateState
+                        <DisplayUpdateState key={index}
                             userId={userId} position={position} role={roles} email={email} index={index} />
                     )
                     : <div>Loading</div>
                 : <div>Error</div>
             }
             </div>
-            <Button className={"apply-button"}>Apply</Button>
+            <Button className={"apply-button"} onClick={() => setUpdate(true)}>Apply</Button>
             <Button onClick={() => window.location.reload()} className={"cancel-changes-button"}>Cancel</Button>
         </div>
     );
