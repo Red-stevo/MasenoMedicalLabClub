@@ -1,7 +1,21 @@
 import "./../Styles/UserManagement.css";
-import {Form} from "react-bootstrap";
+import {Button} from "react-bootstrap";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {getUsers} from "../../../../ReduxStorage/UserManagementStore.js";
+import DisplayUpdateState from "./DisplayUpdateState.jsx";
 
 const UserManagement = () => {
+    const users = useSelector(state => state.userManagementReducer);
+    const [update, setUpdate] = useState(false);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getUsers(null))
+    }, []);
+
+
+
     return (
         <div className={"user-management-page"}>
             <div className={"user-display-title title-user-management"}>
@@ -10,36 +24,18 @@ const UserManagement = () => {
                 <div>Position</div>
                 <div>Role</div>
             </div>
-            <div className={"users-holder"}>
-                <div className={"user-display-title users-view"}>
-                    <div>1</div>
-                    <div>stephen.muiru22@students.dkut.ac.ke</div>
-                    <div>ChairPerson</div>
-                    <div>Admin</div>
-                </div>
-
-                <Form className={"user-reg-form"}>
-                    <span className={"space"}></span>
-                    <input className={"form-control email-input"} placeholder={"Email e.g. jameskago@gmail.com"} />
-
-                    <select className={"form-select position-select"} defaultValue={"Member"}>
-                        <option value={"Chair Person"}>Chair Person</option>
-                        <option value={"Vise Chair Person"}>Vise Chair Person</option>
-                        <option value={"Treasure"}>Treasure</option>
-                        <option value={"Vise Treasure"}>Vise Treasure</option>
-                        <option value={"Secretary"}>Secretary</option>
-                        <option value={"Vise Secretary"}>Vise Secretary</option>
-                        <option value={"Member"}>Member</option>
-                    </select>
-
-                    <select className={"form-select role-select"} defaultValue={"USER"}>
-                        <option value={"USER"}>USER</option>
-                        <option value={"ADMIN"}>ADMIN</option>
-                    </select>
-
-                </Form>
-
+            <div className={"user-field-spacer"}>
+            {users.length !== 0 ? users.length >= 1 && !users.status ?
+                    users.map(({userId, email, position, roles}, index) =>
+                        <DisplayUpdateState key={index}
+                            userId={userId} position={position} role={roles} email={email} index={index} />
+                    )
+                    : <div>Loading</div>
+                : <div>Error</div>
+            }
             </div>
+            <Button className={"apply-button"} onClick={() => setUpdate(true)}>Apply</Button>
+            <Button onClick={() => window.location.reload()} className={"cancel-changes-button"}>Cancel</Button>
         </div>
     );
 };

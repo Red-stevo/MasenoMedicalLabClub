@@ -33,6 +33,7 @@ import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
 import red.stevo.code.masenomedlabclub.configurations.PasswordGenerator;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.InvalidPropertiesFormatException;
@@ -65,7 +66,8 @@ public class UsersRegistrationService {
 
                     Users user = new Users();
                     if (!isEmailValid(usersRegistrationRequests.getEmail())) {
-                        throw new InvalidEmailFormatException("Invalid email format: " + usersRegistrationRequests.getEmail());
+                        throw new InvalidEmailFormatException("Invalid email format: " + usersRegistrationRequests.
+                                getEmail());
                     }
 
                     String password = passwordGenerator.generateRandomPassword(8);
@@ -92,7 +94,8 @@ public class UsersRegistrationService {
 
 
     private boolean isEmailValid(String email) {
-        org.apache.commons.validator.routines.EmailValidator emailValidator = org.apache.commons.validator.routines.EmailValidator.getInstance();
+        org.apache.commons.validator.routines.EmailValidator emailValidator = org.apache.commons.validator
+                .routines.EmailValidator.getInstance();
         return emailValidator.isValid(email);
     }
 
@@ -163,6 +166,28 @@ public class UsersRegistrationService {
         return password.matches(passwordRegex);
     }
 
+    public List<UserResponse> getAllUsers(){
+        try {
+            List<Users> users = usersRepository.findAll();
+            modelMapper.getConfiguration()
+                    .setFieldMatchingEnabled(true)
+                    .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+
+            return users.stream().map(user->{
+                UserResponse userResponse = new UserResponse();
+                userResponse.setEmail(user.getEmail());
+                userResponse.setUserId(user.getUserId());
+                userResponse.setPosition(user.getPosition());
+                userResponse.setRoles(Roles.valueOf(user.getRole().toString()));
+
+                return userResponse;
+                    })
+                    .toList();
+
+        }catch (Exception e){
+            throw new ResourceNotFoundException("the users could not be retrieved");
+        }
+    }
 
     public UserGeneralResponse deleteUser(List<String> emails){
         log.info("Service to delete the user");
@@ -213,6 +238,7 @@ public class UsersRegistrationService {
 
         user.setPassword(passwordEncoder.encode(adminPassword));
         user.setRole(Roles.ADMIN);
+        user.setPosition("Chair Person");
         user.setEnabled(true);
 
         usersRepository.save(user);
@@ -221,6 +247,23 @@ public class UsersRegistrationService {
         response.setMessage("Default admin created successfully");
         response.setDate(new Date());
         response.setHttpStatus(HttpStatus.OK);
+        return response;
+    }
+
+    public UserGeneralResponse updateUser(UserResponse regRequest,int userId) {
+        Users user = usersRepository.findById(userId).orElseThrow(()->new UserDoesNotExistException("user not found"));
+
+        user.setEmail(regRequest.getEmail());
+        user.setPosition(regRequest.getPosition());
+        user.setRole(Roles.valueOf(String.valueOf(regRequest.getRoles())));
+
+        usersRepository.save(user);
+
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setMessage("User updated successfully");
+        response.setDate(new Date());
+        response.setHttpStatus(HttpStatus.OK);
+
         return response;
     }
 

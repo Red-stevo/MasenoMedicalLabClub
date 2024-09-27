@@ -29,7 +29,7 @@ export const updateEventReducer = createAsyncThunk("save-event/update",
 
 
 export const saveEvent = createAsyncThunk("save-event/new-event",
-    async (eventData, config) => {
+    async (eventData = null, config) => {
 
     try {
         const response = await secureAxiosConfig.post("/admin/events/create", eventData);
