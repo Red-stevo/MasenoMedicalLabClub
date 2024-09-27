@@ -9,4 +9,6 @@ import red.stevo.code.masenomedlabclub.Entities.IndexPageImages;
 @Transactional
 public interface ImageRepository extends CrudRepository<IndexPageImages, String> {
 
+    void deleteByImagePublicId(String imagePublicId);
+
 }

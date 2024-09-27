@@ -16,6 +16,7 @@ import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Repositories.profile.ProfileRepository;
 import red.stevo.code.masenomedlabclub.Repositories.profile.SocialMediaAccountsRepository;
 import red.stevo.code.masenomedlabclub.Repositories.profile.StudentResearchRepository;
+import red.stevo.code.masenomedlabclub.Service.events.EventImagesService;
 
 import java.util.Date;
 import java.util.List;
@@ -28,8 +29,9 @@ public class ProfileService {
     private final SocialMediaAccountsRepository socialMediaAccountsRepository;
     private final StudentResearchRepository studentResearchRepository;
     private final ModelMapper modelMapper;
+    private EventImagesService eventImagesService;
 
-    public UserGeneralResponse createProfile(ProfileCreationRequests requests, String userId) {
+    public UserGeneralResponse createProfile(ProfileCreationRequests requests, int userId) {
         try {
             log.info("Creating profile");
 
@@ -39,14 +41,15 @@ public class ProfileService {
             userProfile.setFirstName(requests.getFirstName());
             userProfile.setLastName(requests.getLastName());
             userProfile.setProfileImage(requests.getProfileImage());
+            userProfile.setProfileImageId(requests.getProfileImageId());
             userProfile.setRegistrationNo(requests.getRegistrationNo());
 
             // Save user profile
             UserProfile savedProfile = profileRepository.save(userProfile);
 
             // Add social media accounts if provided
-            if (requests.getSocialMediaAccounts() != null && !requests.getSocialMediaAccounts().isEmpty()) {
-                addSocialMedia(savedProfile.getProfileId(), requests.getSocialMediaAccounts());
+            if (requests.getMediaRequests() != null && !requests.getMediaRequests().isEmpty()) {
+                addSocialMedia(savedProfile.getProfileId(), requests.getMediaRequests());
             }
 
             if (requests.getStudentResearches() != null && !requests.getStudentResearches().isEmpty()){
@@ -65,22 +68,22 @@ public class ProfileService {
         }
     }
 
-    public void addSocialMedia(String profileId, List<SocialMediaAccounts> socialMediaAccounts) {
+    public void addSocialMedia(String profileId, List<SocialMediaRequests> mediaRequests) {
         log.info("Adding social media accounts for profile: " + profileId);
 
-        List<SocialMediaAccounts> accountsToSave = socialMediaAccounts.stream()
+        List<SocialMediaAccounts> accountsToSave = mediaRequests.stream()
                 .map(accountRequest -> {
                     SocialMediaAccounts account = new SocialMediaAccounts();
-                    account.setProfileId(accountRequest.getProfileId());
-                    account.setSocialMediaAccountName(accountRequest.getSocialMediaAccountName());
-                    account.setSocialMediaAccountUrl(accountRequest.getSocialMediaAccountUrl());
+                    account.setProfileId(profileId);
+                    account.setSocialMediaAccountName(accountRequest.getSocialMediaName());
+                    account.setSocialMediaAccountUrl(accountRequest.getSocialMediaUrl());
                     return account;
                 }).toList();
 
         // Save the social media accounts
         socialMediaAccountsRepository.saveAll(accountsToSave);
     }
-    public UserGeneralResponse  addStudentResearch(String profileId, List<StudentResearch> studentResearches){
+    public UserGeneralResponse  addStudentResearch(String profileId, List<ResearchRequests> studentResearches){
         log.info("Adding student research for profile: " + profileId);
         List<StudentResearch> studentResearchesToSave = studentResearches.stream()
                 .map(researchReq->{
@@ -88,7 +91,8 @@ public class ProfileService {
                     studentResearch.setProfileId(profileId);
                     studentResearch.setResearchTitle(researchReq.getResearchTitle());
                     studentResearch.setResearchDescription(researchReq.getResearchDescription());
-                    studentResearch.setResearchDocuments(researchReq.getResearchDocuments());
+                    studentResearch.setResearchDocumentsUrl(researchReq.getResearchDocumentUrl());
+                    studentResearch.setResearchDocsId(researchReq.getResearchDocsId());
                     return studentResearch;
                 }).toList();
         studentResearchRepository.saveAll(studentResearchesToSave);
@@ -99,19 +103,20 @@ public class ProfileService {
         return response;
     }
 
-    public UserGeneralResponse updateProfile(ProfileCreationRequests requests, String profileId){
+    public UserGeneralResponse updateProfile(ProfileCreationRequests requests, int userId){
         log.info("Updating profile");
-        UserProfile userProfile = profileRepository.findByProfileId(profileId).orElseThrow();
+        UserProfile userProfile = profileRepository.findByUserId(userId);
         userProfile.setFirstName(requests.getFirstName());
         userProfile.setLastName(requests.getLastName());
         userProfile.setProfileImage(requests.getProfileImage());
+        userProfile.setProfileImageId(requests.getProfileImageId());
         userProfile.setRegistrationNo(requests.getRegistrationNo());
-        UserProfile updatedProfile = profileRepository.save(userProfile);
-        if (requests.getSocialMediaAccounts() != null && !requests.getSocialMediaAccounts().isEmpty()) {
-            addSocialMedia(updatedProfile.getProfileId(), requests.getSocialMediaAccounts());
+        UserProfile userProfile1 = profileRepository.save(userProfile);
+        if (requests.getMediaRequests() != null && !requests.getMediaRequests().isEmpty()) {
+            addSocialMedia(userProfile1.getProfileId(), requests.getMediaRequests());
         }
         if (requests.getStudentResearches() != null && !requests.getStudentResearches().isEmpty()) {
-            addStudentResearch(updatedProfile.getProfileId(), requests.getStudentResearches());
+            addStudentResearch(userProfile.getProfileId(), requests.getStudentResearches());
         }
         UserGeneralResponse response = new UserGeneralResponse();
         response.setMessage("Profile updated successfully");
@@ -125,7 +130,8 @@ public class ProfileService {
         StudentResearch research = studentResearchRepository.findByResearchId(researchId);
         research.setResearchTitle(studentResearches.getResearchTitle());
         research.setResearchDescription(studentResearches.getResearchDescription());
-        research.setResearchDocuments(studentResearches.getResearchDocument());
+        research.setResearchDocumentsUrl(studentResearches.getResearchDocumentUrl());
+        research.setResearchDocsId(studentResearches.getResearchDocsId());
         studentResearchRepository.save(research);
 
         UserGeneralResponse response = new UserGeneralResponse();
@@ -161,6 +167,7 @@ public class ProfileService {
     public UserGeneralResponse deleteStudentResearch(String researchId){
         log.info("Deleting student research");
         StudentResearch research = studentResearchRepository.findByResearchId(researchId);
+        eventImagesService.deleteImageFromCloudinary(research.getResearchDocsId());
         studentResearchRepository.delete(research);
         UserGeneralResponse response = new UserGeneralResponse();
         response.setMessage("research deleted successfully");
@@ -169,9 +176,9 @@ public class ProfileService {
         return response;
     }
 
-    public UserGeneralResponse deleteUserProfile(String profileId){
+    public UserGeneralResponse deleteUserProfile(int userId){
         log.info("Deleting user profile");
-        UserProfile profile = profileRepository.findByProfileId(profileId).orElseThrow();
+        UserProfile profile = profileRepository.findByUserId(userId);
         profileRepository.delete(profile);
         UserGeneralResponse response = new UserGeneralResponse();
         response.setMessage("profile deleted successfully");
@@ -179,13 +186,24 @@ public class ProfileService {
         response.setHttpStatus(HttpStatus.OK);
         return response;
     }
-    public ProfileCreationRequests getUserProfile(String userId){
+    public UserProfile getUserProfile(int userId){
         log.info("Retrieving user profile");
+        return profileRepository.findByUserId(userId);
+
+    }
+
+    public UserGeneralResponse deleteProfileImage(int userId){
+        log.info("Deleting profile image");
         UserProfile profile = profileRepository.findByUserId(userId);
-        modelMapper.getConfiguration()
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
-                .setFieldMatchingEnabled(true);
-        return modelMapper.map(profile, ProfileCreationRequests.class);
+        eventImagesService.deleteImageFromCloudinary(profile.getProfileImageId());
+        profile.setProfileImage(null);
+        profile.setProfileImageId(null);
+        profileRepository.save(profile);
+        UserGeneralResponse response = new UserGeneralResponse();
+        response.setMessage("profile image deleted successfully");
+        response.setDate(new Date());
+        response.setHttpStatus(HttpStatus.OK);
+        return response;
 
     }
 }

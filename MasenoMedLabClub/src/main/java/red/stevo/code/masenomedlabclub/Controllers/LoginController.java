@@ -22,17 +22,17 @@ public class LoginController {
     private final UsersRegistrationService usersRegistrationService;
 
     @PostMapping("/login")
-
     public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequests requests) {
         log.info("Login request received.");
         return registrationService.loginUser(requests);
-
     }
+
 
     @PutMapping("/update/password")
     public ResponseEntity<UserGeneralResponse> updatePassword(@RequestBody ResetPasswordDetails details){
         log.info("Request to update password.");
         return ResponseEntity.ok(usersRegistrationService.resetPassword(details));
     }
+
 
 }

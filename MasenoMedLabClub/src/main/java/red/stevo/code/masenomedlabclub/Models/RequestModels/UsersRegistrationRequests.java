@@ -8,5 +8,6 @@ public class UsersRegistrationRequests {
 
     private String email;
     private Roles roles;
+    private String position;
 
 }

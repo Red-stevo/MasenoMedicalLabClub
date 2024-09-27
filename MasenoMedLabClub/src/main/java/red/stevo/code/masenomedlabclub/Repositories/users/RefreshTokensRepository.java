@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import red.stevo.code.masenomedlabclub.Entities.Users;
 import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,4 +15,7 @@ public interface RefreshTokensRepository extends JpaRepository<RefreshTokens, In
     Optional<RefreshTokens> findByRefreshToken(String refreshToken);
 
     RefreshTokens findByUser(Users user);
+
+    boolean existsRefreshTokensByUser(Users user);
+
 }

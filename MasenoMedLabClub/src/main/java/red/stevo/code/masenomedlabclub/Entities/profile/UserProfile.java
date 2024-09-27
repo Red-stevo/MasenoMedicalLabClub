@@ -12,18 +12,17 @@ public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String profileId;
-    private String userId;
+    private Integer userId;
     private String firstName;
     private String lastName;
     private String registrationNo;
     private String profileImage;
+    private String profileImageId;
     @OneToMany(mappedBy = "profileId",cascade = CascadeType.ALL,
             orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = SocialMediaAccounts.class)
     private List<SocialMediaAccounts> socialMediaAccounts;
     @OneToMany(mappedBy = "profileId",cascade = CascadeType.ALL,orphanRemoval = true,
             fetch = FetchType.EAGER, targetEntity = StudentResearch.class)
     private List<StudentResearch> studentResearch;
-    @OneToOne
-    @JoinColumn(referencedColumnName = "userId")
-    private Users users;
+
 }

@@ -16,6 +16,7 @@ import red.stevo.code.masenomedlabclub.Entities.IndexPageImages;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.IndexPageImageModel;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Repositories.ImageRepository;
+import red.stevo.code.masenomedlabclub.Service.events.EventImagesService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 public class AdminIndexImagesStorageService {
 
     private final ImageRepository imageRepository;
+    private final EventImagesService eventImagesService;
 
 
     /*This Method receives image details from the controller and pushes them to the database.*/
@@ -39,7 +41,7 @@ public class AdminIndexImagesStorageService {
 
         /*Mapping the Images details passed to Image table Object and returning them to the list.*/
         List<IndexPageImages> indexPageImages = uploadedImage.stream().map((imageModel)
-        -> new IndexPageImages(imageModel.getImageId(), imageModel.getImageUrl(),
+        -> new IndexPageImages(imageModel.getImageId(), imageModel.getImageUrl(),imageModel.getImagePublicId(),
                 imageModel.getImageTitle(), imageModel.getImageDescription())).toList();
 
         /*Save the list of image entity to the database.*/
@@ -65,7 +67,7 @@ public class AdminIndexImagesStorageService {
 
         imageRepository.findAll().forEach((image) -> {
             IndexPageImageModel indexPageImageModel = new
-                    IndexPageImageModel(image.getId(), image.getUrl(), image.getDescription(), image.getName());
+                    IndexPageImageModel(image.getId(), image.getUrl(),image.getImagePublicId(), image.getDescription(), image.getName());
             imageDetails.add(indexPageImageModel);
         });
 
@@ -73,11 +75,12 @@ public class AdminIndexImagesStorageService {
     }
 
     @CacheEvict(value = "IndexPageImages", allEntries =true )
-    public ResponseEntity<UserGeneralResponse> deleteIndexPageImage(String imageId){
+    public ResponseEntity<UserGeneralResponse> deleteIndexPageImage(String imagePublicId){
         log.info("Processing image for deletion.");
 
         /*delete image.*/
-        imageRepository.deleteById(imageId);
+        eventImagesService.deleteImageFromCloudinary(imagePublicId);
+        imageRepository.deleteByImagePublicId(imagePublicId);
 
         UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
         userGeneralResponse.setHttpStatus(HttpStatus.OK);

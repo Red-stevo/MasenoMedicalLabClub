@@ -9,7 +9,9 @@ public class EventImages {
 
     @Id
     private String imageId;
+
     private String eventId;
+
     private String imageUrl;
 
 

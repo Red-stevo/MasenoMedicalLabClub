@@ -174,6 +174,22 @@ public class RuntimeExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String,String>> handleResourceNotFoundException(ResourceNotFoundException ex){
+        Map<String,String> errors = new HashMap<>();
+        String message = ex.getMessage();
+        errors.put("message",message);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ResourceCreationFailedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String,String>> handleResourceCreationFailedException(ResourceCreationFailedException ex){
+        Map<String,String> errors = new HashMap<>();
+        String message = ex.getMessage();
+        errors.put("message",message);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(EventsCreationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -183,6 +199,19 @@ public class RuntimeExceptionHandler {
         String message = ex.getMessage();
         errors.put("message"+ message+"cause", ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<UserGeneralResponse> handleEventNotFoundException(EventNotFoundException e){
+        log.warn("EventNotFoundException");
+
+        UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
+        userGeneralResponse.setMessage(e.getMessage());
+        userGeneralResponse.setDate(new Date());
+        userGeneralResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(userGeneralResponse, HttpStatus.NOT_FOUND);
     }
 
 }

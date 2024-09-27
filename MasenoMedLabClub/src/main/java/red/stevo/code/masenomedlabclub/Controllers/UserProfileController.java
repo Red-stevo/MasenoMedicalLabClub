@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import red.stevo.code.masenomedlabclub.Entities.profile.UserProfile;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.profiles.ProfileCreationRequests;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.profiles.ResearchRequests;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.profiles.SocialMediaRequests;
@@ -14,37 +15,38 @@ import red.stevo.code.masenomedlabclub.Service.profile.ProfileService;
 @Data
 @RequiredArgsConstructor
 @RequestMapping("/apis/user/profile")
+@CrossOrigin(value={"http://localhost:5173"}, allowCredentials = "true")
 public class UserProfileController {
 
     private final ProfileService profileService;
 
     @PostMapping("/create")
     public ResponseEntity<UserGeneralResponse> createProfile(@RequestBody ProfileCreationRequests requests,
-                                                             @RequestParam String userId) {
+                                                             @RequestParam int userId) {
         UserGeneralResponse response = profileService.createProfile(requests,userId);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/update")
     public ResponseEntity<UserGeneralResponse> updateProfile(@RequestBody ProfileCreationRequests requests,
-                                                             @RequestParam String profileId){
-        UserGeneralResponse response = profileService.updateProfile(requests,profileId);
+                                                             @RequestParam int userId){
+        UserGeneralResponse response = profileService.updateProfile(requests,userId);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<ProfileCreationRequests> getProfile(@PathVariable String userId) {
-        ProfileCreationRequests requests = profileService.getUserProfile(userId);
+    public ResponseEntity<UserProfile> getProfile(@PathVariable int userId) {
+        UserProfile requests = profileService.getUserProfile(userId);
         return ResponseEntity.ok(requests);
     }
 
 
-    @PutMapping("/delete/{profileId}")
-    public ResponseEntity<UserGeneralResponse> deleteProfile(@PathVariable String profileId) {
-        UserGeneralResponse response = profileService.deleteUserProfile(profileId);
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<UserGeneralResponse> deleteProfile(@PathVariable int userId) {
+        UserGeneralResponse response = profileService.deleteUserProfile(userId);
         return ResponseEntity.ok(response);
     }
-    @PutMapping("/update//research{researchId}")
+    @PutMapping("/update/research/{researchId}")
     public ResponseEntity<UserGeneralResponse> updateProfile(@PathVariable String researchId, @RequestBody ResearchRequests requests) {
         UserGeneralResponse response = profileService.updateStudentResearch(requests,researchId);
         return ResponseEntity.ok(response);
@@ -67,6 +69,11 @@ public class UserProfileController {
         UserGeneralResponse response = profileService.deleteStudentResearch(researchId);
         return ResponseEntity.ok(response);
 
+    }
+    @DeleteMapping("/delete/profileImage")
+    public ResponseEntity<UserGeneralResponse> deleteProfileImage(@RequestParam int userId){
+        UserGeneralResponse response = profileService.deleteProfileImage(userId);
+        return ResponseEntity.ok(response);
     }
 
 }
