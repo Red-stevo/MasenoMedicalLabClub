@@ -257,7 +257,6 @@ public class UsersRegistrationService {
         user.setEmail(regRequest.getEmail());
         user.setPosition(regRequest.getPosition());
         user.setRole(Roles.valueOf(String.valueOf(regRequest.getRoles())));
-
         usersRepository.save(user);
 
         UserGeneralResponse response = new UserGeneralResponse();
