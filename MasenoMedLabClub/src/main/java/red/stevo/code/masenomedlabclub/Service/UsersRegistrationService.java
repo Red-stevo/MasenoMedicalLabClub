@@ -68,7 +68,8 @@ public class UsersRegistrationService {
 
                     Users user = new Users();
                     if (!isEmailValid(usersRegistrationRequests.getEmail())) {
-                        throw new InvalidEmailFormatException("Invalid email format: " + usersRegistrationRequests.getEmail());
+                        throw new InvalidEmailFormatException("Invalid email format: " + usersRegistrationRequests.
+                                getEmail());
                     }
 
                     String password = passwordGenerator.generateRandomPassword(8);
@@ -96,7 +97,8 @@ public class UsersRegistrationService {
 
 
     private boolean isEmailValid(String email) {
-        org.apache.commons.validator.routines.EmailValidator emailValidator = org.apache.commons.validator.routines.EmailValidator.getInstance();
+        org.apache.commons.validator.routines.EmailValidator emailValidator = org.apache.commons.validator
+                .routines.EmailValidator.getInstance();
         return emailValidator.isValid(email);
     }
 
@@ -257,7 +259,7 @@ public class UsersRegistrationService {
 
         user.setEmail(regRequest.getEmail());
         user.setPosition(regRequest.getPosition());
-        user.setRole(Roles.valueOf(regRequest.getRoles()));
+        user.setRole(Roles.valueOf(String.valueOf(regRequest.getRoles())));
 
         usersRepository.save(user);
 
