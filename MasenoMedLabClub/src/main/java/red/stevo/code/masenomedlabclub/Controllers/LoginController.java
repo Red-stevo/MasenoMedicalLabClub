@@ -14,7 +14,7 @@ import red.stevo.code.masenomedlabclub.Service.UsersRegistrationService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/apis")
-@CrossOrigin(value={"http://localhost:5173"}, allowCredentials = "true")
+@CrossOrigin(value={"http://localhost:5173", "http://192.168.100.6:5173"}, allowCredentials = "true")
 public class LoginController {
 
     private final UsersRegistrationService registrationService;
@@ -33,7 +33,6 @@ public class LoginController {
         log.info("Request to update password.");
         return ResponseEntity.ok(usersRegistrationService.resetPassword(details));
     }
-
 
 
 }
