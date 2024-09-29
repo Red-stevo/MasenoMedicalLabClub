@@ -10,11 +10,20 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
 
 
     useEffect(() => {
-            reset({email, role, position})
+            reset({email, role, position});
     }, [editUserState, reset]);
 
     const handleStateUpdate = (data) => {
-        console.log(data);
+
+        /*Update the user state.(Redux state)*/
+
+
+        /*Make the backend call to update the user.*/
+
+
+        /*Set the update mode to view mode.*/
+
+
     }
 
 
