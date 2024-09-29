@@ -1,12 +1,15 @@
 import {Button, Form} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
+import {update} from "../../../../ReduxStorage/UserManagementStore.js";
 
 
 const DisplayUpdateState = ({index, email, position, role, userId}) => {
     const {register, handleSubmit,
         reset} = useForm();
     const [editUserState, setEditUserState] = useState(false);
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -16,7 +19,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
     const handleStateUpdate = (data) => {
 
         /*Update the user state.(Redux state)*/
-
+        dispatch(update({id:userId, changes:data}));
 
         /*Make the backend call to update the user.*/
 

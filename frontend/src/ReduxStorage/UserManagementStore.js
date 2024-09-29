@@ -1,7 +1,9 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import {secureAxiosConfig} from "../DataSourceConfig/secureAxios.js";
 
-const userManagementAdapter = createEntityAdapter()
+const userManagementAdapter = createEntityAdapter({
+    selectId: user => user.userId
+})
 
 const initialState = userManagementAdapter.getInitialState([]);
 
@@ -19,7 +21,7 @@ export const getUsers = createAsyncThunk("user-management/get-users",
 const userManagementStore = createSlice({
     name:"user-management",
     initialState,
-    reducers:{ update:userManagementAdapter.updateOne()},
+    reducers:{ update:userManagementAdapter.updateOne,},
     extraReducers:builder => {
         builder
             .addCase(getUsers.pending, () => {
@@ -34,4 +36,8 @@ const userManagementStore = createSlice({
     }
 });
 
+
 export default userManagementStore.reducer;
+
+export const { update } = userManagementStore.actions;
+
