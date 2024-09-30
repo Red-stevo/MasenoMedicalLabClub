@@ -47,3 +47,5 @@ export default userManagementStore.reducer;
 
 export const { update } = userManagementStore.actions;
 
+export const {selectAll,selectById} =
+    userManagementAdapter.getSelectors(state => state.userManagementReducer);

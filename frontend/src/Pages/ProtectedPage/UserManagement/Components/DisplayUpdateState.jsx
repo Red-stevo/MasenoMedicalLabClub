@@ -63,8 +63,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
                         <option value={"Member"}>Member</option>
                     </select>
 
-                    <select className={"form-select role-select"} defaultValue={"USER"}
-                            {...register("role")}>
+                    <select className={"form-select role-select"} defaultValue={"USER"} {...register("roles")}>
                         <option value={"USER"}>USER</option>
                         <option value={"ADMIN"}>ADMIN</option>
                     </select>

@@ -2,17 +2,25 @@ import "./../Styles/UserManagement.css";
 import {Button} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getUsers} from "../../../../ReduxStorage/UserManagementStore.js";
+import {getUsers, selectAll} from "../../../../ReduxStorage/UserManagementStore.js";
 import DisplayUpdateState from "./DisplayUpdateState.jsx";
 
 const UserManagement = () => {
-    const users = useSelector(state => state.userManagementReducer.entities);
+    const users = useSelector(selectAll);
+    const loading = useSelector(state => state.userManagementReducer.loading);
+    const error = useSelector(state => state.userManagementReducer.error);
     const [update, setUpdate] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getUsers(null))
+        dispatch(getUsers());
     }, []);
+
+
+    useEffect(() => {
+        console.log(users.length);
+        console.log((!loading && users.length > 0))
+    }, [users]);
 
 
 
@@ -25,13 +33,12 @@ const UserManagement = () => {
                 <div>Role</div>
             </div>
             <div className={"user-field-spacer"}>
-            {users.length !== 0 ? users.length >= 1 && !users.status ?
+            {(!loading && users.length > 0) ?
                     users.map(({userId, email, position, roles}, index) =>
                         <DisplayUpdateState key={index}
                             userId={userId} position={position} role={roles} email={email} index={index} />
                     )
                     : <div>Loading</div>
-                : <div>Error</div>
             }
             </div>
             <Button className={"apply-button"} onClick={() => setUpdate(true)}>Apply</Button>
