@@ -6,7 +6,7 @@ import {getUsers} from "../../../../ReduxStorage/UserManagementStore.js";
 import DisplayUpdateState from "./DisplayUpdateState.jsx";
 
 const UserManagement = () => {
-    const users = useSelector(state => state.userManagementReducer);
+    const users = useSelector(state => state.userManagementReducer.entities);
     const [update, setUpdate] = useState(false);
     const dispatch = useDispatch();
 

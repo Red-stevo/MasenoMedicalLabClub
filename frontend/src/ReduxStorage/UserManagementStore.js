@@ -5,15 +5,18 @@ const userManagementAdapter = createEntityAdapter({
     selectId: user => user.userId
 })
 
-const initialState = userManagementAdapter.getInitialState([]);
+const initialState = userManagementAdapter.getInitialState({
+    loading:false,
+    error:null
+});
 
 export const getUsers = createAsyncThunk("user-management/get-users",
-    async (data= null, config) => {
+    async (_, config) => {
         try {
             const response = await secureAxiosConfig.get("/admin/get_all_users");
             return config.fulfillWithValue(response.data);
         }catch (error){
-            return config.rejectWithValue(error);
+            return config.rejectWithValue(error ? error.response.data : error.message);
         }
     });
 
@@ -24,14 +27,17 @@ const userManagementStore = createSlice({
     reducers:{ update:userManagementAdapter.updateOne,},
     extraReducers:builder => {
         builder
-            .addCase(getUsers.pending, () => {
-                return [{status:"pending"}];
+            .addCase(getUsers.pending, (state) => {
+                state.loading = true;
+                state.error = null;
             })
             .addCase(getUsers.fulfilled, (state, action) => {
-                return [...action.payload];
+                userManagementAdapter.setAll(state, action.payload);
+                state.loading = false;
             })
-            .addCase(getUsers.rejected, () => {
-                return [];
+            .addCase(getUsers.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload || "Error Fetching Users.";
             });
     }
 });
