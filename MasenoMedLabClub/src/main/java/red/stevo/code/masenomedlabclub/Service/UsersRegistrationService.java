@@ -80,6 +80,7 @@ public class UsersRegistrationService {
                     user.setEnabled(true);
 
                     createdEmails.add(user.getEmail());
+
                     return user;
                 }).toList();
 
@@ -241,8 +242,8 @@ public class UsersRegistrationService {
         user.setRole(Roles.ADMIN);
         user.setPosition("Chair Person");
         user.setEnabled(true);
-
         usersRepository.save(user);
+        System.out.println(user.getPosition());
 
         UserGeneralResponse response = new UserGeneralResponse();
         response.setMessage("Default admin created successfully");
@@ -252,11 +253,19 @@ public class UsersRegistrationService {
     }
 
     public UserGeneralResponse updateUser(UserResponse regRequest,int userId) {
+
+
         Users user = usersRepository.findById(userId).orElseThrow(()->new UserDoesNotExistException("user not found"));
+
+
+        if( usersRepository.existsByEmail(regRequest.getEmail()) && !isUserSame(userId,user.getUserId()))
+            throw new UserAlreadyExistException("The user with that email already exists");
 
         user.setEmail(regRequest.getEmail());
         user.setPosition(regRequest.getPosition());
         user.setRole(Roles.valueOf(regRequest.getRoles()));
+
+
 
         usersRepository.save(user);
 
@@ -269,4 +278,8 @@ public class UsersRegistrationService {
     }
 
 
+    private  boolean isUserSame(int oldId, int newId) {
+        Users users = usersRepository.findByUserId(oldId);
+        return users.getUserId() == newId;
+    }
 }
