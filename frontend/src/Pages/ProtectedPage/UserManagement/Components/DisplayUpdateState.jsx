@@ -2,7 +2,7 @@ import {Alert, Button, Form, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {update} from "../../../../ReduxStorage/UserManagementStore.js";
+import {update, updateUser} from "../../../../ReduxStorage/UserManagementStore.js";
 import {FaTrash} from "react-icons/fa";
 
 
@@ -12,7 +12,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
     const [editUserState, setEditUserState] = useState(false);
     const dispatch = useDispatch();
     const updateMessage = useSelector(state => state.userManagementReducer.updateMessage);
-    const isLoading = useSelector(state => state.userManagementReducer.loading);
+    const isLoading = useSelector(state => state.userManagementReducer.updateLoading);
     const updateError = useSelector(state => state.userManagementReducer.updateError);
 
 
@@ -23,9 +23,6 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
     useEffect(() => {
 
         if(updateMessage) {
-            /*Update the user state.(Redux state)*/
-            dispatch(update({id: userId, changes: data}));
-
             /*Set the update mode to view mode.*/
             setEditUserState(false);
         }
@@ -33,7 +30,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
         if(updateError){
             setTimeout(() => {
                 //clear the update error message.
-            }, 6000)
+            }, 6000);
         }
 
     }, [updateMessage, updateError]);
@@ -41,6 +38,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
 
     const handleStateUpdate = (data) => {
         /*Make the backend call to update the user.*/
+        dispatch(updateUser({userId,...data}))
 
     }
 
@@ -61,7 +59,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
                 <div className={"form-error-holder"}>
                     <Form className={"user-reg-form"}
                           onDoubleClick={() => setEditUserState(false)}>
-                        {isLoading ? <Button onClick={handleSubmit(handleStateUpdate)}
+                        {!isLoading ? <Button onClick={handleSubmit(handleStateUpdate)}
                                 className={"space user-update-button"}>Update</Button> :
                             <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true"
                             className={"update-loading"}/>}
@@ -87,8 +85,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
 
                         <FaTrash />
                     </Form>
-
-                    {updateError && <Alert>{updateError}</Alert>}
+                    {updateError && <Alert className={"alert-danger"}>{updateError}</Alert>}
                 </div>
             }
         </div>

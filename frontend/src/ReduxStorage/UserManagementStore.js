@@ -1,5 +1,6 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import {secureAxiosConfig} from "../DataSourceConfig/secureAxios.js";
+import {store} from "./Store.js";
 
 const userManagementAdapter = createEntityAdapter({
     selectId: user => user.userId
@@ -9,7 +10,8 @@ const initialState = userManagementAdapter.getInitialState({
     loading:false,
     error:null,
     updateMessage:null,
-    updateError:null
+    updateError:null,
+    updateLoading:false
 });
 
 export const getUsers = createAsyncThunk("user-management/get-users",
@@ -28,6 +30,7 @@ export const updateUser = createAsyncThunk("user-management",
         try {
             const response = await secureAxiosConfig.put(`/admin/update/${userUpdates.userId}`,
                 userUpdates);
+            store.dispatch(update({id: userUpdates.userId, changes: {...userUpdates}}));
             return config.fulfillWithValue(response.data);
         } catch (error) {
             return config.rejectWithValue(error ? error.response.data : error.message);
@@ -55,15 +58,18 @@ const userManagementStore = createSlice({
                 state.error = action.payload || "Error Fetching Users.";
             })
             .addCase(updateUser.pending, (state) => {
-                state.loading = true;
+                state.updateLoading = true;
                 state.updateError = null;
+                state.updateMessage = null;
             })
             .addCase(updateUser.fulfilled, (state, action) => {
                 state.updateMessage = action.payload.message;
                 state.updateError = null;
+                state.updateLoading = false;
             })
             .addCase(updateUser.rejected, (state, action) => {
                 state.updateError = action.payload || "User Update Failed.";
+                state.updateLoading = false;
             })
     }
 });
