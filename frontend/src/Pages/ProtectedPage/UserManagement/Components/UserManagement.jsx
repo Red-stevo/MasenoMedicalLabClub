@@ -1,5 +1,5 @@
 import "./../Styles/UserManagement.css";
-import {Button} from "react-bootstrap";
+import {Button, Spinner} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getUsers, selectAll} from "../../../../ReduxStorage/UserManagementStore.js";
@@ -33,12 +33,12 @@ const UserManagement = () => {
                 <div>Role</div>
             </div>
             <div className={"user-field-spacer"}>
-            {(!loading && users.length > 0) ?
+                {loading && <Spinner animation={"grow"} className={"loading-component"}/>}
+            {(!loading && users.length > 0) &&
                     users.map(({userId, email, position, roles}, index) =>
                         <DisplayUpdateState key={index}
                             userId={userId} position={position} role={roles} email={email} index={index} />
                     )
-                    : <div>Loading</div>
             }
             </div>
             <Button className={"apply-button"} onClick={() => setUpdate(true)}>Apply</Button>

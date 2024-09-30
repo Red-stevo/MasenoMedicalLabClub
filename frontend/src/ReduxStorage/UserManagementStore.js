@@ -7,7 +7,8 @@ const userManagementAdapter = createEntityAdapter({
 
 const initialState = userManagementAdapter.getInitialState({
     loading:false,
-    error:null
+    error:null,
+    updateMessage:null,
 });
 
 export const getUsers = createAsyncThunk("user-management/get-users",
@@ -19,6 +20,18 @@ export const getUsers = createAsyncThunk("user-management/get-users",
             return config.rejectWithValue(error ? error.response.data : error.message);
         }
     });
+
+export const updateUser = createAsyncThunk("user-management",
+    async (userUpdates, config) => {
+
+    try {
+        const response = secureAxiosConfig.put(`/admin/update/${userUpdates.userId}`, userUpdates);
+        return config.fulfillWithValue((await response).data);
+    }catch (error) {
+        return config.rejectWithValue(error ? error.response.data : error.message);
+    }
+
+    })
 
 
 const userManagementStore = createSlice({
