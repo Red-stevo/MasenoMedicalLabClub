@@ -17,13 +17,6 @@ const UserManagement = () => {
     }, []);
 
 
-    useEffect(() => {
-        console.log(users.length);
-        console.log((!loading && users.length > 0))
-    }, [users]);
-
-
-
     return (
         <div className={"user-management-page"}>
             <div className={"user-display-title title-user-management"}>

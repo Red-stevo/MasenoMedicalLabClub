@@ -9,6 +9,7 @@ const initialState = userManagementAdapter.getInitialState({
     loading:false,
     error:null,
     updateMessage:null,
+    updateError:null
 });
 
 export const getUsers = createAsyncThunk("user-management/get-users",
@@ -22,16 +23,17 @@ export const getUsers = createAsyncThunk("user-management/get-users",
     });
 
 export const updateUser = createAsyncThunk("user-management",
-    async (userUpdates, config) => {
+    async (userUpdates=null, config) => {
 
-    try {
-        const response = secureAxiosConfig.put(`/admin/update/${userUpdates.userId}`, userUpdates);
-        return config.fulfillWithValue((await response).data);
-    }catch (error) {
-        return config.rejectWithValue(error ? error.response.data : error.message);
-    }
+        try {
+            const response = await secureAxiosConfig.put(`/admin/update/${userUpdates.userId}`,
+                userUpdates);
+            return config.fulfillWithValue(response.data);
+        } catch (error) {
+            return config.rejectWithValue(error ? error.response.data : error.message);
+        }
 
-    })
+    });
 
 
 const userManagementStore = createSlice({
@@ -51,7 +53,18 @@ const userManagementStore = createSlice({
             .addCase(getUsers.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload || "Error Fetching Users.";
-            });
+            })
+            .addCase(updateUser.pending, (state) => {
+                state.loading = true;
+                state.updateError = null;
+            })
+            .addCase(updateUser.fulfilled, (state, action) => {
+                state.updateMessage = action.payload.message;
+                state.updateError = null;
+            })
+            .addCase(updateUser.rejected, (state, action) => {
+                state.updateError = action.payload || "User Update Failed.";
+            })
     }
 });
 
@@ -60,5 +73,5 @@ export default userManagementStore.reducer;
 
 export const { update } = userManagementStore.actions;
 
-export const {selectAll,selectById} =
+export const {selectAll} =
     userManagementAdapter.getSelectors(state => state.userManagementReducer);
