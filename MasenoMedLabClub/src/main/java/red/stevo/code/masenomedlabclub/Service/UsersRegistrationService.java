@@ -258,8 +258,9 @@ public class UsersRegistrationService {
         Users user = usersRepository.findById(userId).orElseThrow(()->new UserDoesNotExistException("user not found"));
 
 
-        if( usersRepository.existsByEmail(regRequest.getEmail()) && !isUserSame(userId,user.getUserId()))
-            throw new UserAlreadyExistException("The user with that email already exists");
+        if (usersRepository.existsByEmailAndUserIdNot(regRequest.getEmail(), userId)) {
+            throw new UserAlreadyExistException("The email is already used by another user");
+        }
 
         user.setEmail(regRequest.getEmail());
         user.setPosition(regRequest.getPosition());
