@@ -111,7 +111,8 @@ public class EventsService {
         log.info("Getting all the events");
 
         // Fetch all events
-        return eventsRepository.findAll(Sort.by(Sort.Direction.DESC,"eventDate"));
+        /*return eventsRepository.findAll(Sort.by(Sort.Direction.DESC,"eventDate"));*/
+        return eventsRepository.findAllOrderByEventDateDesc();
     }
 
     public Events getEventById(String eventId){
