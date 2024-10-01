@@ -36,8 +36,7 @@ export const updateUser = createAsyncThunk("user-management",
             return config.rejectWithValue(error ? error.response.data : error.message);
         }
 
-    });
-
+    })
 
 const userManagementStore = createSlice({
     name:"user-management",

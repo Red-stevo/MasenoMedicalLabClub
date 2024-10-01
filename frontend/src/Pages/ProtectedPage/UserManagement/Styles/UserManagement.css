@@ -123,8 +123,15 @@
     z-index: 2;
 }
 
-.update-loading {
+.update-loading, .add-user-form {
     position: fixed;
     justify-self: center;
     align-self: center;
+}
+
+.add-user-form {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    margin: 5px;
 }

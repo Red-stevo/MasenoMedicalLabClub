@@ -14,6 +14,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
     const updateMessage = useSelector(state => state.userManagementReducer.updateMessage);
     const isLoading = useSelector(state => state.userManagementReducer.updateLoading);
     const updateError = useSelector(state => state.userManagementReducer.updateError);
+    const [stateId, setStateId] = useState(null);
 
 
     useEffect(() => {
@@ -22,9 +23,11 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
 
     useEffect(() => {
 
-        if(updateMessage) {
+        if(updateMessage && stateId) {
             /*Set the update mode to view mode.*/
             setEditUserState(false);
+
+            setStateId(null);
         }
 
         if(updateError){
@@ -37,11 +40,12 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
 
 
     const handleStateUpdate = (data) => {
+        /*set the start id.*/
+        setStateId(userId);
         /*Make the backend call to update the user.*/
         dispatch(updateUser({userId,...data}))
 
     }
-
 
 
     return (

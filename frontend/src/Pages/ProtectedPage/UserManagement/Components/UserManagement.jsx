@@ -1,9 +1,11 @@
 import "./../Styles/UserManagement.css";
-import {Button, Spinner} from "react-bootstrap";
+import {Button, Form, Spinner} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getUsers, selectAll} from "../../../../ReduxStorage/UserManagementStore.js";
 import DisplayUpdateState from "./DisplayUpdateState.jsx";
+import {FaPlus, FaTrash} from "react-icons/fa";
+import {useForm} from "react-hook-form";
 
 const UserManagement = () => {
     const users = useSelector(selectAll);
@@ -11,6 +13,7 @@ const UserManagement = () => {
     const error = useSelector(state => state.userManagementReducer.error);
     const [update, setUpdate] = useState(false);
     const dispatch = useDispatch();
+    const {register, handleSubmit} = useForm();
 
     useEffect(() => {
         dispatch(getUsers());
@@ -36,6 +39,32 @@ const UserManagement = () => {
             </div>
             <Button className={"apply-button"} onClick={() => setUpdate(true)}>Apply</Button>
             <Button onClick={() => window.location.reload()} className={"cancel-changes-button"}>Cancel</Button>
+
+            <Form className={"user-reg-form"}>
+
+                <FaPlus className={"add-user-form"} />
+
+                <input className={"form-control email-input"}
+                       placeholder={"Email e.g. jameskago@gmail.com"}
+                       required={true}
+                       {...register("email")}/>
+
+                <select className={"form-select position-select"} defaultValue={"Member"}
+                        {...register("position")}>
+                    <option value={"Chair Person"}>Chair Person</option>
+                    <option value={"Vise Chair Person"}>Vise Chair Person</option>
+                    <option value={"Treasure"}>Treasure</option>
+                    <option value={"Vise Treasure"}>Vise Treasure</option>
+                    <option value={"Secretary"}>Secretary</option>
+                    <option value={"Vise Secretary"}>Vise Secretary</option>
+                    <option value={"Member"}>Member</option>
+                </select>
+
+                <select className={"form-select role-select"} defaultValue={"USER"} {...register("roles")}>
+                    <option value={"USER"}>USER</option>
+                    <option value={"ADMIN"}>ADMIN</option>
+                </select>
+            </Form>
         </div>
     );
 };
