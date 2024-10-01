@@ -2,19 +2,21 @@ import "./../Styles/UserManagement.css";
 import {Button, Form, Spinner} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {checkUserExist, getUsers, selectAll} from "../../../../ReduxStorage/UserManagementStore.js";
+import {addUser, getUsers, registerUsers, selectAll} from "../../../../ReduxStorage/UserManagementStore.js";
 import DisplayUpdateState from "./DisplayUpdateState.jsx";
 import {FaPlus} from "react-icons/fa";
 import {useForm} from "react-hook-form";
+import {v4} from "uuid";
 
 const UserManagement = () => {
     const users = useSelector(selectAll);
+    const [exist, setExist] = useState(true);
     const loading = useSelector(state => state.userManagementReducer.loading);
     const error = useSelector(state => state.userManagementReducer.error);
-    const userExist = useSelector(state => state.userManagementReducer.exists);
-    const [newUsers, setNewUsers] = useState(null);
+    const [newUsers, setNewUsers] = useState([]);
     const dispatch = useDispatch();
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit,
+        reset} = useForm();
     const [createUserError, setCreateUserError] = useState(null);
 
     useEffect(() => {
@@ -23,16 +25,29 @@ const UserManagement = () => {
 
 
     const handleAddUser = (data) => {
+        users.some((user) => {
+            if (user.email === data.email) {
+                setExist( true);
+                return true;
+            }else setExist(false);
 
-        /*Fetch user by email to check if the email is already register*/
-        dispatch(checkUserExist(data.email));
+        });
 
-        if (userExist){
-            setCreateUserError("User Email Already Exist");
-        }else {
-            console.log(userExist);
+        if(!exist) {
+            /*add the user to the redux state.*/
+            dispatch(addUser({userId: v4(), ...data}));
+
+            /*add user to the new list state*/
+            setNewUsers((prevUsers) => [...prevUsers, data]);
+
+            /*reset the form fields*/
+            reset();
         }
+    }
 
+    const saveUsers = () => {
+        /*called backend API to save new users.*/
+        dispatch(registerUsers(newUsers));
     }
 
     return (
@@ -53,7 +68,7 @@ const UserManagement = () => {
             }
             </div>
             <Button onClick={() => window.location.reload()} className={"cancel-changes-button"}>Cancel</Button>
-            <Button className={"apply-button"}>Apply</Button>
+            <Button onClick={saveUsers} className={"apply-button"}>Apply</Button>
 
             <Form className={"user-reg-form"} onSubmit={handleSubmit(handleAddUser)}>
 

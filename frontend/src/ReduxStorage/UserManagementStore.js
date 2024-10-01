@@ -1,6 +1,7 @@
-import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice, isFulfilled} from "@reduxjs/toolkit";
 import {secureAxiosConfig} from "../DataSourceConfig/secureAxios.js";
 import {store} from "./Store.js";
+import {isStateMemberExpression} from "eslint-plugin-react/lib/util/componentUtil.js";
 
 const userManagementAdapter = createEntityAdapter({
     selectId: user => user.userId
@@ -12,8 +13,21 @@ const initialState = userManagementAdapter.getInitialState({
     updateMessage:null,
     updateError:null,
     updateLoading:false,
-    exist:false,
+    registerLoading:false,
+    registerError:null,
 });
+
+export const registerUsers = createAsyncThunk(
+    "user-management/register-users",
+    async (userList=null, config) => {
+        try {
+            const response = await secureAxiosConfig.post("/admin/register", userList);
+            return config.fulfillWithValue(response.data)
+        }catch (error){
+            return config.rejectWithValue(error.response ? error.response.message : error.message)
+        }
+    }
+)
 
 export const getUsers = createAsyncThunk("user-management/get-users",
     async (_, config) => {
@@ -45,15 +59,6 @@ const userManagementStore = createSlice({
     reducers: {
         update: userManagementAdapter.updateOne,
         addUser: userManagementAdapter.addOne,
-        checkUserExist(state, action) {
-            state.ids.some((user) => {
-                if (action.payload === state.entities[user].email) {
-                    state.exists = true;
-                    return true;
-                }
-                return false;
-            })
-        }
     },
     extraReducers:builder => {
         builder
@@ -83,6 +88,18 @@ const userManagementStore = createSlice({
                 state.updateError = action.payload || "User Update Failed.";
                 state.updateLoading = false;
             })
+            .addCase(registerUsers.pending, (state) => {
+                state.registerLoading = true;
+                state.error = null;
+            })
+            .addCase(registerUsers.fulfilled, (state) => {
+                state.registerLoading = false;
+                state.error = null;
+            })
+            .addCase(registerUsers.rejected, (state, action) => {
+                state.registerLoading = true;
+                state.error = action.payload || "Failed to register users.";
+            })
     }
 });
 
@@ -92,7 +109,6 @@ export default userManagementStore.reducer;
 export const {
     update,
     addUser,
-    checkUserExist
 } = userManagementStore.actions;
 
 export const {selectAll} =
