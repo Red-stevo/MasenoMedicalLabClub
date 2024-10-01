@@ -43,7 +43,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
         /*set the start id.*/
         setStateId(userId);
         /*Make the backend call to update the user.*/
-        dispatch(updateUser({userId,...data}))
+        dispatch(updateUser({userId,...data}));
 
     }
 

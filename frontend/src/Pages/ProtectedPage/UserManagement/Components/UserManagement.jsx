@@ -4,14 +4,14 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getUsers, selectAll} from "../../../../ReduxStorage/UserManagementStore.js";
 import DisplayUpdateState from "./DisplayUpdateState.jsx";
-import {FaPlus, FaTrash} from "react-icons/fa";
+import {FaPlus} from "react-icons/fa";
 import {useForm} from "react-hook-form";
 
 const UserManagement = () => {
     const users = useSelector(selectAll);
     const loading = useSelector(state => state.userManagementReducer.loading);
     const error = useSelector(state => state.userManagementReducer.error);
-    const [newUser, setNewUser] = useState(null);
+    const [newUsers, setNewUsers] = useState(null);
     const dispatch = useDispatch();
     const {register, handleSubmit} = useForm();
 
@@ -21,7 +21,11 @@ const UserManagement = () => {
 
 
     const handleAddUser = (data) => {
-        console.log(data);
+
+        /*Fetch user by email to check if the email is already register*/
+
+
+
     }
 
     return (
@@ -47,10 +51,9 @@ const UserManagement = () => {
             <Form className={"user-reg-form"} onSubmit={handleSubmit(handleAddUser)}>
 
                 <Button type={"submit"} className={"add-user-button"}><FaPlus className={"add-user-form"} /></Button>
-                <input className={"form-control email-input"}
-                       placeholder={"Email e.g. jameskago@gmail.com"}
-                       required={true}
-                       {...register("email")}/>
+
+                <input className={"form-control email-input"} placeholder={"Email e.g. jameskago@gmail.com"}
+                  type={"email"} required={true} {...register("email")}/>
 
                 <select className={"form-select position-select"} defaultValue={"Member"}
                         {...register("position")}>
@@ -67,6 +70,7 @@ const UserManagement = () => {
                     <option value={"USER"}>USER</option>
                     <option value={"ADMIN"}>ADMIN</option>
                 </select>
+
             </Form>
         </div>
     );

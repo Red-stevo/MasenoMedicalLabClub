@@ -41,7 +41,11 @@ export const updateUser = createAsyncThunk("user-management",
 const userManagementStore = createSlice({
     name:"user-management",
     initialState,
-    reducers:{ update:userManagementAdapter.updateOne,},
+    reducers:{
+        update:userManagementAdapter.updateOne,
+        addUser:userManagementAdapter.addOne,
+        checkUserExist (state,action){}
+    },
     extraReducers:builder => {
         builder
             .addCase(getUsers.pending, (state) => {
@@ -76,7 +80,7 @@ const userManagementStore = createSlice({
 
 export default userManagementStore.reducer;
 
-export const { update } = userManagementStore.actions;
+export const { update, addUser } = userManagementStore.actions;
 
 export const {selectAll} =
     userManagementAdapter.getSelectors(state => state.userManagementReducer);
