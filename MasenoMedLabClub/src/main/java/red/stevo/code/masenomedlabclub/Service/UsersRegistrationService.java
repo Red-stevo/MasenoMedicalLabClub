@@ -263,7 +263,7 @@ public class UsersRegistrationService {
 
         user.setEmail(regRequest.getEmail());
         user.setPosition(regRequest.getPosition());
-        user.setRole(Roles.valueOf(regRequest.getRoles()));
+        user.setRole(Roles.valueOf(String.valueOf(regRequest.getRoles())));
 
 
 
