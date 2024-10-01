@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.modelmapper.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,10 +35,7 @@ import red.stevo.code.masenomedlabclub.configurations.PasswordGenerator;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.InvalidPropertiesFormatException;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
@@ -77,6 +75,7 @@ public class UsersRegistrationService {
                     user.setEmail(usersRegistrationRequests.getEmail());
                     user.setPassword(passwordEncoder.encode(password));
                     user.setRole(usersRegistrationRequests.getRoles());
+                    user.setPosition(usersRegistrationRequests.getPosition());
                     user.setEnabled(true);
 
                     createdEmails.add(user.getEmail());
@@ -96,8 +95,7 @@ public class UsersRegistrationService {
 
 
     private boolean isEmailValid(String email) {
-        org.apache.commons.validator.routines.EmailValidator emailValidator = org.apache.commons.validator
-                .routines.EmailValidator.getInstance();
+        EmailValidator emailValidator = EmailValidator.getInstance();
         return emailValidator.isValid(email);
     }
 
@@ -171,15 +169,13 @@ public class UsersRegistrationService {
     public List<UserResponse> getAllUsers(){
         try {
             List<Users> users = usersRepository.findAll();
-            /*modelMapper.getConfiguration()
-                    .setFieldMatchingEnabled(true)
-                    .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);*/
 
+            users.sort(Comparator.comparing(users1 -> getPositionPriority(users1.getPosition())));
             return users.stream().map(user->{
                 UserResponse userResponse = new UserResponse();
                 userResponse.setEmail(user.getEmail());
                 userResponse.setUserId(user.getUserId());
-                userResponse.setPosition(user.getPosition());
+                userResponse.setPosition(enumToPosition(user.getPosition()));
                 userResponse.setRoles(Roles.valueOf(user.getRole().toString()));
 
                 return userResponse;
@@ -189,6 +185,31 @@ public class UsersRegistrationService {
         }catch (Exception e){
             throw new ResourceNotFoundException("the users could not be retrieved");
         }
+    }
+
+    private int getPositionPriority(UserPositions positions){
+        return switch (positions) {
+            case CHAIRPERSON -> 1;
+            case VICE_CHAIRPERSON -> 2;
+            case TREASURER -> 3;
+            case VICE_TREASURER -> 4;
+            case SECRETARY -> 5;
+            case VICE_SECRETARY -> 6;
+            case MEMBER -> 7;
+
+        };
+    }
+    private String enumToPosition(UserPositions pos){
+        return switch (pos){
+            case CHAIRPERSON -> "CHAIR PERSON";
+            case VICE_CHAIRPERSON -> "VICE CHAIR PERSON";
+            case TREASURER -> "TREASURER";
+            case VICE_TREASURER -> "VICE TREASURER";
+            case SECRETARY -> "SECRETARY";
+            case VICE_SECRETARY -> "VICE SECRETARY";
+            case MEMBER -> "MEMBER";
+            default -> throw new IllegalStateException("Unexpected value: " + pos);
+        };
     }
 
     public UserGeneralResponse deleteUser(List<String> emails){
@@ -240,7 +261,7 @@ public class UsersRegistrationService {
 
         user.setPassword(passwordEncoder.encode(adminPassword));
         user.setRole(Roles.ADMIN);
-        user.setPosition("Chair Person");
+        user.setPosition(UserPositions.CHAIRPERSON);
         user.setEnabled(true);
         usersRepository.save(user);
         System.out.println(user.getPosition());
@@ -263,8 +284,8 @@ public class UsersRegistrationService {
         }
 
         user.setEmail(regRequest.getEmail());
-        user.setPosition(regRequest.getPosition());
-        user.setRole(Roles.valueOf(String.valueOf(regRequest.getRoles())));
+        user.setPosition(UserPositions.valueOf(regRequest.getPosition()));
+        user.setRole(regRequest.getRoles());
 
 
 
@@ -279,8 +300,4 @@ public class UsersRegistrationService {
     }
 
 
-    private  boolean isUserSame(int oldId, int newId) {
-        Users users = usersRepository.findByUserId(oldId);
-        return users.getUserId() == newId;
-    }
 }
