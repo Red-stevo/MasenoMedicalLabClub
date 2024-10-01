@@ -22,9 +22,12 @@
 }
 
 .users-holder {
-    margin-top: 60px;
+    margin-top: 3px;
 }
 
+.user-field-spacer {
+    margin-top: 90px;
+}
 
 .users-view:hover {
     transform: scale(1.02);
@@ -54,14 +57,74 @@
     border-left: none;
     border-top: none;
     border-bottom: 1px solid black;
+    border-radius: 0;
 }
 
 .position-select {
     width: 46%;
     text-align: center;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-bottom: 1px solid black;
+    border-radius: 0;
 }
 
 .email-input {
     width: 60%;
     text-align: center;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-bottom: 1px solid black;
+    border-radius: 0;
+}
+
+.user-update-button {
+    align-content: center;
+    border: 1px solid rgb(11, 136, 175);
+    background-color: rgb(11, 136, 175);
+    width: 80px;
+    font-weight: 400;
+}
+
+.cancel-changes-button, .apply-button {
+    align-content: center;
+    position: fixed;
+    border: 1px solid rgb(11, 136, 175);
+    background-color: rgb(11, 136, 175);
+    width: 100px;
+    font-weight: 600;
+}
+
+.cancel-changes-button:hover, .apply-button:hover, .user-update-button:hover {
+    border: 1px solid rgb(11, 136, 175);
+    background-color:whitesmoke;
+    color: rgb(11, 136, 175);
+}
+
+
+
+.apply-button {
+    right: 10vw;
+    bottom: 10vh;
+}
+
+
+.cancel-changes-button {
+    right: 30vw;
+    bottom: 10vh;
+}
+
+.loading-component {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+}
+
+.update-loading {
+    position: fixed;
+    justify-self: center;
+    align-self: center;
 }

@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,10 +29,11 @@ import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepositor
 import red.stevo.code.masenomedlabclub.Repositories.users.UsersRepository;
 import red.stevo.code.masenomedlabclub.Service.DetService.EmailService;
 import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
-import red.stevo.code.masenomedlabclub.Service.DetService.LogoutService;
+import red.stevo.code.masenomedlabclub.configurations.ModelMapperConfig;
 import red.stevo.code.masenomedlabclub.configurations.PasswordGenerator;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.InvalidPropertiesFormatException;
@@ -53,7 +53,7 @@ public class UsersRegistrationService {
     private final CookieUtils cookieUtils;
     private final EmailService emailService;
     private final HttpServletResponse response;
-    private final ModelMapper modelMapper;
+    private final ModelMapperConfig modelMapper;
 
 
     public UserGeneralResponse createUser(List<UsersRegistrationRequests> regRequest) {
@@ -67,7 +67,8 @@ public class UsersRegistrationService {
 
                     Users user = new Users();
                     if (!isEmailValid(usersRegistrationRequests.getEmail())) {
-                        throw new InvalidEmailFormatException("Invalid email format: " + usersRegistrationRequests.getEmail());
+                        throw new InvalidEmailFormatException("Invalid email format: " + usersRegistrationRequests.
+                                getEmail());
                     }
 
                     String password = passwordGenerator.generateRandomPassword(8);
@@ -76,7 +77,6 @@ public class UsersRegistrationService {
                     user.setEmail(usersRegistrationRequests.getEmail());
                     user.setPassword(passwordEncoder.encode(password));
                     user.setRole(usersRegistrationRequests.getRoles());
-                    user.setPosition(usersRegistrationRequests.getPosition());
                     user.setEnabled(true);
 
                     createdEmails.add(user.getEmail());
@@ -96,7 +96,8 @@ public class UsersRegistrationService {
 
 
     private boolean isEmailValid(String email) {
-        org.apache.commons.validator.routines.EmailValidator emailValidator = org.apache.commons.validator.routines.EmailValidator.getInstance();
+        org.apache.commons.validator.routines.EmailValidator emailValidator = org.apache.commons.validator
+                .routines.EmailValidator.getInstance();
         return emailValidator.isValid(email);
     }
 
@@ -170,16 +171,16 @@ public class UsersRegistrationService {
     public List<UserResponse> getAllUsers(){
         try {
             List<Users> users = usersRepository.findAll();
-            modelMapper.getConfiguration()
+            /*modelMapper.getConfiguration()
                     .setFieldMatchingEnabled(true)
-                    .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+                    .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);*/
 
             return users.stream().map(user->{
                 UserResponse userResponse = new UserResponse();
                 userResponse.setEmail(user.getEmail());
                 userResponse.setUserId(user.getUserId());
                 userResponse.setPosition(user.getPosition());
-                userResponse.setRoles(user.getRole().toString());
+                userResponse.setRoles(Roles.valueOf(user.getRole().toString()));
 
                 return userResponse;
                     })
@@ -202,7 +203,6 @@ public class UsersRegistrationService {
                     }
 
             ).toList();
-
             usersRepository.deleteAll(usersList);
             UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
             userGeneralResponse.setMessage("User deleted successfully");

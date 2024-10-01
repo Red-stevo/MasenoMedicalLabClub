@@ -22,7 +22,7 @@ const initialState = getEventAdapter.getInitialState({
 
 
 export const getEventAsyncReducer = createAsyncThunk("get-event-by-id/get-user-event",
-    async (eventId, config) => {
+    async (eventId = null, config) => {
         try {
             const response = await secureAxiosConfig.get(`events/${eventId}/get-event`);
             return config.fulfillWithValue(response.data);
