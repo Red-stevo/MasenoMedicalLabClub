@@ -2,6 +2,7 @@ package red.stevo.code.masenomedlabclub.Models.RequestModels;
 
 import lombok.Data;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
+import red.stevo.code.masenomedlabclub.Service.UserPositions;
 
 @Data
 public class UsersRegistrationRequests {
@@ -10,6 +11,6 @@ public class UsersRegistrationRequests {
 
     private Roles roles;
 
-    private String position;
+    private UserPositions position;
 
 }
