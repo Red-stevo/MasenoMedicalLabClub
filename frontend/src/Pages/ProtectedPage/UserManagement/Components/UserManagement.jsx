@@ -11,7 +11,7 @@ const UserManagement = () => {
     const users = useSelector(selectAll);
     const loading = useSelector(state => state.userManagementReducer.loading);
     const error = useSelector(state => state.userManagementReducer.error);
-    const [update, setUpdate] = useState(false);
+    const [newUser, setNewUser] = useState(null);
     const dispatch = useDispatch();
     const {register, handleSubmit} = useForm();
 
@@ -19,6 +19,10 @@ const UserManagement = () => {
         dispatch(getUsers());
     }, []);
 
+
+    const handleAddUser = (data) => {
+        console.log(data);
+    }
 
     return (
         <div className={"user-management-page"}>
@@ -37,13 +41,12 @@ const UserManagement = () => {
                     )
             }
             </div>
-            <Button className={"apply-button"} onClick={() => setUpdate(true)}>Apply</Button>
             <Button onClick={() => window.location.reload()} className={"cancel-changes-button"}>Cancel</Button>
+            <Button className={"apply-button"}>Apply</Button>
 
-            <Form className={"user-reg-form"}>
+            <Form className={"user-reg-form"} onSubmit={handleSubmit(handleAddUser)}>
 
-                <FaPlus className={"add-user-form"} />
-
+                <Button type={"submit"} className={"add-user-button"}><FaPlus className={"add-user-form"} /></Button>
                 <input className={"form-control email-input"}
                        placeholder={"Email e.g. jameskago@gmail.com"}
                        required={true}

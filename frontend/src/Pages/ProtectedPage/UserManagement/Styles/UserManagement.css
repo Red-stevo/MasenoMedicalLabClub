@@ -45,6 +45,7 @@
 
 .user-reg-form {
     display: flex;
+    padding: 10px;
     justify-content: space-between;
     align-content: center;
     gap: 5%;
@@ -123,15 +124,20 @@
     z-index: 2;
 }
 
-.update-loading, .add-user-form {
+.update-loading {
     position: fixed;
     justify-self: center;
     align-self: center;
 }
 
-.add-user-form {
-    cursor: pointer;
-    width: 16px;
-    height: 16px;
-    margin: 5px;
+.add-user-button {
+    background-color: transparent;
+    border: solid grey 1px;
+    color: black;
+}
+
+.add-user-button:hover {
+    background-color: rgb(11, 136, 175);
+    border: solid grey 1px;
+    color: whitesmoke;
 }
