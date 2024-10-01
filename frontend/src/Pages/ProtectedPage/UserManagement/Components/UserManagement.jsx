@@ -2,7 +2,7 @@ import "./../Styles/UserManagement.css";
 import {Button, Form, Spinner} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getUsers, selectAll} from "../../../../ReduxStorage/UserManagementStore.js";
+import {checkUserExist, getUsers, selectAll} from "../../../../ReduxStorage/UserManagementStore.js";
 import DisplayUpdateState from "./DisplayUpdateState.jsx";
 import {FaPlus} from "react-icons/fa";
 import {useForm} from "react-hook-form";
@@ -11,9 +11,11 @@ const UserManagement = () => {
     const users = useSelector(selectAll);
     const loading = useSelector(state => state.userManagementReducer.loading);
     const error = useSelector(state => state.userManagementReducer.error);
+    const userExist = useSelector(state => state.userManagementReducer.exists);
     const [newUsers, setNewUsers] = useState(null);
     const dispatch = useDispatch();
     const {register, handleSubmit} = useForm();
+    const [createUserError, setCreateUserError] = useState(null);
 
     useEffect(() => {
         dispatch(getUsers());
@@ -23,8 +25,13 @@ const UserManagement = () => {
     const handleAddUser = (data) => {
 
         /*Fetch user by email to check if the email is already register*/
+        dispatch(checkUserExist(data.email));
 
-
+        if (userExist){
+            setCreateUserError("User Email Already Exist");
+        }else {
+            console.log(userExist);
+        }
 
     }
 

@@ -4,14 +4,15 @@ import {store} from "./Store.js";
 
 const userManagementAdapter = createEntityAdapter({
     selectId: user => user.userId
-})
+});
 
 const initialState = userManagementAdapter.getInitialState({
     loading:false,
     error:null,
     updateMessage:null,
     updateError:null,
-    updateLoading:false
+    updateLoading:false,
+    exist:false,
 });
 
 export const getUsers = createAsyncThunk("user-management/get-users",
@@ -41,10 +42,18 @@ export const updateUser = createAsyncThunk("user-management",
 const userManagementStore = createSlice({
     name:"user-management",
     initialState,
-    reducers:{
-        update:userManagementAdapter.updateOne,
-        addUser:userManagementAdapter.addOne,
-        checkUserExist (state,action){}
+    reducers: {
+        update: userManagementAdapter.updateOne,
+        addUser: userManagementAdapter.addOne,
+        checkUserExist(state, action) {
+            state.ids.some((user) => {
+                if (action.payload === state.entities[user].email) {
+                    state.exists = true;
+                    return true;
+                }
+                return false;
+            })
+        }
     },
     extraReducers:builder => {
         builder
@@ -80,7 +89,11 @@ const userManagementStore = createSlice({
 
 export default userManagementStore.reducer;
 
-export const { update, addUser } = userManagementStore.actions;
+export const {
+    update,
+    addUser,
+    checkUserExist
+} = userManagementStore.actions;
 
 export const {selectAll} =
     userManagementAdapter.getSelectors(state => state.userManagementReducer);
