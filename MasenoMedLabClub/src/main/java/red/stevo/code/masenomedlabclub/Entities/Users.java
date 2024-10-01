@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import red.stevo.code.masenomedlabclub.Service.UserPositions;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Users implements UserDetails {
     @Column(nullable = false,unique = true)
     private String email;
 
-    private String position;
+    private UserPositions position;
 
     private Roles role;
 
