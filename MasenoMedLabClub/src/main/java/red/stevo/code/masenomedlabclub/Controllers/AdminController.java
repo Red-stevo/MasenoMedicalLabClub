@@ -107,9 +107,7 @@ public class AdminController {
 
     @GetMapping("/get_all_users")
     public ResponseEntity<List<UserResponse>> getAllUsers(){
-        log.info("getting all the users");
         List<UserResponse> users = usersRegistrationService.getAllUsers();
-        log.info("returning users to client");
         return ResponseEntity.ok(users);
     }
 

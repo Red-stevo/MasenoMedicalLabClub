@@ -57,7 +57,9 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
                      }}>
                     <div>{(index + 1)}</div>
                     <div>{email}</div>
-                    <div>{position}</div>
+                    <div>{position === "0" ? "Chair Person": position === "1" ? "Vise Chair Person":
+                    position === "2" ? "Treasure" : position === "3" ? "Vise Treasure" :  position === "4" ? "Secretary":
+                    position === "5" ? "Vise Secretary" : position === "6" ? "Member":position}</div>
                     <div>{role}</div>
                 </div> :
                 <div className={"form-error-holder"}>
@@ -71,15 +73,15 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
                                placeholder={"Email e.g. jameskago@gmail.com"}
                                {...register("email")}/>
 
-                        <select className={"form-select position-select"} defaultValue={"Secretary"}
+                        <select className={"form-select position-select"} defaultValue={"6"}
                                 {...register("position")}>
-                            <option value={"Chair Person"}>Chair Person</option>
-                            <option value={"Vise Chair Person"}>Vise Chair Person</option>
-                            <option value={"Treasure"}>Treasure</option>
-                            <option value={"Vise Treasure"}>Vise Treasure</option>
-                            <option value={"Secretary"}>Secretary</option>
-                            <option value={"Vise Secretary"}>Vise Secretary</option>
-                            <option value={"Member"}>Member</option>
+                            <option value={"0"}>Chair Person</option>
+                            <option value={"1"}>Vise Chair Person</option>
+                            <option value={"2"}>Treasure</option>
+                            <option value={"3"}>Vise Treasure</option>
+                            <option value={"4"}>Secretary</option>
+                            <option value={"5"}>Vise Secretary</option>
+                            <option value={"6"}>Member</option>
                         </select>
 
                         <select className={"form-select role-select"} defaultValue={"USER"} {...register("roles")}>
@@ -87,7 +89,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
                             <option value={"ADMIN"}>ADMIN</option>
                         </select>
 
-                        <FaTrash />
+                        <FaTrash/>
                     </Form>
                     {updateError && <Alert className={"alert-danger"}>{updateError}</Alert>}
                 </div>

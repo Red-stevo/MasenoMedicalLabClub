@@ -13,8 +13,8 @@ const initialState = userManagementAdapter.getInitialState({
     updateMessage:null,
     updateError:null,
     updateLoading:false,
-    registerLoading:false,
     registerError:null,
+    registrationComplete:false
 });
 
 export const registerUsers = createAsyncThunk(
@@ -89,15 +89,18 @@ const userManagementStore = createSlice({
                 state.updateLoading = false;
             })
             .addCase(registerUsers.pending, (state) => {
-                state.registerLoading = true;
+                state.registrationComplete = false;
+                state.loading = true;
                 state.error = null;
             })
             .addCase(registerUsers.fulfilled, (state) => {
-                state.registerLoading = false;
+                state.registrationComplete = true;
+                state.loading = false;
                 state.error = null;
             })
             .addCase(registerUsers.rejected, (state, action) => {
-                state.registerLoading = true;
+                state.loading = true;
+                state.registrationComplete = false;
                 state.error = action.payload || "Failed to register users.";
             })
     }
