@@ -107,14 +107,12 @@ public class AdminController {
 
     @GetMapping("/get_all_users")
     public ResponseEntity<List<UserResponse>> getAllUsers(){
-        List<UserResponse> users = usersRegistrationService.getAllUsers();
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok( usersRegistrationService.getAllUsers());
     }
 
     @PutMapping("/update/{userId}")
     public ResponseEntity<UserGeneralResponse> updateUser(@RequestBody UserResponse regRequest,
                                                           @PathVariable int userId){
-        UserGeneralResponse response = usersRegistrationService.updateUser(regRequest, userId);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(usersRegistrationService.updateUser(regRequest, userId));
     }
 }

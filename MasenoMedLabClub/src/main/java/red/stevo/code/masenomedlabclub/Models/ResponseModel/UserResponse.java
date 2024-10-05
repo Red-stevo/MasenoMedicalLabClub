@@ -10,7 +10,7 @@ public class UserResponse {
 
     private Roles roles;
 
-    private String position;
+    private int position;
 
     private int userId;
 }

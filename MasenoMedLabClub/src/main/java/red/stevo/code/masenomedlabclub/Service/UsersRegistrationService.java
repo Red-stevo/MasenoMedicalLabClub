@@ -171,14 +171,14 @@ public class UsersRegistrationService {
             List<Users> users = usersRepository.findAll();
 
             users.sort(Comparator.comparing(users1 -> getPositionPriority(users1.getPosition())));
-            return users.stream().map(user->{
-                UserResponse userResponse = new UserResponse();
-                userResponse.setEmail(user.getEmail());
-                userResponse.setUserId(user.getUserId());
-                userResponse.setPosition(enumToPosition(user.getPosition()));
-                userResponse.setRoles(Roles.valueOf(user.getRole().toString()));
+            return users.stream().map(user-> {
+                        UserResponse userResponse = new UserResponse();
+                        userResponse.setEmail(user.getEmail());
+                        userResponse.setUserId(user.getUserId());
+                        userResponse.setPosition(user.getPosition().ordinal());
+                        userResponse.setRoles(Roles.valueOf(user.getRole().toString()));
 
-                return userResponse;
+                        return userResponse;
                     })
                     .toList();
 
@@ -284,9 +284,8 @@ public class UsersRegistrationService {
         }
 
         user.setEmail(regRequest.getEmail());
-        user.setPosition(UserPositions.valueOf(regRequest.getPosition()));
+        user.setPosition(UserPositions.values()[regRequest.getPosition()]);
         user.setRole(regRequest.getRoles());
-
 
 
         usersRepository.save(user);
