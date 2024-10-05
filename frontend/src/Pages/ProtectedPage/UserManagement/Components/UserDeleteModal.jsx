@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, Modal} from "react-bootstrap";
 import {FaTrash} from "react-icons/fa";
 
-const UserDeleteModal = () => {
+const UserDeleteModal = ({email, userId}) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -16,9 +16,9 @@ const UserDeleteModal = () => {
             <Modal show={show} onHide={handleClose}>
                 <div className={"modal-image-deletion"}>
                     <Modal.Header closeButton>
-                        <Modal.Title>DELETE USER</Modal.Title>
+                        <Modal.Title>DELETE {email}</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Are You Sure You Want To Delete This User?</Modal.Body>
+                    <Modal.Body>Are Sure You Want to Delete This user Permanently?</Modal.Body>
                     <Modal.Footer>
                         <Button className={"cancel-button"} onClick={handleClose}>
                             CANCEL

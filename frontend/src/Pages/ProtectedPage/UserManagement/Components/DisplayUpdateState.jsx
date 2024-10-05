@@ -97,7 +97,7 @@ const DisplayUpdateState = ({index, email, position, roles, userId}) => {
                             <option value={"ADMIN"}>ADMIN</option>
                         </select>
 
-                        <UserDeleteModal />
+                        <UserDeleteModal email={email} userId={userId}/>
                     </Form>
                     {updateError && stateId && <div className={"add-user-error"}><TbFaceIdError />{updateError}</div>}
                 </div>
