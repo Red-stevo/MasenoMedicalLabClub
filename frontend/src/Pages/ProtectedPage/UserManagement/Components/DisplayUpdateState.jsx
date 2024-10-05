@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {updateUser} from "../../../../ReduxStorage/UserManagementStore.js";
 import {FaTrash} from "react-icons/fa";
+import {TbFaceIdError} from "react-icons/tb";
 
 
 const DisplayUpdateState = ({index, email, position, roles, userId}) => {
@@ -97,7 +98,7 @@ const DisplayUpdateState = ({index, email, position, roles, userId}) => {
 
                         <FaTrash/>
                     </Form>
-                    {updateError && <Alert className={"alert-danger"}>{updateError}</Alert>}
+                    {updateError && stateId && <div className={"add-user-error"}><TbFaceIdError />{updateError}</div>}
                 </div>
             }
         </div>

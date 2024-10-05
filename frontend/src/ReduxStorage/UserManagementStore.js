@@ -83,7 +83,7 @@ const userManagementStore = createSlice({
                 state.updateLoading = false;
             })
             .addCase(updateUser.rejected, (state, action) => {
-                state.updateError = action.payload || "User Update Failed.";
+                state.updateError = action.payload || "User Update Failed, User Exist!";
                 state.updateLoading = false;
             })
             .addCase(registerUsers.pending, (state) => {
