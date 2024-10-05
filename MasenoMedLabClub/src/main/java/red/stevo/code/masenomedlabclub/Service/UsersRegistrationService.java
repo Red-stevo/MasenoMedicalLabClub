@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.modelmapper.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -19,14 +18,12 @@ import org.springframework.stereotype.Service;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.*;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
 import red.stevo.code.masenomedlabclub.Entities.Users;
-import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.LoginRequests;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.ResetPasswordDetails;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.AuthenticationResponse;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserResponse;
-import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepository;
 import red.stevo.code.masenomedlabclub.Repositories.users.UsersRepository;
 import red.stevo.code.masenomedlabclub.Service.DetService.EmailService;
 import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
@@ -34,9 +31,10 @@ import red.stevo.code.masenomedlabclub.configurations.ModelMapperConfig;
 import red.stevo.code.masenomedlabclub.configurations.PasswordGenerator;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
-import javax.swing.*;
-import java.util.*;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -70,7 +68,6 @@ public class UsersRegistrationService {
                     }
 
                     String password = passwordGenerator.generateRandomPassword(8);
-                    log.info("Default password is " + password);
 
                     user.setEmail(usersRegistrationRequests.getEmail());
                     user.setPassword(passwordEncoder.encode(password));
