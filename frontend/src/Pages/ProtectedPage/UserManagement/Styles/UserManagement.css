@@ -143,3 +143,8 @@
     border: solid grey 1px;
     color: whitesmoke;
 }
+
+.add-user-error {
+    color: red;
+
+}

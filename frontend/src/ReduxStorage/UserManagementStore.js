@@ -1,7 +1,6 @@
-import {createAsyncThunk, createEntityAdapter, createSlice, isFulfilled} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import {secureAxiosConfig} from "../DataSourceConfig/secureAxios.js";
 import {store} from "./Store.js";
-import {isStateMemberExpression} from "eslint-plugin-react/lib/util/componentUtil.js";
 
 const userManagementAdapter = createEntityAdapter({
     selectId: user => user.userId
@@ -58,7 +57,6 @@ const userManagementStore = createSlice({
     initialState,
     reducers: {
         update: userManagementAdapter.updateOne,
-        addUser: userManagementAdapter.addOne,
     },
     extraReducers:builder => {
         builder
@@ -111,7 +109,6 @@ export default userManagementStore.reducer;
 
 export const {
     update,
-    addUser,
 } = userManagementStore.actions;
 
 export const {selectAll} =

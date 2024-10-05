@@ -2,11 +2,11 @@ import "./../Styles/UserManagement.css";
 import {Button, Form, Spinner} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addUser, getUsers, registerUsers, selectAll} from "../../../../ReduxStorage/UserManagementStore.js";
+import {getUsers, registerUsers, selectAll} from "../../../../ReduxStorage/UserManagementStore.js";
 import DisplayUpdateState from "./DisplayUpdateState.jsx";
 import {FaPlus} from "react-icons/fa";
 import {useForm} from "react-hook-form";
-import {v4} from "uuid";
+import {TbFaceIdError} from "react-icons/tb";
 
 const UserManagement = () => {
     const users = useSelector(selectAll);
@@ -25,6 +25,12 @@ const UserManagement = () => {
     }, []);
 
 
+    useEffect(() => {
+        setTimeout(() => {
+            setCreateUserError(null);
+        }, 5000)
+    }, [createUserError])
+
     const handleAddUser = (data) => {
         users.some((user) => {
             if (user.email === data.email) {
@@ -34,10 +40,10 @@ const UserManagement = () => {
 
         });
 
-        if(!exist) {
-            /*add the user to the redux state.*/
-            dispatch(addUser({userId: v4(), ...data}));
+        if (exist)
+            setCreateUserError("User Email Already Exist!");
 
+        if(!exist) {
             /*add user to the new list state*/
             setNewUsers((prevUsers) => [...prevUsers, data]);
 
@@ -69,37 +75,40 @@ const UserManagement = () => {
             {(!loading && users.length > 0) &&
                     users.map(({userId, email, position, roles}, index) =>
                         <DisplayUpdateState key={index}
-                            userId={userId} position={position} roles={roles} email={email} index={index} />
-                    )
+                            userId={userId} position={position} roles={roles} email={email} index={index} />)
             }
+
             </div>
             <Button onClick={() => window.location.reload()} className={"cancel-changes-button"}>Cancel</Button>
             <Button onClick={saveUsers} className={"apply-button"}>Apply</Button>
+            <div className={"form-error-holder"}>
+                <Form className={"user-reg-form"} onSubmit={handleSubmit(handleAddUser)}>
 
-            <Form className={"user-reg-form"} onSubmit={handleSubmit(handleAddUser)}>
+                    <Button type={"submit"} className={"add-user-button"}><FaPlus className={"add-user-form"} /></Button>
 
-                <Button type={"submit"} className={"add-user-button"}><FaPlus className={"add-user-form"} /></Button>
+                    <input className={"form-control email-input"} placeholder={"Email e.g. jameskago@gmail.com"}
+                      type={"email"} required={true} {...register("email")}/>
 
-                <input className={"form-control email-input"} placeholder={"Email e.g. jameskago@gmail.com"}
-                  type={"email"} required={true} {...register("email")}/>
+                    <select className={"form-select position-select"} defaultValue={"6"}
+                            {...register("position")}>
+                        <option value={"0"}>Chair Person</option>
+                        <option value={"1"}>Vise Chair Person</option>
+                        <option value={"2"}>Treasure</option>
+                        <option value={"3"}>Vise Treasure</option>
+                        <option value={"4"}>Secretary</option>
+                        <option value={"5"}>Vise Secretary</option>
+                        <option value={"6"}>Member</option>
+                    </select>
 
-                <select className={"form-select position-select"} defaultValue={"6"}
-                        {...register("position")}>
-                    <option value={"0"}>Chair Person</option>
-                    <option value={"1"}>Vise Chair Person</option>
-                    <option value={"2"}>Treasure</option>
-                    <option value={"3"}>Vise Treasure</option>
-                    <option value={"4"}>Secretary</option>
-                    <option value={"5"}>Vise Secretary</option>
-                    <option value={"6"}>Member</option>
-                </select>
+                    <select className={"form-select role-select"} defaultValue={"USER"} {...register("roles")}>
+                        <option value={"USER"}>USER</option>
+                        <option value={"ADMIN"}>ADMIN</option>
+                    </select>
 
-                <select className={"form-select role-select"} defaultValue={"USER"} {...register("roles")}>
-                    <option value={"USER"}>USER</option>
-                    <option value={"ADMIN"}>ADMIN</option>
-                </select>
-
-            </Form>
+                </Form>
+                {createUserError && <span className={"add-user-error"}>
+                    <TbFaceIdError />{createUserError}</span>}
+            </div>
         </div>
     );
 };
