@@ -56,13 +56,11 @@ public class AdminController {
 
 
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<UserGeneralResponse> deleteUser(@RequestBody List<String> emails){
+    @DeleteMapping("/delete/{email}")
+    public ResponseEntity<UserGeneralResponse> deleteUser(@PathVariable ("email") String email){
         log.info("Request to delete user.");
         try {
-            UserGeneralResponse generalResponse = new UserGeneralResponse();
-            usersRegistrationService.deleteUser(emails);
-            return ResponseEntity.ok(generalResponse);
+            return ResponseEntity.ok(usersRegistrationService.deleteUser(email));
         }catch (Exception e){
             throw new EntityDeletionException("could not delete the user");
         }

@@ -209,19 +209,14 @@ public class UsersRegistrationService {
         };
     }
 
-    public UserGeneralResponse deleteUser(List<String> emails){
+    public UserGeneralResponse deleteUser(String email){
         log.info("Service to delete the user");
         try {
 
-            List<Users> usersList = emails.stream().map(
-                    email1 -> {
-                        Users user = usersRepository.findByEmail(email1);
-                        if (user == null) throw new UsernameNotFoundException("User does not exist");
-                        return user;
-                    }
+            Users user = usersRepository.findByEmail(email)
+                    .orElseThrow(() -> {return new UserDoesNotExistException("User Does Not Exist");});
 
-            ).toList();
-            usersRepository.deleteAll(usersList);
+            usersRepository.delete(user);
             UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
             userGeneralResponse.setMessage("User deleted successfully");
             userGeneralResponse.setDate(new Date());
