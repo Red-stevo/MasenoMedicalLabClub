@@ -102,17 +102,15 @@ public class UsersRegistrationService {
                 new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
 
         // Fetch user details
-        Users user = usersRepository.findByEmail(loginRequests.getEmail());
+        Users user = usersRepository.findByEmail(loginRequests.getEmail()).orElseThrow(()-> {
+            return new UserDoesNotExistException("User Does Not Exist.");
+        });
 
         // Generate access and refresh tokens
         String accessToken = jwtGenService.generateAccessToken(user);
 
 
-
-
         // Set the access token in a secure cookie
-
-
         AuthenticationResponse authResponse = new AuthenticationResponse();
         authResponse.setMessage("Authentication successful.");
         authResponse.setToken(accessToken);
@@ -130,10 +128,9 @@ public class UsersRegistrationService {
         log.info("Service to reset the password");
 
         // Find user by email
-        Users user = usersRepository.findByEmail(resetPasswordDetails.getEmail());
-        if (user == null) {
-            throw new UsernameNotFoundException("User does not exist");
-        }
+        Users user = usersRepository.findByEmail(resetPasswordDetails.getEmail()).orElseThrow(() -> {
+            return new UserDoesNotExistException("User Does Not Exist.");
+        });
 
         // Validate the old password by comparing it with the encoded password in the database
         if (!passwordEncoder.matches(resetPasswordDetails.getOldPassword(), user.getPassword())) {
