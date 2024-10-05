@@ -7,16 +7,17 @@ import DisplayUpdateState from "./DisplayUpdateState.jsx";
 import {FaPlus} from "react-icons/fa";
 import {useForm} from "react-hook-form";
 import {TbFaceIdError} from "react-icons/tb";
+import NewUsersDisplay from "./NewUsersDisplay.jsx";
 
 const UserManagement = () => {
     const users = useSelector(selectAll);
-    const [exist, setExist] = useState(true);
+    const [exist, setExist] = useState(null);
     const loading = useSelector(state => state.userManagementReducer.loading);
     const error = useSelector(state => state.userManagementReducer.error);
     const [newUsers, setNewUsers] = useState([]);
     const dispatch = useDispatch();
     const {register, handleSubmit,
-        reset} = useForm();
+        reset, watch} = useForm();
     const [createUserError, setCreateUserError] = useState(null);
     const registrationComplete = useSelector(state => state.userManagementReducer.registrationComplete);
 
@@ -32,6 +33,7 @@ const UserManagement = () => {
     }, [createUserError])
 
     const handleAddUser = (data) => {
+
         users.some((user) => {
             if (user.email === data.email) {
                 setExist( true);
@@ -40,12 +42,13 @@ const UserManagement = () => {
 
         });
 
-        if (exist)
+        if (exist === true)
             setCreateUserError("User Email Already Exist!");
 
-        if(!exist) {
+
+        if(exist === false) {
             /*add user to the new list state*/
-            setNewUsers((prevUsers) => [...prevUsers, data]);
+            setNewUsers((prevUsers) => [...prevUsers, {...data}]);
 
             /*reset the form fields*/
             reset();
@@ -58,6 +61,12 @@ const UserManagement = () => {
     }, [registrationComplete]);
 
     const saveUsers = () => {
+        const data = watch();
+        if(data.email){
+            setCreateUserError("Please Add This Last Field.");
+            return;
+        }
+
         /*called backend API to save new users.*/
         dispatch(registerUsers(newUsers));
     }
@@ -77,8 +86,12 @@ const UserManagement = () => {
                         <DisplayUpdateState key={index}
                             userId={userId} position={position} roles={roles} email={email} index={index} />)
             }
-
+                {newUsers.length > 0 && newUsers.map((newUser, index) => (
+                    <NewUsersDisplay email={newUser.email} roles={newUser.roles} position={newUser.position}
+                                     key={index+"unique"}/>
+                ))}
             </div>
+
             <Button onClick={() => window.location.reload()} className={"cancel-changes-button"}>Cancel</Button>
             <Button onClick={saveUsers} className={"apply-button"}>Apply</Button>
             <div className={"form-error-holder"}>
@@ -91,13 +104,13 @@ const UserManagement = () => {
 
                     <select className={"form-select position-select"} defaultValue={"6"}
                             {...register("position")}>
-                        <option value={"0"}>Chair Person</option>
-                        <option value={"1"}>Vise Chair Person</option>
-                        <option value={"2"}>Treasure</option>
-                        <option value={"3"}>Vise Treasure</option>
-                        <option value={"4"}>Secretary</option>
-                        <option value={"5"}>Vise Secretary</option>
-                        <option value={"6"}>Member</option>
+                        <option value={0}>Chair Person</option>
+                        <option value={1}>Vise Chair Person</option>
+                        <option value={2}>Treasure</option>
+                        <option value={3}>Vise Treasure</option>
+                        <option value={4}>Secretary</option>
+                        <option value={5}>Vise Secretary</option>
+                        <option value={6}>Member</option>
                     </select>
 
                     <select className={"form-select role-select"} defaultValue={"USER"} {...register("roles")}>
