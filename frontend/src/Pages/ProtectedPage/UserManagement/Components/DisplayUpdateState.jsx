@@ -2,11 +2,11 @@ import {Alert, Button, Form, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {update, updateUser} from "../../../../ReduxStorage/UserManagementStore.js";
+import {updateUser} from "../../../../ReduxStorage/UserManagementStore.js";
 import {FaTrash} from "react-icons/fa";
 
 
-const DisplayUpdateState = ({index, email, position, role, userId}) => {
+const DisplayUpdateState = ({index, email, position, roles, userId}) => {
     const {register, handleSubmit,
         reset} = useForm();
     const [editUserState, setEditUserState] = useState(false);
@@ -18,7 +18,7 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
 
 
     useEffect(() => {
-            reset({email, role, position});
+            reset({email, roles, position});
     }, [editUserState, reset]);
 
     useEffect(() => {
@@ -57,10 +57,16 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
                      }}>
                     <div>{(index + 1)}</div>
                     <div>{email}</div>
-                    <div>{position === "0" ? "Chair Person": position === "1" ? "Vise Chair Person":
-                    position === "2" ? "Treasure" : position === "3" ? "Vise Treasure" :  position === "4" ? "Secretary":
-                    position === "5" ? "Vise Secretary" : position === "6" ? "Member":position}</div>
-                    <div>{role}</div>
+                    <div>{
+                        position === "0" || position === 0  ? "Chair Person":
+                            position === "1" || position === 1 ? "Vise Chair Person":
+                                position === "2" || position === 2 ? "Treasure" :
+                                    position === "3" || position === 3 ? "Vise Treasure" :
+                                        position === "4" || position === 4 ? "Secretary":
+                                            position === "5" || position === 5 ? "Vise Secretary" :
+                                                position === "6" || position === 6 ? "Member":
+                                                    position}</div>
+                    <div>{roles}</div>
                 </div> :
                 <div className={"form-error-holder"}>
                     <Form className={"user-reg-form"}
@@ -75,13 +81,13 @@ const DisplayUpdateState = ({index, email, position, role, userId}) => {
 
                         <select className={"form-select position-select"} defaultValue={"6"}
                                 {...register("position")}>
-                            <option value={"0"}>Chair Person</option>
-                            <option value={"1"}>Vise Chair Person</option>
-                            <option value={"2"}>Treasure</option>
-                            <option value={"3"}>Vise Treasure</option>
-                            <option value={"4"}>Secretary</option>
-                            <option value={"5"}>Vise Secretary</option>
-                            <option value={"6"}>Member</option>
+                            <option value={0}>Chair Person</option>
+                            <option value={1}>Vise Chair Person</option>
+                            <option value={2}>Treasure</option>
+                            <option value={3}>Vise Treasure</option>
+                            <option value={4}>Secretary</option>
+                            <option value={5}>Vise Secretary</option>
+                            <option value={6}>Member</option>
                         </select>
 
                         <select className={"form-select role-select"} defaultValue={"USER"} {...register("roles")}>

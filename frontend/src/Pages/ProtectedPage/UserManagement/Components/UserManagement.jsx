@@ -69,7 +69,7 @@ const UserManagement = () => {
             {(!loading && users.length > 0) &&
                     users.map(({userId, email, position, roles}, index) =>
                         <DisplayUpdateState key={index}
-                            userId={userId} position={position} role={roles} email={email} index={index} />
+                            userId={userId} position={position} roles={roles} email={email} index={index} />
                     )
             }
             </div>
