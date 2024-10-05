@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {updateUser} from "../../../../ReduxStorage/UserManagementStore.js";
 import {FaTrash} from "react-icons/fa";
 import {TbFaceIdError} from "react-icons/tb";
+import UserDeleteModal from "./UserDeleteModal.jsx";
 
 
 const DisplayUpdateState = ({index, email, position, roles, userId}) => {
@@ -96,7 +97,7 @@ const DisplayUpdateState = ({index, email, position, roles, userId}) => {
                             <option value={"ADMIN"}>ADMIN</option>
                         </select>
 
-                        <FaTrash/>
+                        <UserDeleteModal />
                     </Form>
                     {updateError && stateId && <div className={"add-user-error"}><TbFaceIdError />{updateError}</div>}
                 </div>
