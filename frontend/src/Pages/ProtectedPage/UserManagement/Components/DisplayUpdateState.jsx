@@ -18,7 +18,6 @@ const DisplayUpdateState = ({index, email, position, roles, userId}) => {
     const updateError = useSelector(state => state.userManagementReducer.updateError);
     const [stateId, setStateId] = useState(null);
 
-
     useEffect(() => {
             reset({email, roles, position});
     }, [editUserState, reset]);

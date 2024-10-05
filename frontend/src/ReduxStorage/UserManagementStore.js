@@ -13,15 +13,16 @@ const initialState = userManagementAdapter.getInitialState({
     updateError:null,
     updateLoading:false,
     registerError:null,
-    registrationComplete:false
+    registrationComplete:false,
+    userDeleted:false,
+    userDeletionError:null
 });
 
 
 export const deleteUser = createAsyncThunk("user-management/delte-user",
-    async (email, config) => {
+    async (email=null, config) => {
     try {
-        const emails = [email]
-        const response = await secureAxiosConfig.delete("/admin/delete", emails);
+        const response = await secureAxiosConfig.delete(`/admin/delete/${email}`);
         return config.fulfillWithValue("Deletion FulFilled");
     }catch (error){
         return config.rejectWithValue(error.response ? error.response.data : error.data);
@@ -112,6 +113,17 @@ const userManagementStore = createSlice({
                 state.loading = true;
                 state.registrationComplete = false;
                 state.error = action.payload || "Failed to register users.";
+            })
+            .addCase(deleteUser.fulfilled, (state)=> {
+                state.userDeleted = true;
+            })
+            .addCase(deleteUser.rejected, (state, action) => {
+                state.userDeletionError = action.payload || "Could Not Delete the User.";
+                state.userDeleted = false;
+            })
+            .addCase(deleteUser.pending, (state) => {
+                state.userDeleted = "loading";
+                state.userDeleted = false;
             })
     }
 });

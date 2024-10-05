@@ -1,16 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Modal} from "react-bootstrap";
 import {FaTrash} from "react-icons/fa";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteUser} from "../../../../ReduxStorage/UserManagementStore.js";
 
-const UserDeleteModal = ({email, userId}) => {
+const UserDeleteModal = ({email}) => {
     const [show, setShow] = useState(false);
+    const dispatch = useDispatch();
+    const deletionState = useSelector(state => state.userManagementReducer.userDeleted);
+
+    useEffect(() => {
+        if (deletionState)
+            window.location.reload();
+    }, [deletionState]);
 
     const handleClose = () => setShow(false);
+
+    const handleUserDeletion = () => {
+        dispatch(deleteUser(email));
+    }
     const handleShow = () => setShow(true);
 
     return (
         <>
-
             <FaTrash className={"user-delete"} onClick={handleShow} />
 
             <Modal show={show} onHide={handleClose}>
@@ -23,7 +35,7 @@ const UserDeleteModal = ({email, userId}) => {
                         <Button className={"cancel-button"} onClick={handleClose}>
                             CANCEL
                         </Button>
-                        <Button className={"confirm-delete"} onClick={handleClose}>
+                        <Button className={"confirm-delete"} onClick={handleUserDeletion}>
                             CONFIRM DELETION
                         </Button>
                     </Modal.Footer>
