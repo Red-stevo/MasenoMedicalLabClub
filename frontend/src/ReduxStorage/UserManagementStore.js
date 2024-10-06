@@ -70,6 +70,7 @@ const userManagementStore = createSlice({
     initialState,
     reducers: {
         update: userManagementAdapter.updateOne,
+        deleteUserById:userManagementAdapter.removeOne,
     },
     extraReducers:builder => {
         builder
@@ -133,6 +134,7 @@ export default userManagementStore.reducer;
 
 export const {
     update,
+    deleteUserById,
 } = userManagementStore.actions;
 
 export const {selectAll} =

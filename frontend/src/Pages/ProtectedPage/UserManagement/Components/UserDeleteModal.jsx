@@ -2,16 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {Button, Modal} from "react-bootstrap";
 import {FaTrash} from "react-icons/fa";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteUser} from "../../../../ReduxStorage/UserManagementStore.js";
+import {deleteUser, deleteUserById} from "../../../../ReduxStorage/UserManagementStore.js";
 
-const UserDeleteModal = ({email}) => {
+const UserDeleteModal = ({email, userId}) => {
     const [show, setShow] = useState(false);
     const dispatch = useDispatch();
     const deletionState = useSelector(state => state.userManagementReducer.userDeleted);
 
     useEffect(() => {
         if (deletionState)
-            window.location.reload();
+            dispatch(deleteUserById(userId));
     }, [deletionState]);
 
     const handleClose = () => setShow(false);
