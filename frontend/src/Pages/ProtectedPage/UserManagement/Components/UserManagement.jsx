@@ -39,7 +39,6 @@ const UserManagement = () => {
                 setExist( true);
                 return true;
             }else setExist(false);
-
         });
 
         if (exist === true)
@@ -52,6 +51,9 @@ const UserManagement = () => {
 
             /*reset the form fields*/
             reset();
+
+            /*reset exist*/
+            setExist(null);
         }
     }
 

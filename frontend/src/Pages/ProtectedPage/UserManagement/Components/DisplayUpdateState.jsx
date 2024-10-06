@@ -3,7 +3,6 @@ import {useForm} from "react-hook-form";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {updateUser} from "../../../../ReduxStorage/UserManagementStore.js";
-import {FaTrash} from "react-icons/fa";
 import {TbFaceIdError} from "react-icons/tb";
 import UserDeleteModal from "./UserDeleteModal.jsx";
 
