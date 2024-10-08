@@ -12,7 +12,6 @@ import NewUsersDisplay from "./NewUsersDisplay.jsx";
 const UserManagement = () => {
     const users = useSelector(selectAll);
     const loading = useSelector(state => state.userManagementReducer.loading);
-    const error = useSelector(state => state.userManagementReducer.error);
     const [newUsers, setNewUsers] = useState([]);
     const dispatch = useDispatch();
     const {register, handleSubmit,
@@ -28,7 +27,7 @@ const UserManagement = () => {
     useEffect(() => {
         setTimeout(() => {
             setCreateUserError(null);
-        }, 5000)
+        }, 3000)
     }, [createUserError])
 
     const handleAddUser = (data) => {
