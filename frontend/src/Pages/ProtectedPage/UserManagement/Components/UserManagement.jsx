@@ -11,7 +11,6 @@ import NewUsersDisplay from "./NewUsersDisplay.jsx";
 
 const UserManagement = () => {
     const users = useSelector(selectAll);
-    const [exist, setExist] = useState(null);
     const loading = useSelector(state => state.userManagementReducer.loading);
     const error = useSelector(state => state.userManagementReducer.error);
     const [newUsers, setNewUsers] = useState([]);
@@ -34,29 +33,32 @@ const UserManagement = () => {
 
     const handleAddUser = (data) => {
 
-        users.some((user) => {
-            if (user.email === data.email) {
-                setExist( true);
-                return true;
-            }else setExist(false);
-        });
-
-        if (exist === true)
-            setCreateUserError("User Email Already Exist!");
-
-
-        if(exist === false) {
-            /*add user to the new list state*/
-            setNewUsers((prevUsers) => [...prevUsers, {...data}]);
-
-            /*reset the form fields*/
-            reset();
-
-            /*reset exist*/
-            setExist(null);
+        /*Check if the email exist in the saved users.*/
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].email === data.email) {
+                setCreateUserError("User Email Already Exist!");
+                return;
+            }
         }
+
+        /*Check if the user exist in the new added users.*/
+        for (let i = 0; i < newUsers.length; i++) {
+            if (newUsers[i].email === data.email) {
+                setCreateUserError("User Email Already Exist!");
+                return;
+            }
+        }
+
+        /*add user to the new list state*/
+        setNewUsers((prevUsers) => [...prevUsers, {...data}]);
+
+        /*reset the form fields*/
+        reset();
+
+
     }
 
+    /*refresh the state after a successful user creation.*/
     useEffect(() => {
         if (registrationComplete)
             window.location.reload();
