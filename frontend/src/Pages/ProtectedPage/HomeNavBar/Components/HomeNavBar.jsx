@@ -12,22 +12,22 @@ const HomeNavBar = () => {
                 <Navbar.Brand className={"home-title"} href="#">MMLSA</Navbar.Brand>
                 <Navbar.Toggle className={"responsive-toggle"} aria-controls={"basic-navbar-nav"} />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav variant="underline" defaultActiveKey="/home/events" className={"nav-items"}>
+                    <Nav variant="underline" defaultActiveKey={1} className={"nav-items"}>
                         <Nav.Item>
-                            <Nav.Link href={"/home/events"}>Events</Nav.Link>
+                            <Nav.Link key={1} href={"/home/events"}>Events</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link href={"#"}>Messaging</Nav.Link>
+                            <Nav.Link key={2} href={"#"}>Messaging</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link href={"#"}>Constitution</Nav.Link>
+                            <Nav.Link key={3} href={"/home/constitution"}>Constitution</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link href={"#"}>Profile</Nav.Link>
+                            <Nav.Link key={4} href={"#"}>Profile</Nav.Link>
                         </Nav.Item>
                         {role === "ADMIN" &&
                         <Nav.Item>
-                            <Nav.Link href={"/home/admin/user-management"}>Members</Nav.Link>
+                            <Nav.Link key={5} href={"/home/admin/user-management"}>Members</Nav.Link>
                         </Nav.Item>
                         }
                     </Nav>

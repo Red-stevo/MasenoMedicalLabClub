@@ -10,6 +10,7 @@ import AddEventPage from "./Pages/ProtectedPage/EventsPage/Components/AddEventPa
 import AdminRouteProtection from "./RouterProtectionComponent/AdminRouteProtection.jsx";
 import EventDataView from "./Pages/ProtectedPage/EventsPage/Components/EventDataView.jsx";
 import UserManagement from "./Pages/ProtectedPage/UserManagement/Components/UserManagement.jsx";
+import ConstitutionEditor from "./Pages/ProtectedPage/ConstitutionDisplay/Components/ConstitutionEditor.jsx";
 
 function App() {
     return (
@@ -19,10 +20,12 @@ function App() {
                 <Route path={"/login"} element={<LoginPage />} />
                 <Route path={"/home"} element={<ProtectedRoutes><HomeNavBar /></ProtectedRoutes>}>
                     <Route path={"/home/events"} element={<EventsPage />} />
+                    <Route path={"/home/constitution"} element={<ConstitutionEditor />} />
                     <Route path={"/home/events/add"}
                            element={<AdminRouteProtection><AddEventPage /></AdminRouteProtection>} />
                     <Route path={"/home/events/:eventId"} element={<EventDataView />}/>
-                    <Route path={"/home/admin/user-management"} element={<UserManagement />} />
+                    <Route path={"/home/admin/user-management"}
+                           element={<AdminRouteProtection><UserManagement /></AdminRouteProtection>} />
                 </Route>
             </Routes>
         </Router>
