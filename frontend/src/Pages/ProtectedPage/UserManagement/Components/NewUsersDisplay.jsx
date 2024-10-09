@@ -1,5 +1,4 @@
-import {Button, Form, Spinner} from "react-bootstrap";
-import {FaTrash} from "react-icons/fa";
+import {Form} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {useEffect} from "react";
 

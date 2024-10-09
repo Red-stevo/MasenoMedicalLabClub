@@ -1,9 +1,9 @@
 import "../Styles/ConstitutionEditor.css";
-const ConstitutionEditor = () => {
 
+
+const ConstitutionEditor = () => {
     return (
         <div className={"constitution-editor-page"}>
-            Constitution display.
 
         </div>
     );

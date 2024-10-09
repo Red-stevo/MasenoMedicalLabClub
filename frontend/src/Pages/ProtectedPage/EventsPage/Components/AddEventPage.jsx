@@ -1,7 +1,7 @@
 import {Button, FloatingLabel, Form, Spinner} from "react-bootstrap";
 import "./../Styles/AddEventPage.css";
 import {useForm} from "react-hook-form";
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
     clearErrorMessage,

@@ -1,4 +1,4 @@
-import {createAsyncThunk, createEntityAdapter, createSlice, isFulfilled} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import {secureAxiosConfig} from "../DataSourceConfig/secureAxios.js";
 import {store} from "./Store.js";
 
@@ -19,7 +19,7 @@ const initialState = userManagementAdapter.getInitialState({
 });
 
 
-export const deleteUser = createAsyncThunk("user-management/delte-user",
+export const deleteUser = createAsyncThunk("user-management/delete-user",
     async (email=null, config) => {
     try {
         const response = await secureAxiosConfig.delete(`/admin/delete/${email}`);
