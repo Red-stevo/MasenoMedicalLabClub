@@ -2,6 +2,7 @@ package red.stevo.code.masenomedlabclub.Models.RequestModels;
 
 import jakarta.persistence.Lob;
 import lombok.Data;
+import org.w3c.dom.Text;
 
 import java.time.LocalDateTime;
 
