@@ -22,7 +22,7 @@ const initialState = userManagementAdapter.getInitialState({
 export const deleteUser = createAsyncThunk("user-management/delete-user",
     async (email=null, config) => {
     try {
-        const response = await secureAxiosConfig.delete(`/admin/delete/${email}`);
+        await secureAxiosConfig.delete(`/admin/delete/${email}`);
         return config.fulfillWithValue("Deletion FulFilled");
     }catch (error){
         return config.rejectWithValue(error.response ? error.response.data : error.data);
