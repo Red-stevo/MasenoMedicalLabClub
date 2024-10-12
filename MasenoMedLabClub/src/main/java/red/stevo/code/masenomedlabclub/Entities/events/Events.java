@@ -26,6 +26,7 @@ public class Events {
 
     @OneToMany(mappedBy = "eventId", cascade = CascadeType.ALL,
             fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "imageId")
     private List<EventImages> eventImages;
 
 

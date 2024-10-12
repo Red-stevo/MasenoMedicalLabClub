@@ -14,6 +14,7 @@ public class RefreshTokens {
 
     private String refreshToken;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "usersId")
     private Users user;
 }

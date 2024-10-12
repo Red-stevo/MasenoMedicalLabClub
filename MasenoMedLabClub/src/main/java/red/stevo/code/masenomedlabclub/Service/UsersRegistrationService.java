@@ -79,7 +79,7 @@ public class UsersRegistrationService {
                     user.setEnabled(true);
 
                     createdEmails.add(user.getEmail());
-
+//                    emailService.sendRegistrationEmail(user.getEmail(),password);
                     return user;
                 }).toList();
 
@@ -263,6 +263,7 @@ public class UsersRegistrationService {
         user.setRole(Roles.ADMIN);
         user.setPosition(UserPositions.CHAIRPERSON);
         user.setEnabled(true);
+//        emailService.sendRegistrationEmail(adminEmail,adminPassword);
         usersRepository.save(user);
         System.out.println(user.getPosition());
 

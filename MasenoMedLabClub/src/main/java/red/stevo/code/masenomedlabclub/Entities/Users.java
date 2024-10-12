@@ -6,8 +6,10 @@ import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
 import red.stevo.code.masenomedlabclub.Service.UserPositions;
 
+import javax.security.auth.Refreshable;
 import java.util.Collection;
 import java.util.List;
 
@@ -32,6 +34,10 @@ public class Users implements UserDetails {
 
     @Column(nullable = false)
     private boolean enabled;
+
+    /*@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true)
+    @JoinColumn
+    private RefreshTokens refreshTokens;*/
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

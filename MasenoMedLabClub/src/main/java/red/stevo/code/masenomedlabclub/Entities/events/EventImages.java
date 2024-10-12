@@ -14,6 +14,9 @@ public class EventImages {
 
     private String imageUrl;
 
+   /* @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "")
+    private Events event;*/
 
 }
 
