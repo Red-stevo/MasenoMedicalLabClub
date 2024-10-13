@@ -4,8 +4,7 @@ import {persistReducer, persistStore} from "redux-persist";
 import sessionStorage from "redux-persist/es/storage/session";
 import saveEventReducer from "./EventsStore/saveEventReducer.js";
 import GetEvents from "./EventsStore/GetEvents.js";
-import getEventSlice, {getEventAsyncReducer} from "./EventsStore/getEventSlice.js";
-import userManagement from "../Pages/ProtectedPage/UserManagement/Components/UserManagement.jsx";
+import getEventSlice from "./EventsStore/getEventSlice.js";
 import userManagementStore from "./UserManagementStore.js";
 
 

@@ -4,15 +4,42 @@ import {store} from "./Store.js";
 
 const userManagementAdapter = createEntityAdapter({
     selectId: user => user.userId
-})
+});
 
 const initialState = userManagementAdapter.getInitialState({
     loading:false,
     error:null,
     updateMessage:null,
     updateError:null,
-    updateLoading:false
+    updateLoading:false,
+    registerError:null,
+    registrationComplete:false,
+    userDeleted:false,
+    userDeletionError:null
 });
+
+
+export const deleteUser = createAsyncThunk("user-management/delete-user",
+    async (email=null, config) => {
+    try {
+        await secureAxiosConfig.delete(`/admin/delete/${email}`);
+        return config.fulfillWithValue("Deletion FulFilled");
+    }catch (error){
+        return config.rejectWithValue(error.response ? error.response.data : error.data);
+    }
+    })
+
+export const registerUsers = createAsyncThunk(
+    "user-management/register-users",
+    async (userList=null, config) => {
+        try {
+            const response = await secureAxiosConfig.post("/admin/register", userList);
+            return config.fulfillWithValue(response.data)
+        }catch (error){
+            return config.rejectWithValue(error.response ? error.response.message : error.message)
+        }
+    }
+)
 
 export const getUsers = createAsyncThunk("user-management/get-users",
     async (_, config) => {
@@ -36,13 +63,15 @@ export const updateUser = createAsyncThunk("user-management",
             return config.rejectWithValue(error ? error.response.data : error.message);
         }
 
-    });
-
+    })
 
 const userManagementStore = createSlice({
     name:"user-management",
     initialState,
-    reducers:{ update:userManagementAdapter.updateOne,},
+    reducers: {
+        update: userManagementAdapter.updateOne,
+        deleteUserById:userManagementAdapter.removeOne,
+    },
     extraReducers:builder => {
         builder
             .addCase(getUsers.pending, (state) => {
@@ -68,8 +97,34 @@ const userManagementStore = createSlice({
                 state.updateLoading = false;
             })
             .addCase(updateUser.rejected, (state, action) => {
-                state.updateError = action.payload || "User Update Failed.";
+                state.updateError = action.payload || "User Update Failed, User Exist!";
                 state.updateLoading = false;
+            })
+            .addCase(registerUsers.pending, (state) => {
+                state.registrationComplete = false;
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(registerUsers.fulfilled, (state) => {
+                state.registrationComplete = true;
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(registerUsers.rejected, (state, action) => {
+                state.loading = true;
+                state.registrationComplete = false;
+                state.error = action.payload || "Failed to register users.";
+            })
+            .addCase(deleteUser.fulfilled, (state)=> {
+                state.userDeleted = true;
+            })
+            .addCase(deleteUser.rejected, (state, action) => {
+                state.userDeletionError = action.payload || "Could Not Delete the User.";
+                state.userDeleted = false;
+            })
+            .addCase(deleteUser.pending, (state) => {
+                state.userDeleted = "loading";
+                state.userDeleted = false;
             })
     }
 });
@@ -77,7 +132,10 @@ const userManagementStore = createSlice({
 
 export default userManagementStore.reducer;
 
-export const { update } = userManagementStore.actions;
+export const {
+    update,
+    deleteUserById,
+} = userManagementStore.actions;
 
 export const {selectAll} =
     userManagementAdapter.getSelectors(state => state.userManagementReducer);

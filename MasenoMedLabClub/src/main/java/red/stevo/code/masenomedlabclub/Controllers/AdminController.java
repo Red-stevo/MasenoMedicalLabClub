@@ -56,12 +56,13 @@ public class AdminController {
 
 
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<UserGeneralResponse> deleteUser(@RequestBody List<String> emails){
+    @DeleteMapping("/delete/{email}")
+    public ResponseEntity<UserGeneralResponse> deleteUser(@PathVariable ("email") String email){
         log.info("Request to delete user.");
         try {
             UserGeneralResponse generalResponse =  usersRegistrationService.deleteUser(emails);
             return ResponseEntity.ok(generalResponse);
+
         }catch (Exception e){
             throw new EntityDeletionException("could not delete the user");
         }
@@ -106,16 +107,12 @@ public class AdminController {
 
     @GetMapping("/get_all_users")
     public ResponseEntity<List<UserResponse>> getAllUsers(){
-        log.info("getting all the users");
-        List<UserResponse> users = usersRegistrationService.getAllUsers();
-        log.info("returning users to client");
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok( usersRegistrationService.getAllUsers());
     }
 
     @PutMapping("/update/{userId}")
     public ResponseEntity<UserGeneralResponse> updateUser(@RequestBody UserResponse regRequest,
                                                           @PathVariable int userId){
-        UserGeneralResponse response = usersRegistrationService.updateUser(regRequest, userId);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(usersRegistrationService.updateUser(regRequest, userId));
     }
 }

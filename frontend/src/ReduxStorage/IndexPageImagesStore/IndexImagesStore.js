@@ -16,11 +16,5 @@ const fetchImages = createAsyncThunk("indexImages/allImages",
 const imageStore = createSlice({
     name:"indexImages",
     initialState,
-    reducers : {
-
-    },
-    extraReducers: builder => {
-        builder
-            .addCase()
-    }
+    reducers : {}
 })

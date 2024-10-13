@@ -15,8 +15,9 @@ public class ConstitutionSection {
 
     private String title;
 
-    @Lob // For long text content
-    private String content;
+    @Lob
+    @Column(length = 10000)
+    String content;
 
     private Instant createdAt;
 

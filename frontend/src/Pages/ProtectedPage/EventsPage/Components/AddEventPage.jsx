@@ -11,13 +11,15 @@ import {
 } from "../../../../ReduxStorage/EventsStore/saveEventReducer.js";
 import dayjs from "dayjs";
 import {uploadWidget} from "../../CommonJS/uploadWidget.js";
+import {useNavigate} from "react-router-dom";
 
 
-const AddEventPage = () => {
+const AddEventPage = (factory, deps) => {
     const [imageUrls, setImageUrls] = useState([]);
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
     const {successMessage, errorMessage, status} = useSelector(state => state.saveEventReducer);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -27,12 +29,9 @@ const AddEventPage = () => {
                 dispatch(clearErrorMessage());
             }, 5000);
 
-        }else if (successMessage){
-            setTimeout(() => {
-                dispatch(clearSuccessMessage());
-            }, 5000);
+        }else if (successMessage)
+            navigate("/home/events");
 
-        }
     }, [successMessage, errorMessage, status]);
 
 

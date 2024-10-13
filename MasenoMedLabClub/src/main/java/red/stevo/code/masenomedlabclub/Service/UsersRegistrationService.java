@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.modelmapper.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -20,14 +19,12 @@ import org.springframework.stereotype.Service;
 import red.stevo.code.masenomedlabclub.ControllerAdvice.custom.*;
 import red.stevo.code.masenomedlabclub.Entities.Roles;
 import red.stevo.code.masenomedlabclub.Entities.Users;
-import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.LoginRequests;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.ResetPasswordDetails;
 import red.stevo.code.masenomedlabclub.Models.RequestModels.UsersRegistrationRequests;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.AuthenticationResponse;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserGeneralResponse;
 import red.stevo.code.masenomedlabclub.Models.ResponseModel.UserResponse;
-import red.stevo.code.masenomedlabclub.Repositories.users.RefreshTokensRepository;
 import red.stevo.code.masenomedlabclub.Repositories.users.UsersRepository;
 import red.stevo.code.masenomedlabclub.Service.DetService.EmailService;
 import red.stevo.code.masenomedlabclub.Service.DetService.JWTGenService;
@@ -35,9 +32,10 @@ import red.stevo.code.masenomedlabclub.configurations.ModelMapperConfig;
 import red.stevo.code.masenomedlabclub.configurations.PasswordGenerator;
 import red.stevo.code.masenomedlabclub.filter.CookieUtils;
 
-import javax.swing.*;
-import java.util.*;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -71,7 +69,6 @@ public class UsersRegistrationService {
                     }
 
                     String password = passwordGenerator.generateRandomPassword(8);
-                    log.info("Default password is " + password);
 
                     user.setEmail(usersRegistrationRequests.getEmail());
                     user.setPassword(passwordEncoder.encode(password));
@@ -107,8 +104,15 @@ public class UsersRegistrationService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
 
+<<<<<<< HEAD
             // Fetch user details
             Users user = usersRepository.findByEmail(loginRequests.getEmail());
+=======
+        // Fetch user details
+        Users user = usersRepository.findByEmail(loginRequests.getEmail()).orElseThrow(()-> {
+            return new UserDoesNotExistException("User Does Not Exist.");
+        });
+>>>>>>> 6086ed1eac2f4837d786e717fc2763698e857e51
 
             if (user == null) {
                 log.error("User not found with email: {}", loginRequests.getEmail());
@@ -119,6 +123,7 @@ public class UsersRegistrationService {
             String accessToken = jwtGenService.generateAccessToken(user);
             log.info("Access token generated successfully");
 
+<<<<<<< HEAD
             log.info("Setting secure cookie");
             response.setHeader("Set-Cookie", cookieUtils.responseCookie(user).toString());
 
@@ -138,6 +143,19 @@ public class UsersRegistrationService {
             return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
         }
 
+=======
+        // Set the access token in a secure cookie
+        AuthenticationResponse authResponse = new AuthenticationResponse();
+        authResponse.setMessage("Authentication successful.");
+        authResponse.setToken(accessToken);
+        authResponse.setUserId(user.getUserId());
+        authResponse.setUserRole(user.getRole().toString());
+
+        response.setHeader("Set-Cookie", cookieUtils.responseCookie(user).toString());
+
+        // Return an AuthenticationResponse object containing both tokens
+        return new ResponseEntity<>(authResponse, HttpStatus.OK);
+>>>>>>> 6086ed1eac2f4837d786e717fc2763698e857e51
     }
 
 
@@ -145,10 +163,9 @@ public class UsersRegistrationService {
         log.info("Service to reset the password");
 
         // Find user by email
-        Users user = usersRepository.findByEmail(resetPasswordDetails.getEmail());
-        if (user == null) {
-            throw new UsernameNotFoundException("User does not exist");
-        }
+        Users user = usersRepository.findByEmail(resetPasswordDetails.getEmail()).orElseThrow(() -> {
+            return new UserDoesNotExistException("User Does Not Exist.");
+        });
 
         // Validate the old password by comparing it with the encoded password in the database
         if (!passwordEncoder.matches(resetPasswordDetails.getOldPassword(), user.getPassword())) {
@@ -183,14 +200,14 @@ public class UsersRegistrationService {
             List<Users> users = usersRepository.findAll();
 
             users.sort(Comparator.comparing(users1 -> getPositionPriority(users1.getPosition())));
-            return users.stream().map(user->{
-                UserResponse userResponse = new UserResponse();
-                userResponse.setEmail(user.getEmail());
-                userResponse.setUserId(user.getUserId());
-                userResponse.setPosition(enumToPosition(user.getPosition()));
-                userResponse.setRoles(Roles.valueOf(user.getRole().toString()));
+            return users.stream().map(user-> {
+                        UserResponse userResponse = new UserResponse();
+                        userResponse.setEmail(user.getEmail());
+                        userResponse.setUserId(user.getUserId());
+                        userResponse.setPosition(user.getPosition().ordinal());
+                        userResponse.setRoles(Roles.valueOf(user.getRole().toString()));
 
-                return userResponse;
+                        return userResponse;
                     })
                     .toList();
 
@@ -224,19 +241,14 @@ public class UsersRegistrationService {
         };
     }
 
-    public UserGeneralResponse deleteUser(List<String> emails){
+    public UserGeneralResponse deleteUser(String email){
         log.info("Service to delete the user");
         try {
 
-            List<Users> usersList = emails.stream().map(
-                    email1 -> {
-                        Users user = usersRepository.findByEmail(email1);
-                        if (user == null) throw new UsernameNotFoundException("User does not exist");
-                        return user;
-                    }
+            Users user = usersRepository.findByEmail(email)
+                    .orElseThrow(() -> {return new UserDoesNotExistException("User Does Not Exist");});
 
-            ).toList();
-            usersRepository.deleteAll(usersList);
+            usersRepository.delete(user);
             UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
             userGeneralResponse.setMessage("User deleted successfully");
             userGeneralResponse.setDate(new Date());
@@ -298,9 +310,8 @@ public class UsersRegistrationService {
         }
 
         user.setEmail(regRequest.getEmail());
-        user.setPosition(UserPositions.valueOf(regRequest.getPosition()));
+        user.setPosition(UserPositions.values()[regRequest.getPosition()]);
         user.setRole(regRequest.getRoles());
-
 
 
         usersRepository.save(user);

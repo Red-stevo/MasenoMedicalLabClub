@@ -25,7 +25,10 @@
     "react-router-dom": "^6.26.1",
     "react-typed": "^2.0.12",
     "redux": "^5.0.1",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "slate": "^0.103.0",
+    "slate-react": "^0.110.1",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

@@ -6,6 +6,7 @@
     min-height: 100vh;
     width: 100%;
     background-color: transparent;
+    margin-bottom: 40vh;
 }
 
 .user-display-title {
@@ -35,6 +36,7 @@
 }
 
 .title-user-management {
+    background-color: rgba(245, 222, 179, 1);
     position: fixed;
     width: 82%;
 }
@@ -45,6 +47,7 @@
 
 .user-reg-form {
     display: flex;
+    padding: 10px;
     justify-content: space-between;
     align-content: center;
     gap: 5%;
@@ -127,4 +130,26 @@
     position: fixed;
     justify-self: center;
     align-self: center;
+}
+
+.add-user-button {
+    background-color: transparent;
+    border: solid grey 1px;
+    color: black;
+}
+
+.add-user-button:hover {
+    background-color: rgb(11, 136, 175);
+    border: solid grey 1px;
+    color: whitesmoke;
+}
+
+.add-user-error {
+    color: red;
+
+}
+
+.user-delete {
+    font-size: 20px;
+    color: red;
 }
