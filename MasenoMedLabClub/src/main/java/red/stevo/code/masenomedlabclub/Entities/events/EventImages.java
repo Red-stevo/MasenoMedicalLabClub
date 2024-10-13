@@ -10,13 +10,13 @@ public class EventImages {
     @Id
     private String imageId;
 
-    private String eventId;
+    //private String eventId;
 
     private String imageUrl;
 
-   /* @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "")
-    private Events event;*/
+    @ManyToOne
+    @JoinColumn(name = "event_id", nullable = false)
+    private Events event;
 
 }
 

@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import red.stevo.code.masenomedlabclub.Entities.tokens.RefreshTokens;
 import red.stevo.code.masenomedlabclub.Service.UserPositions;
 
-import javax.security.auth.Refreshable;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,9 +34,9 @@ public class Users implements UserDetails {
     @Column(nullable = false)
     private boolean enabled;
 
-    /*@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true)
-    @JoinColumn
-    private RefreshTokens refreshTokens;*/
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true,mappedBy = "user")
+    @JoinColumn(name = "users_id")
+    private RefreshTokens refreshTokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

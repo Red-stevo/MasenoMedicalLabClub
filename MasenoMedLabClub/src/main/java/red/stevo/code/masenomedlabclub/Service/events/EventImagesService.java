@@ -2,6 +2,7 @@ package red.stevo.code.masenomedlabclub.Service.events;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import jdk.jfr.Event;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,9 +38,10 @@ public class EventImagesService {
 
                 // Create EventImages and set properties
                 EventImages eventImage = new EventImages();
+                Events event = eventsRepository.findEventsByEventId(eventId);
                 eventImage.setImageId(imageRequest.getImageId());
                 eventImage.setImageUrl(imageRequest.getUrl());
-                eventImage.setEventId(eventId);
+                eventImage.setEvent(event);
 
                 return eventImage;
             }).toList();
@@ -82,7 +84,8 @@ public class EventImagesService {
     }
 
     public List<EventImages> getEventImages(String eventId) {
-        return imagesRepository.findAllByEventId(eventId);
+        Events events = eventsRepository.findEventsByEventId(eventId);
+        return imagesRepository.findAllByEvent(events);
     }
 
     public void deleteImageFromCloudinary(String imageId){
@@ -94,7 +97,8 @@ public class EventImagesService {
     }
 
     public void deleteImagesByEventId(String eventId){
-        List<EventImages> images = eventsImagesRepository.findAllByEventId(eventId);
+        Events events = eventsRepository.findEventsByEventId(eventId);
+        List<EventImages> images = eventsImagesRepository.findAllByEvent(events);
         for (EventImages image: images) {
             deleteImageFromCloudinary(image.getImageId());
         }

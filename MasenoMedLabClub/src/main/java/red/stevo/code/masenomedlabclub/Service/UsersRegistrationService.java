@@ -2,6 +2,7 @@ package red.stevo.code.masenomedlabclub.Service;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -99,33 +100,44 @@ public class UsersRegistrationService {
         return emailValidator.isValid(email);
     }
 
+    @Transactional
     public ResponseEntity<AuthenticationResponse> loginUser(LoginRequests loginRequests) {
-        // Authenticate the user
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
+        try {
+            // Authenticate the user
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
 
-        // Fetch user details
-        Users user = usersRepository.findByEmail(loginRequests.getEmail());
+            // Fetch user details
+            Users user = usersRepository.findByEmail(loginRequests.getEmail());
 
-        // Generate access and refresh tokens
-        String accessToken = jwtGenService.generateAccessToken(user);
+            if (user == null) {
+                log.error("User not found with email: {}", loginRequests.getEmail());
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
+            // Generate access token
+            String accessToken = jwtGenService.generateAccessToken(user);
+            log.info("Access token generated successfully");
 
+            log.info("Setting secure cookie");
+            response.setHeader("Set-Cookie", cookieUtils.responseCookie(user).toString());
 
+            // Set the response
+            AuthenticationResponse authResponse = new AuthenticationResponse();
+            authResponse.setMessage("Authentication successful.");
+            authResponse.setToken(accessToken);
+            authResponse.setUserId(user.getUserId());
+            authResponse.setUserRole(user.getRole().toString());
+            log.info("Response is being sent back");
 
-        // Set the access token in a secure cookie
+            // Return AuthenticationResponse object
+            return new ResponseEntity<>(authResponse, HttpStatus.OK);
 
+        } catch (Exception e) {
+            log.error("Authentication failed: {}", e.getMessage());
+            return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
+        }
 
-        AuthenticationResponse authResponse = new AuthenticationResponse();
-        authResponse.setMessage("Authentication successful.");
-        authResponse.setToken(accessToken);
-        authResponse.setUserId(user.getUserId());
-        authResponse.setUserRole(user.getRole().toString());
-
-        response.setHeader("Set-Cookie", cookieUtils.responseCookie(user).toString());
-
-        // Return an AuthenticationResponse object containing both tokens
-        return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 
 
@@ -229,6 +241,7 @@ public class UsersRegistrationService {
             userGeneralResponse.setMessage("User deleted successfully");
             userGeneralResponse.setDate(new Date());
             userGeneralResponse.setHttpStatus(HttpStatus.OK);
+            log.info(userGeneralResponse.toString());
 
             return userGeneralResponse;
 

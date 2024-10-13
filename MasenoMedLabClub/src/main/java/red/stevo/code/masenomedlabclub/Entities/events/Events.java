@@ -24,9 +24,7 @@ public class Events {
 
     private String eventLocation;
 
-    @OneToMany(mappedBy = "eventId", cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "imageId")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EventImages> eventImages;
 
 
