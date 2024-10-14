@@ -86,7 +86,7 @@
     margin: 10px;
 }
 
-.contact-me-header {
+.contact-me-header, .research-header  {
     width: 90%;
     margin-left: 20px;
 }
@@ -103,3 +103,5 @@
 .edit-icon:hover {
     cursor: pointer;
 }
+
+
