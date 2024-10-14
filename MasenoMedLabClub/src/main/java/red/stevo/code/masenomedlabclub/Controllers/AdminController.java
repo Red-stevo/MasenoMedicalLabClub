@@ -60,9 +60,7 @@ public class AdminController {
     public ResponseEntity<UserGeneralResponse> deleteUser(@PathVariable ("email") String email){
         log.info("Request to delete user.");
         try {
-            UserGeneralResponse generalResponse =  usersRegistrationService.deleteUser(emails);
-            return ResponseEntity.ok(generalResponse);
-
+            return ResponseEntity.ok(usersRegistrationService.deleteUser(email));
         }catch (Exception e){
             throw new EntityDeletionException("could not delete the user");
         }
