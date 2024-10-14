@@ -77,7 +77,7 @@ public class UsersRegistrationService {
                     user.setEnabled(true);
 
                     createdEmails.add(user.getEmail());
-//                    emailService.sendRegistrationEmail(user.getEmail(),password);
+                    emailService.sendRegistrationEmail(user.getEmail(),password);
                     return user;
                 }).toList();
 
@@ -104,15 +104,12 @@ public class UsersRegistrationService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
 
-<<<<<<< HEAD
-            // Fetch user details
-            Users user = usersRepository.findByEmail(loginRequests.getEmail());
-=======
+
         // Fetch user details
         Users user = usersRepository.findByEmail(loginRequests.getEmail()).orElseThrow(()-> {
             return new UserDoesNotExistException("User Does Not Exist.");
         });
->>>>>>> 6086ed1eac2f4837d786e717fc2763698e857e51
+
 
             if (user == null) {
                 log.error("User not found with email: {}", loginRequests.getEmail());
@@ -123,7 +120,7 @@ public class UsersRegistrationService {
             String accessToken = jwtGenService.generateAccessToken(user);
             log.info("Access token generated successfully");
 
-<<<<<<< HEAD
+
             log.info("Setting secure cookie");
             response.setHeader("Set-Cookie", cookieUtils.responseCookie(user).toString());
 
@@ -143,19 +140,6 @@ public class UsersRegistrationService {
             return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
         }
 
-=======
-        // Set the access token in a secure cookie
-        AuthenticationResponse authResponse = new AuthenticationResponse();
-        authResponse.setMessage("Authentication successful.");
-        authResponse.setToken(accessToken);
-        authResponse.setUserId(user.getUserId());
-        authResponse.setUserRole(user.getRole().toString());
-
-        response.setHeader("Set-Cookie", cookieUtils.responseCookie(user).toString());
-
-        // Return an AuthenticationResponse object containing both tokens
-        return new ResponseEntity<>(authResponse, HttpStatus.OK);
->>>>>>> 6086ed1eac2f4837d786e717fc2763698e857e51
     }
 
 
@@ -199,6 +183,7 @@ public class UsersRegistrationService {
         try {
             List<Users> users = usersRepository.findAll();
 
+
             users.sort(Comparator.comparing(users1 -> getPositionPriority(users1.getPosition())));
             return users.stream().map(user-> {
                         UserResponse userResponse = new UserResponse();
@@ -237,7 +222,6 @@ public class UsersRegistrationService {
             case SECRETARY -> "SECRETARY";
             case VICE_SECRETARY -> "VICE SECRETARY";
             case MEMBER -> "MEMBER";
-            default -> throw new IllegalStateException("Unexpected value: " + pos);
         };
     }
 
@@ -246,14 +230,13 @@ public class UsersRegistrationService {
         try {
 
             Users user = usersRepository.findByEmail(email)
-                    .orElseThrow(() -> {return new UserDoesNotExistException("User Does Not Exist");});
+                    .orElseThrow(() -> new UserDoesNotExistException("User Does Not Exist"));
 
             usersRepository.delete(user);
             UserGeneralResponse userGeneralResponse = new UserGeneralResponse();
             userGeneralResponse.setMessage("User deleted successfully");
             userGeneralResponse.setDate(new Date());
             userGeneralResponse.setHttpStatus(HttpStatus.OK);
-            log.info(userGeneralResponse.toString());
 
             return userGeneralResponse;
 
@@ -288,7 +271,7 @@ public class UsersRegistrationService {
         user.setRole(Roles.ADMIN);
         user.setPosition(UserPositions.CHAIRPERSON);
         user.setEnabled(true);
-//        emailService.sendRegistrationEmail(adminEmail,adminPassword);
+        emailService.sendRegistrationEmail(adminEmail,adminPassword);
         usersRepository.save(user);
         System.out.println(user.getPosition());
 
