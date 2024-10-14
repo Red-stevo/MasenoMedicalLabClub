@@ -8,6 +8,7 @@
 .user-profile-page {
     display: flex;
     margin-top: 20vh;
+    margin-bottom: 20vh;
     min-height: 110vh;
 }
 
@@ -104,4 +105,26 @@
     cursor: pointer;
 }
 
+.research-section {
+    margin-bottom: 10vh;
+}
 
+.research-title {
+    margin-top: 20px;
+    width: 100%;
+    text-justify: distribute-center-last;
+    text-align: center;
+    font-size: x-large;
+    font-weight: 400;
+}
+
+.research-description {
+    margin-left: 36px;
+}
+
+.research-description-area {
+    font-style: oblique;
+    font-size: 19px;
+    font-weight: normal;
+   margin-left: 50px;
+}

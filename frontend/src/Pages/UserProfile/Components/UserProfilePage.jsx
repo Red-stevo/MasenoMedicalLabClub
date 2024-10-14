@@ -43,9 +43,19 @@ const UserProfilePage = () => {
                 </div>
 
                 {/*User research display section*/}
-                <div>
+                <div className={"research-section"}>
                     <div>
                         <h5 className={"research-header"}>My Research</h5>
+                        <div>
+                            <h5 className={"research-title"}>Title</h5>
+                            <h5 className={"research-description"}>Description</h5>
+                            <section className={"research-description-area"}>
+                                Research short description.Research short description.Research short description.<br/>
+                                Research short description.Research short description.Research short description.<br/>
+                                Research short description.Research short description.Research short description.<br/>
+                                Research short description.Research short description.Research short description.<br/>
+                            </section>
+                    </div>
                     </div>
                 </div>
             </div>
