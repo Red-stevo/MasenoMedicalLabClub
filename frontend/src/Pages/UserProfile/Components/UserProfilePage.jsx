@@ -4,7 +4,7 @@ import {FcAddImage} from "react-icons/fc";
 import {LiaEdit} from "react-icons/lia";
 const UserProfilePage = () => {
     return (
-        <div className={"user-profile-page"}>
+        <div className={"user-profile-page lato-regular"}>
             <div className={"image-profile-holder"}>
                <div className={"profile-image-background"}>
                    <FcAddImage className={"add-image-button"}/>

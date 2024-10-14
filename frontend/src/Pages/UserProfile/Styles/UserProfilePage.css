@@ -1,3 +1,10 @@
+
+.lato-regular {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: initial;
+}
+
 .user-profile-page {
     display: flex;
     margin-top: 20vh;
@@ -66,7 +73,7 @@
 .contact-me-body {
     display: flex;
     flex-flow: row;
-    overflow: auto !important;
+    overflow: auto;
     width: 100%;
     margin-bottom: 20px;
 
