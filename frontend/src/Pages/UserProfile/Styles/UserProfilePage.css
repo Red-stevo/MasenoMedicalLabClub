@@ -45,8 +45,12 @@
 
 .user-name {
     width: 100%;
+    padding-left: 15px;
+}
+
+.reg-no {
     margin-bottom: 20px;
-    padding: 15px;
+    padding: 0 15px 15px 15px;
     border-bottom: 1px rgba(128, 128, 128, 0.36) solid;
 }
 

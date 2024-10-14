@@ -15,6 +15,7 @@ const UserProfilePage = () => {
                     <Card className={"profile-card"}>
                         <Card.Body className={"profile-card-body"}>
                             <Card.Title className={"user-name"}>Stephen Muiru</Card.Title>
+                            <Card.Title className={"reg-no"}>C026-01-0931/2022</Card.Title>
                         </Card.Body>
                     </Card>
 
