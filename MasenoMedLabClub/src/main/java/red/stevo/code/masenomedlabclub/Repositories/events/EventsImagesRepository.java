@@ -11,7 +11,7 @@ import java.util.List;
 public interface EventsImagesRepository extends JpaRepository<EventImages,String> {
     EventImages findByImageUrl(String todelete);
 
-    List<EventImages> findAllByEventId(String eventId);
+    List<EventImages> findAllByEvent(Events event);
 
-    void deleteAllByEventId(String eventId);
+    void deleteAllByEvent(Events event);
 }

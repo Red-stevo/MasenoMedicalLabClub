@@ -2,6 +2,7 @@ package red.stevo.code.masenomedlabclub.Service;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,7 +76,7 @@ public class UsersRegistrationService {
                     user.setEnabled(true);
 
                     createdEmails.add(user.getEmail());
-
+//                    emailService.sendRegistrationEmail(user.getEmail(),password);
                     return user;
                 }).toList();
 
@@ -95,20 +96,53 @@ public class UsersRegistrationService {
         return emailValidator.isValid(email);
     }
 
+    @Transactional
     public ResponseEntity<AuthenticationResponse> loginUser(LoginRequests loginRequests) {
-        // Authenticate the user
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
+        try {
+            // Authenticate the user
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
 
+<<<<<<< HEAD
+            // Fetch user details
+            Users user = usersRepository.findByEmail(loginRequests.getEmail());
+=======
         // Fetch user details
         Users user = usersRepository.findByEmail(loginRequests.getEmail()).orElseThrow(()-> {
             return new UserDoesNotExistException("User Does Not Exist.");
         });
+>>>>>>> 6086ed1eac2f4837d786e717fc2763698e857e51
 
-        // Generate access and refresh tokens
-        String accessToken = jwtGenService.generateAccessToken(user);
+            if (user == null) {
+                log.error("User not found with email: {}", loginRequests.getEmail());
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
+            // Generate access token
+            String accessToken = jwtGenService.generateAccessToken(user);
+            log.info("Access token generated successfully");
 
+<<<<<<< HEAD
+            log.info("Setting secure cookie");
+            response.setHeader("Set-Cookie", cookieUtils.responseCookie(user).toString());
+
+            // Set the response
+            AuthenticationResponse authResponse = new AuthenticationResponse();
+            authResponse.setMessage("Authentication successful.");
+            authResponse.setToken(accessToken);
+            authResponse.setUserId(user.getUserId());
+            authResponse.setUserRole(user.getRole().toString());
+            log.info("Response is being sent back");
+
+            // Return AuthenticationResponse object
+            return new ResponseEntity<>(authResponse, HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("Authentication failed: {}", e.getMessage());
+            return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
+        }
+
+=======
         // Set the access token in a secure cookie
         AuthenticationResponse authResponse = new AuthenticationResponse();
         authResponse.setMessage("Authentication successful.");
@@ -120,6 +154,7 @@ public class UsersRegistrationService {
 
         // Return an AuthenticationResponse object containing both tokens
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
+>>>>>>> 6086ed1eac2f4837d786e717fc2763698e857e51
     }
 
 
@@ -217,6 +252,7 @@ public class UsersRegistrationService {
             userGeneralResponse.setMessage("User deleted successfully");
             userGeneralResponse.setDate(new Date());
             userGeneralResponse.setHttpStatus(HttpStatus.OK);
+            log.info(userGeneralResponse.toString());
 
             return userGeneralResponse;
 
@@ -251,6 +287,7 @@ public class UsersRegistrationService {
         user.setRole(Roles.ADMIN);
         user.setPosition(UserPositions.CHAIRPERSON);
         user.setEnabled(true);
+//        emailService.sendRegistrationEmail(adminEmail,adminPassword);
         usersRepository.save(user);
         System.out.println(user.getPosition());
 
