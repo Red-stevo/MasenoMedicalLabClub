@@ -1,0 +1,44 @@
+.user-profile-page {
+    display: flex;
+    margin-top: 20vh;
+    min-height: 110vh;
+}
+
+.profile-card {
+    width: 100%;
+    z-index: -1;
+}
+
+.profile-card-body {
+    margin-top: 60px;
+}
+
+.profile-image-background {
+    background-color: #1beae3;
+    width: 100%;
+    height: 200px;
+}
+
+
+.profile-image {
+    margin-bottom: -300px;
+    align-self: start;
+    background-color: #1beae3;
+}
+
+.image-profile-holder {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    border: #536553 1px solid;
+    height: fit-content;
+}
+
+.add-image-button {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    margin-top: 150px;
+    margin-left: 190px;
+}
+
