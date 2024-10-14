@@ -11,6 +11,7 @@ import AdminRouteProtection from "./RouterProtectionComponent/AdminRouteProtecti
 import EventDataView from "./Pages/ProtectedPage/EventsPage/Components/EventDataView.jsx";
 import UserManagement from "./Pages/ProtectedPage/UserManagement/Components/UserManagement.jsx";
 import ConstitutionEditor from "./Pages/ProtectedPage/ConstitutionDisplay/Components/ConstitutionEditor.jsx";
+import UserProfilePage from "./Pages/UserProfile/Components/UserProfilePage.jsx";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path={"/home/events/:eventId"} element={<EventDataView />}/>
                     <Route path={"/home/admin/user-management"}
                            element={<AdminRouteProtection><UserManagement /></AdminRouteProtection>} />
+                    <Route path={"/home/profile"} element={<UserProfilePage />}/>
                 </Route>
             </Routes>
         </Router>

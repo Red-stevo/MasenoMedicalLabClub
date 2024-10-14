@@ -56,14 +56,14 @@ const DisplayUpdateState = ({index, email, position, roles, userId}) => {
                          setEditUserState(true)
                      }}>
                     <div>{(index + 1)}</div>
-                    <div>{email}</div>
-                    <div>{
+                    <div className={"email-display"}>{email}</div>
+                    <div className={"position-display"}>{
                         position === "0" || position === 0  ? "Chair Person":
-                            position === "1" || position === 1 ? "Vise Chair Person":
+                            position === "1" || position === 1 ? "Vice Chair Person":
                                 position === "2" || position === 2 ? "Treasure" :
-                                    position === "3" || position === 3 ? "Vise Treasure" :
+                                    position === "3" || position === 3 ? "Vice Treasure" :
                                         position === "4" || position === 4 ? "Secretary":
-                                            position === "5" || position === 5 ? "Vise Secretary" :
+                                            position === "5" || position === 5 ? "Vice Secretary" :
                                                 position === "6" || position === 6 ? "Member":
                                                     position}</div>
                     <div>{roles}</div>
@@ -82,11 +82,11 @@ const DisplayUpdateState = ({index, email, position, roles, userId}) => {
                         <select className={"form-select position-select"} defaultValue={"6"}
                                 {...register("position")}>
                             <option value={0}>Chair Person</option>
-                            <option value={1}>Vise Chair Person</option>
+                            <option value={1}>Vice Chair Person</option>
                             <option value={2}>Treasure</option>
-                            <option value={3}>Vise Treasure</option>
+                            <option value={3}>Vice Treasure</option>
                             <option value={4}>Secretary</option>
-                            <option value={5}>Vise Secretary</option>
+                            <option value={5}>Vice Secretary</option>
                             <option value={6}>Member</option>
                         </select>
 

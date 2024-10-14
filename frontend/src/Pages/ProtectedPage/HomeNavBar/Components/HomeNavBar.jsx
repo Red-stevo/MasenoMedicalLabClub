@@ -12,7 +12,7 @@ const HomeNavBar = () => {
                 <Navbar.Brand className={"home-title"} href="#">MMLSA</Navbar.Brand>
                 <Navbar.Toggle className={"responsive-toggle"} aria-controls={"basic-navbar-nav"} />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav variant="underline" defaultActiveKey={1} className={"nav-items"}>
+                    <Nav variant={'underline'} defaultActiveKey={1} className={"nav-items"}>
                         <Nav.Item>
                             <Nav.Link key={1} href={"/home/events"}>Events</Nav.Link>
                         </Nav.Item>
@@ -23,7 +23,7 @@ const HomeNavBar = () => {
                             <Nav.Link key={3} href={"/home/constitution"}>Constitution</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link key={4} href={"#"}>Profile</Nav.Link>
+                            <Nav.Link key={4} href={"/home/profile"}>Profile</Nav.Link>
                         </Nav.Item>
                         {role === "ADMIN" &&
                         <Nav.Item>

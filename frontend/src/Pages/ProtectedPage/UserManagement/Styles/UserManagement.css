@@ -18,8 +18,6 @@
     background-color: rgba(245, 222, 179, 0.2);
     margin-top: 10px;
     transition: ease-in-out .4s linear;
-    text-justify: distribute-center-last;
-    text-align: center;
 }
 
 .users-holder {
@@ -65,7 +63,7 @@
 
 .position-select {
     width: 46%;
-    text-align: center;
+    text-align: start;
     border-right: none;
     border-left: none;
     border-top: none;

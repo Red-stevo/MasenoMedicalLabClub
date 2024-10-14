@@ -108,11 +108,11 @@ const UserManagement = () => {
                     <select className={"form-select position-select"} defaultValue={"6"}
                             {...register("position")}>
                         <option value={0}>Chair Person</option>
-                        <option value={1}>Vise Chair Person</option>
+                        <option value={1}>Vice Chair Person</option>
                         <option value={2}>Treasure</option>
-                        <option value={3}>Vise Treasure</option>
+                        <option value={3}>Vice Treasure</option>
                         <option value={4}>Secretary</option>
-                        <option value={5}>Vise Secretary</option>
+                        <option value={5}>Vice Secretary</option>
                         <option value={6}>Member</option>
                     </select>
 
