@@ -10,10 +10,13 @@ public class EventImages {
     @Id
     private String imageId;
 
-    private String eventId;
+    //private String eventId;
 
     private String imageUrl;
 
+    @ManyToOne
+    @JoinColumn(name = "event_id", nullable = false)
+    private Events event;
 
 }
 
