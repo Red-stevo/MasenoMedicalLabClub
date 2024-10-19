@@ -98,20 +98,15 @@ public class UsersRegistrationService {
 
     @Transactional
     public ResponseEntity<AuthenticationResponse> loginUser(LoginRequests loginRequests) {
-        try {
             // Authenticate the user
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequests.getEmail(), loginRequests.getPassword()));
 
-<<<<<<< HEAD
-            // Fetch user details
-            Users user = usersRepository.findByEmail(loginRequests.getEmail());
-=======
+
         // Fetch user details
         Users user = usersRepository.findByEmail(loginRequests.getEmail()).orElseThrow(()-> {
             return new UserDoesNotExistException("User Does Not Exist.");
         });
->>>>>>> 6086ed1eac2f4837d786e717fc2763698e857e51
 
             if (user == null) {
                 log.error("User not found with email: {}", loginRequests.getEmail());
@@ -122,27 +117,7 @@ public class UsersRegistrationService {
             String accessToken = jwtGenService.generateAccessToken(user);
             log.info("Access token generated successfully");
 
-<<<<<<< HEAD
-            log.info("Setting secure cookie");
-            response.setHeader("Set-Cookie", cookieUtils.responseCookie(user).toString());
 
-            // Set the response
-            AuthenticationResponse authResponse = new AuthenticationResponse();
-            authResponse.setMessage("Authentication successful.");
-            authResponse.setToken(accessToken);
-            authResponse.setUserId(user.getUserId());
-            authResponse.setUserRole(user.getRole().toString());
-            log.info("Response is being sent back");
-
-            // Return AuthenticationResponse object
-            return new ResponseEntity<>(authResponse, HttpStatus.OK);
-
-        } catch (Exception e) {
-            log.error("Authentication failed: {}", e.getMessage());
-            return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
-        }
-
-=======
         // Set the access token in a secure cookie
         AuthenticationResponse authResponse = new AuthenticationResponse();
         authResponse.setMessage("Authentication successful.");
@@ -154,7 +129,7 @@ public class UsersRegistrationService {
 
         // Return an AuthenticationResponse object containing both tokens
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
->>>>>>> 6086ed1eac2f4837d786e717fc2763698e857e51
+
     }
 
 

@@ -60,7 +60,7 @@ public class AdminController {
     public ResponseEntity<UserGeneralResponse> deleteUser(@PathVariable ("email") String email){
         log.info("Request to delete user.");
         try {
-            UserGeneralResponse generalResponse =  usersRegistrationService.deleteUser(emails);
+            UserGeneralResponse generalResponse =  usersRegistrationService.deleteUser(email);
             return ResponseEntity.ok(generalResponse);
 
         }catch (Exception e){
