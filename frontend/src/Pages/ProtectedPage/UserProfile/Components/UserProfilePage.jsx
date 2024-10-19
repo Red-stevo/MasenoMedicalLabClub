@@ -1,7 +1,8 @@
-import "./../Styles/UserProfilePage.css";
+import "../Styles/UserProfilePage.css";
 import {Card, Image} from "react-bootstrap";
 import {FcAddImage} from "react-icons/fc";
 import {LiaEdit} from "react-icons/lia";
+import ProfileInformCollectionModal from "./ProfileInformCollectionModal.jsx";
 const UserProfilePage = () => {
     return (
         <div className={"user-profile-page lato-regular"}>
@@ -21,7 +22,8 @@ const UserProfilePage = () => {
                 {/*Contact me display section*/}
                 <div>
                     <div className={"contact-me-edit-holder"}>
-                        <h5 className={"contact-me-header"}>Contact Me</h5><LiaEdit className={"edit-icon"}/>
+                        <h5 className={"contact-me-header"}>Contact Me</h5>
+                        <ProfileInformCollectionModal />
                     </div>
                     <div className={"contact-me-body"}>
                         <div className={"contact-me-image-holder"}>
