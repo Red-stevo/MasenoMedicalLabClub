@@ -59,13 +59,7 @@ public class AdminController {
     @DeleteMapping("/delete/{email}")
     public ResponseEntity<UserGeneralResponse> deleteUser(@PathVariable ("email") String email){
         log.info("Request to delete user.");
-        try {
-            UserGeneralResponse generalResponse =  usersRegistrationService.deleteUser(email);
-            return ResponseEntity.ok(generalResponse);
-
-        }catch (Exception e){
-            throw new EntityDeletionException("could not delete the user");
-        }
+        return ResponseEntity.ok(usersRegistrationService.deleteUser(email));
     }
 
     @PostMapping("/events/create")
