@@ -20,31 +20,33 @@ const ProfileInformCollectionModal =   () =>  {
                     <Modal.Title className={'update-title'} >Update Profile</Modal.Title>
                 </Modal.Header >
                 <Modal.Body>
-                   <Form>
-                       <Form.Group>
-                           <Form.Label htmlFor={'profile-username'}>First Name : </Form.Label>
-                           <input className={"form-control"}/>
-                       </Form.Group>
-                       <Form.Group>
-                           <Form.Label htmlFor={'profile-username'}>Second Name : </Form.Label>
-                           <input className={"form-control"}/>
-                       </Form.Group>
-                       <Form.Group>
-                           <Form.Label htmlFor={'profile-username'}>Admission No. : </Form.Label>
-                           <input className={"form-control"}/>
-                       </Form.Group>
-                       <FloatingLabel className={"event-description"} controlId="floatingTextarea" label="Event Decription">
-                           <input required={true} as="textarea" placeholder="Research Description"
-                                  style={{ height: '150px' }} className={"research-description"}
-                           />
-                       </FloatingLabel>
-                   </Form>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label htmlFor={'profile-first-name'}>First Name : </Form.Label>
+                            <input className={"form-control"}/>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label htmlFor={'profile-second-name'}>Second Name : </Form.Label>
+                            <input className={"form-control"}/>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label htmlFor={'profile-reg-no'}>Admission No. : </Form.Label>
+                            <input className={"form-control"}/>
+                        </Form.Group>
+                        <div className="form-group">
+                            <label className={"form-label"} htmlFor="floatingTextarea">Research Description</label>
+                            <textarea
+                                placeholder="Research Description"
+                                style={{height: '150px'}}
+                                className="form-control"/>
+                        </div>
+                    </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button  className={'cancel-profile-changes'} onClick={handleClose}>
+                    <Button className={'cancel-profile-changes'} onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button className={'save-profile-changes'} >Save</Button>
+                    <Button className={'save-profile-changes'}>Save</Button>
                 </Modal.Footer>
             </Modal>
         </>
