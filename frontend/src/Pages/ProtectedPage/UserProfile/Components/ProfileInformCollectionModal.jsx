@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {LiaEdit} from "react-icons/lia";
+import {FloatingLabel, Form} from "react-bootstrap";
 
 
 
@@ -14,24 +15,36 @@ const ProfileInformCollectionModal =   () =>  {
     return (
         <>
             <LiaEdit className={"edit-icon"} onClick={handleShow}/>
-            <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Modal title</Modal.Title>
-                </Modal.Header>
+            <Modal size={"lg"} show={show} onHide={handleClose} backdrop="static" keyboard={false} scrollable={true}>
+                <Modal.Header className={"profile-modal-title"} closeButton>
+                    <Modal.Title className={'update-title'} >Update Profile</Modal.Title>
+                </Modal.Header >
                 <Modal.Body>
-                    I will not close if you click outside me. Do not even try to press
-                    escape key.
+                   <Form>
+                       <Form.Group>
+                           <Form.Label htmlFor={'profile-username'}>First Name : </Form.Label>
+                           <input className={"form-control"}/>
+                       </Form.Group>
+                       <Form.Group>
+                           <Form.Label htmlFor={'profile-username'}>Second Name : </Form.Label>
+                           <input className={"form-control"}/>
+                       </Form.Group>
+                       <Form.Group>
+                           <Form.Label htmlFor={'profile-username'}>Admission No. : </Form.Label>
+                           <input className={"form-control"}/>
+                       </Form.Group>
+                       <FloatingLabel className={"event-description"} controlId="floatingTextarea" label="Event Decription">
+                           <input required={true} as="textarea" placeholder="Research Description"
+                                  style={{ height: '150px' }} className={"research-description"}
+                           />
+                       </FloatingLabel>
+                   </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
+                    <Button  className={'cancel-profile-changes'} onClick={handleClose}>
+                        Cancel
                     </Button>
-                    <Button variant="primary">Understood</Button>
+                    <Button className={'save-profile-changes'} >Save</Button>
                 </Modal.Footer>
             </Modal>
         </>

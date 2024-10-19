@@ -128,3 +128,34 @@
     font-weight: normal;
    margin-left: 50px;
 }
+
+.cancel-profile-changes {
+    background-color: rgb(255, 0, 0);
+    border: 1px solid rgba(215, 2, 34, 0.62);
+}
+
+.save-profile-changes {
+    background-color: rgb(1, 73, 1);
+    border: 1px solid  rgba(0, 114, 0, 0.62);
+}
+
+.save-profile-changes:hover {
+    background-color: rgba(250, 247, 247, 0.71);
+    border: 1px solid rgba(246, 243, 244, 0.62);
+    color: green;
+}
+
+.cancel-profile-changes:hover {
+    background-color: rgba(250, 247, 247, 0.71);
+    border: 1px solid rgba(246, 243, 244, 0.62);
+    color: red;
+}
+
+.profile-modal-title {
+    display: flex;
+}
+
+.update-title {
+   margin-left: 200px;
+}
+
