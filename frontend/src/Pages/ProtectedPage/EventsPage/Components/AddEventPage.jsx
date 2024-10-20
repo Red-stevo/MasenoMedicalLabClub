@@ -84,11 +84,10 @@ const AddEventPage = (factory, deps) => {
             </Form.Group>
 
             <FloatingLabel className={"event-description"} controlId="floatingTextarea" label="Event Decription">
-                <input
+                <textarea
                     disabled={status === "loading"}
                     required={true}
                     className={"input-field form-control"}
-                    as="textarea"
                     placeholder="Event Description"
                     style={{ height: '150px' }}
                     {...register("eventDescription")}
