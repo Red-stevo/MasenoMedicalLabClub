@@ -55,7 +55,7 @@ const UserProfilePage = () => {
                                 Research short description.Research short description.Research short description.<br/>
                                 Research short description.Research short description.Research short description.<br/>
                                 Research short description.Research short description.Research short description.<br/>
-                                Research short description.Research short description.Research short description.<br/>
+
                             </section>
                     </div>
                     </div>
